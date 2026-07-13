@@ -1,0 +1,1080 @@
+[
+  {
+    "name": "Palos de naranjo",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "paquetess",
+    "min_stock": 0,
+    "_raw_reserva": "2 paquetes"
+  },
+  {
+    "name": "Cepillos de mano",
+    "type": "insumo",
+    "quantity": 34,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 34
+  },
+  {
+    "name": "Cepillos de pies",
+    "type": "insumo",
+    "quantity": 6,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 6
+  },
+  {
+    "name": "Lima desechable G. 180",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "paquetes",
+    "min_stock": 0,
+    "_raw_reserva": "1 paquete"
+  },
+  {
+    "name": "Lima desechable P. 180",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "paquetes",
+    "min_stock": 0,
+    "_raw_reserva": "1 paquete"
+  },
+  {
+    "name": "Lima desechable G. 240",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "paquetes",
+    "min_stock": 0,
+    "_raw_reserva": "1. Paquete "
+  },
+  {
+    "name": "Lima desechable G. 150",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "paquetes",
+    "min_stock": 0,
+    "_raw_reserva": "1 paquete"
+  },
+  {
+    "name": "lima desechable para armar Lima 0.75",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "paquetes",
+    "min_stock": 0,
+    "_raw_reserva": "1 paquete"
+  },
+  {
+    "name": "lima desechable para armar 180",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "paquetes",
+    "min_stock": 0,
+    "_raw_reserva": "1 paquete"
+  },
+  {
+    "name": "lima desechable para armar Palos",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "cajas",
+    "min_stock": 0,
+    "_raw_reserva": "1 caja"
+  },
+  {
+    "name": "Desechables de podo disco Discos S (15mm)",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "paquetess",
+    "min_stock": 0,
+    "_raw_reserva": "3 paquetes "
+  },
+  {
+    "name": "Desechables de podo disco M (20mm)",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "paquetess",
+    "min_stock": 0,
+    "_raw_reserva": "4 paquetes "
+  },
+  {
+    "name": "Desechables de podo disco L (25mm)",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "paquetess",
+    "min_stock": 0,
+    "_raw_reserva": "2 paquetes"
+  },
+  {
+    "name": "Lima 4 pasos",
+    "type": "insumo",
+    "quantity": 5,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 5
+  },
+  {
+    "name": "lima de cartón",
+    "type": "insumo",
+    "quantity": 12,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 12
+  },
+  {
+    "name": "Lima pulidora Grde.",
+    "type": "insumo",
+    "quantity": 19,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 19
+  },
+  {
+    "name": "Lima pulidora Pquñ.",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 3
+  },
+  {
+    "name": "Pulidora desechable",
+    "type": "insumo",
+    "quantity": 41,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 41
+  },
+  {
+    "name": "Podo Disco",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Aceite de cutícula",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "Exfoliante",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Guantes",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "cajass",
+    "min_stock": 0,
+    "_raw_reserva": "2 cajas"
+  },
+  {
+    "name": "Tapa bocas",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "cajas",
+    "min_stock": 0,
+    "_raw_reserva": "1 caja"
+  },
+  {
+    "name": "Aceite de almendra",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Filtro de máquina extractora",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "Bolsa de PVC",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "paquetess",
+    "min_stock": 0,
+    "_raw_reserva": "3 paquetes "
+  },
+  {
+    "name": "Imán marca HEY",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Acrylic-Gel Bella vida",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Cortacuticulas",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 4,
+    "_raw_en_uso": 43
+  },
+  {
+    "name": "Corta uñas",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 4
+  },
+  {
+    "name": "Empujador manos",
+    "type": "insumo",
+    "quantity": 23,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 23
+  },
+  {
+    "name": "Empujador pies",
+    "type": "insumo",
+    "quantity": 7,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 7
+  },
+  {
+    "name": "Empujador doble",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 2
+  },
+  {
+    "name": "Empujador de retiro",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 2
+  },
+  {
+    "name": "Pinza",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "Podo Disco",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 3
+  },
+  {
+    "name": "Celulosas",
+    "type": "insumo",
+    "quantity": 7,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 7
+  },
+  {
+    "name": "Pañuelos secos",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 3
+  },
+  {
+    "name": "Bolsa cauterizadora Grande",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 4
+  },
+  {
+    "name": "Bolsa cauterizadora pequeña",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "Cleaners",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "Talco o polvo",
+    "type": "insumo",
+    "quantity": 2.5,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2.5
+  },
+  {
+    "name": "Brochas pque manicura",
+    "type": "insumo",
+    "quantity": 6,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 6
+  },
+  {
+    "name": "Guantes desechables (bolsa)",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "Bolsa desechable (máquina pies)",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 3
+  },
+  {
+    "name": "Discos de algodón",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Rollo de algodón",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "Paños húmedos",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 3
+  },
+  {
+    "name": "Puntas Manos Staly",
+    "type": "insumo",
+    "quantity": 8,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 8
+  },
+  {
+    "name": "Puntas Magic",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 4
+  },
+  {
+    "name": "Puntas Pies Staly",
+    "type": "insumo",
+    "quantity": 18,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 18
+  },
+  {
+    "name": "Puntas Magic",
+    "type": "insumo",
+    "quantity": 13,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 13
+  },
+  {
+    "name": "Puntas Retiro",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 4
+  },
+  {
+    "name": "Puntas Cono",
+    "type": "insumo",
+    "quantity": 5,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 5
+  },
+  {
+    "name": "DNKA Deshydratador",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 3
+  },
+  {
+    "name": "DNKA Ultrabond",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 3
+  },
+  {
+    "name": "DNKA Base Ruber",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "DNKA Fiber Base",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Multi Base",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 3
+  },
+  {
+    "name": "DNKA Top Milky",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "DNKA Wipe Top",
+    "type": "insumo",
+    "quantity": 6,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 6
+  },
+  {
+    "name": "DNKA Cover Top",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "DNKA Acrygel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Pro Gel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Esmaltes #0035",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "DNKA #0016",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Black",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0002",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 2
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0004",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0007",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0010",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0008",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0009",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0005",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Mousse #0011",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Vibe #0001",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Angel #0002",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Pearl #0021",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Coco #0018",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Pinck #0007",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Angelina #0011",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Dolce vita",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 3,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Builder Gel Saphire",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Jelly Gel White #0007",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Jelly Gel Varilla 0002",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Metal Gel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Gold Gel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "DNKA Pincel Gel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Poli Gel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "DNKA Liner",
+    "type": "insumo",
+    "quantity": 4,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 4
+  },
+  {
+    "name": "LUNA Cover",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LUNA Acrygel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LUNA Esmaltes",
+    "type": "insumo",
+    "quantity": 7,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 7
+  },
+  {
+    "name": "LUNA Builder Gel Premium 11",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LUNA Builder Gel Premium 13",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LUNA Builder Gel Premium 14",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LUNA Builder Gel Premium 16",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 2
+  },
+  {
+    "name": "LUNA Builder Gel Premium 23",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LUNA Pincel Liner Gel",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "NAILS OF THE DAY Base Scot",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "NAILS OF THE DAY Deshydratador",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "NAILS OF THE DAY Ultrabond",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "NAILS OF THE DAY Esmaltes",
+    "type": "insumo",
+    "quantity": 22,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 22
+  },
+  {
+    "name": "HEY Base",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Deshydratador",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Ultrabond",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Top",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Esmaltes",
+    "type": "insumo",
+    "quantity": 8,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 8
+  },
+  {
+    "name": "HEY Frame gel Bud",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Frame gel Sea",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Frame gel Si lace",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Molde de uñas Ballerina",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Molde de uñas Stiletto",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Molde de uñas Natural square",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "HEY Molde de uñas Dual Nail f. Sister",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "CLARESA Esmaltes",
+    "type": "insumo",
+    "quantity": 33,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 33
+  },
+  {
+    "name": "CLARESA Green 800",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2,
+    "_raw_en_uso": "                           ^"
+  },
+  {
+    "name": "CLARESA Green 801",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": "                           ^"
+  },
+  {
+    "name": "CLARESA Red 419",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": "                           ^"
+  },
+  {
+    "name": "CLARESA Gray 203",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": "                           ^"
+  },
+  {
+    "name": "SEMILCA Base Fiber",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": 3
+  },
+  {
+    "name": "SEMILCA Top Wipe",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": 2
+  },
+  {
+    "name": "SEMILCA Esmaltes #027",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1,
+    "_raw_en_uso": 18
+  },
+  {
+    "name": "MASGLO Esmaltes Base fortalecedora",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2
+  },
+  {
+    "name": "MASGLO Dilusor De esmalte",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  },
+  {
+    "name": "ÓNIX Esmaltes",
+    "type": "insumo",
+    "quantity": 3,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 3
+  },
+  {
+    "name": "PA LU Esmaltes",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 2
+  },
+  {
+    "name": "LISSIA Esmaltes Brillo",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "LISSIA Uñas de acero",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "TRADICIONAL (MASGLO) Esmaltes",
+    "type": "insumo",
+    "quantity": 25,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 25
+  },
+  {
+    "name": "TRADICIONAL (MASGLO) Base",
+    "type": "insumo",
+    "quantity": 2,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 2,
+    "_raw_en_uso": 3
+  },
+  {
+    "name": "TRADICIONAL (MASGLO) Removedor de cutícula",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_en_uso": 1
+  },
+  {
+    "name": "TRADICIONAL (MASGLO) Dilusor",
+    "type": "insumo",
+    "quantity": 1,
+    "unit": "unidades",
+    "min_stock": 0,
+    "_raw_reserva": 1
+  }
+]

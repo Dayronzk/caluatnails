@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────────────────────────────
+   Prevent iOS auto-zoom on form inputs (font-size must be >= 16px)
+   We force 16px on mobile devices only, keeping the visual unchanged on desktop.
+   ────────────────────────────────────────────────────────────────────── */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  textarea,
+  select,
+  .PhoneInputInput {
+    font-size: 16px !important;
+  }
+}
+
+/* Phone Input Custom Styling */
+.PhoneInput {
+  @apply flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 transition-all;
+}
+
+.PhoneInput:focus-within {
+  @apply border-rose-400 ring-4 ring-rose-100;
+}
+
+.PhoneInputInput {
+  @apply flex-1 bg-transparent border-none outline-none text-sm font-medium text-gray-900 placeholder:text-gray-300;
+}
+
+.PhoneInputCountry {
+  @apply flex items-center gap-1;
+}
+
+.PhoneInputCountrySelect {
+  @apply cursor-pointer;
+}
+
+.PhoneInputCountryIcon--border {
+  @apply rounded-sm shadow-none border-none overflow-hidden;
+}

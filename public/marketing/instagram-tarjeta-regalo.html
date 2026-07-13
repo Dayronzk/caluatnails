@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>NAILOX — Tarjeta Regalo · Instagram 1080×1080</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css">
+<style>
+  :root{
+    --rose-50:#fff1f2;
+    --rose-100:#ffe4e6;
+    --rose-500:#f43f5e;
+    --rose-600:#e11d48;
+    --rose-700:#be123c;
+    --amber-300:#fcd34d;
+    --amber-400:#fbbf24;
+    --orange-400:#fb923c;
+    --rose-400:#fb7185;
+    --gray-900:#111827;
+    --gray-500:#6b7280;
+    --gray-700:#374151;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#1f2937;font-family:"DM Sans",system-ui,sans-serif;color:var(--gray-900);-webkit-font-smoothing:antialiased}
+  body{display:flex;flex-direction:column;align-items:center;gap:32px;min-height:100vh;padding:24px}
+
+  /* Modo "solo este lienzo" — activado por ?only=ID. Oculta todo lo demás y elimina padding/scroll para screenshot 1080×1080 exacto */
+  body.isolate{padding:0;background:#fff;gap:0}
+  body.isolate .caption,
+  body.isolate > div:not(.show){display:none !important}
+  body.isolate .show{box-shadow:none}
+
+  /* Canvas Instagram feed cuadrado 1080×1080 */
+  .canvas{
+    width:1080px;height:1080px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--rose-50) 0%,#ffffff 50%,#fff5f6 100%);
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+  }
+  /* Decorative bokeh */
+  .bokeh{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55;pointer-events:none}
+  .bokeh.b1{width:520px;height:520px;background:#fecdd3;top:-160px;left:-180px}
+  .bokeh.b2{width:420px;height:420px;background:#fed7aa;bottom:-120px;right:-140px}
+  .bokeh.b3{width:300px;height:300px;background:#fbcfe8;top:520px;right:-60px;opacity:.4}
+
+  .frame{position:relative;padding:64px 72px 56px;height:100%;display:flex;flex-direction:column}
+
+  /* Brand row */
+  .brand{display:flex;align-items:center;justify-content:space-between}
+  .brand .logo{font-family:"Playfair Display",serif;font-weight:800;font-size:34px;letter-spacing:.04em;color:var(--gray-900)}
+  .brand .logo span{color:var(--rose-600)}
+  .brand .url{font-size:18px;color:var(--gray-500);font-weight:500;letter-spacing:.02em}
+
+  /* Eyebrow badge */
+  .badge{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--rose-100);color:var(--rose-700);
+    padding:12px 20px;border-radius:999px;
+    font-size:16px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    margin-top:36px;align-self:flex-start;
+  }
+  .badge i{font-size:20px}
+
+  /* Headline */
+  h1{
+    font-family:"Playfair Display",serif;font-weight:700;
+    font-size:84px;line-height:1.02;letter-spacing:-.02em;
+    margin-top:24px;color:var(--gray-900);
+  }
+  h1 .accent{display:block;color:var(--rose-600);font-style:italic;font-weight:600}
+
+  .lede{
+    margin-top:22px;font-size:24px;line-height:1.4;color:var(--gray-700);max-width:820px;font-weight:400;
+  }
+
+  /* Promo card (replica del banner doble-bonus) */
+  .promo{
+    position:relative;margin-top:36px;overflow:hidden;
+    border-radius:32px;color:#fff;padding:36px 44px;
+    background:linear-gradient(120deg,var(--amber-400) 0%,var(--orange-400) 55%,var(--rose-400) 100%);
+    box-shadow:0 30px 60px -20px rgba(251,113,133,.55), 0 10px 25px rgba(251,146,60,.35);
+  }
+  .promo .coin1,.promo .coin2{position:absolute;border-radius:50%;background:rgba(255,255,255,.16)}
+  .promo .coin1{width:200px;height:200px;top:-80px;right:-60px}
+  .promo .coin2{width:140px;height:140px;bottom:-60px;left:-50px}
+  .promo .big-icon{position:absolute;top:24px;right:40px;color:rgba(255,255,255,.18);font-size:140px;line-height:1}
+
+  .promo .row{display:flex;align-items:center;gap:26px;position:relative}
+  .promo .iconbox{
+    flex:0 0 auto;width:92px;height:92px;border-radius:22px;
+    background:rgba(255,255,255,.22);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;font-size:46px;
+  }
+  .promo .mini-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.25);padding:7px 13px;border-radius:999px;
+    font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .promo h2{font-family:"Playfair Display",serif;font-size:38px;line-height:1.1;margin:10px 0 6px;font-weight:700}
+  .promo p{font-size:19px;line-height:1.4;color:rgba(255,255,255,.95);max-width:560px}
+
+  /* Footer CTA strip */
+  .footer{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding-top:32px;
+  }
+  .cta{
+    display:inline-flex;align-items:center;gap:12px;
+    background:var(--gray-900);color:#fff;
+    padding:20px 30px;border-radius:999px;
+    font-size:20px;font-weight:700;letter-spacing:.02em;
+  }
+  .cta i{color:var(--amber-300);font-size:22px}
+  .meta{
+    text-align:right;color:var(--gray-500);font-size:16px;line-height:1.5;font-weight:500;
+  }
+  .meta strong{color:var(--gray-900);font-weight:700}
+
+  /* ════════ Lienzo 2 — Promociones ════════ */
+  .canvas2{
+    width:1080px;height:1080px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,#fff1f2 0%,#ffffff 50%,#fff1f2 100%);
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+  }
+  .canvas2 .bokeh.b1{width:520px;height:520px;background:#fbcfe8;top:-180px;left:-180px;opacity:.5}
+  .canvas2 .bokeh.b2{width:460px;height:460px;background:#fed7aa;bottom:-140px;right:-160px;opacity:.55}
+  .canvas2 .bokeh.b3{width:280px;height:280px;background:#fecdd3;top:540px;left:-80px;opacity:.35}
+
+  .canvas2 .frame{padding:64px 72px 56px}
+
+  .promo-hero h1{
+    font-family:"Playfair Display",serif;font-weight:700;
+    font-size:78px;line-height:1.02;letter-spacing:-.02em;
+    margin-top:24px;color:var(--gray-900);
+  }
+  .promo-hero h1 .accent{color:var(--rose-600);font-style:italic;font-weight:600}
+  .promo-hero .lede{
+    margin-top:20px;font-size:22px;line-height:1.4;color:var(--gray-700);max-width:820px;font-weight:400;
+  }
+
+  /* Stats grid 2×2 — réplica del banner real */
+  .stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
+    margin-top:40px;
+  }
+  .stat{
+    color:#fff;border-radius:28px;padding:30px 32px;
+    box-shadow:0 18px 40px -16px rgba(0,0,0,.25);
+    position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;
+    min-height:200px;
+  }
+  .stat .ico{font-size:54px;opacity:.92;line-height:1}
+  .stat .val{font-family:"Playfair Display",serif;font-weight:700;font-size:72px;line-height:1;letter-spacing:-.02em}
+  .stat .lbl{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.95;margin-top:8px}
+
+  .stat.s1{background:linear-gradient(135deg,#10b981 0%,#14b8a6 100%)}
+  .stat.s2{background:linear-gradient(135deg,#f59e0b 0%,#f97316 100%)}
+  .stat.s3{background:linear-gradient(135deg,#d946ef 0%,#ec4899 100%)}
+  .stat.s4{background:linear-gradient(135deg,#f43f5e 0%,#ef4444 100%)}
+
+  .stat::after{
+    content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+    background:rgba(255,255,255,.12);top:-50px;right:-50px;
+  }
+
+  /* ════════ Lienzos individuales por promoción — 4 variantes de layout ════════ */
+  .promo-card{
+    width:1080px;height:1080px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,#ffffff 0%,#fff5f6 100%);
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+  }
+
+  /* Imagen base reutilizable */
+  .promo-card .pc-img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+
+  /* Tag de sección reutilizable (clase variant para fondo claro/oscuro) */
+  .pc-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 18px;border-radius:999px;
+    font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+  }
+  .pc-tag.light{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);color:var(--gray-900)}
+  .pc-tag.dark {background:rgba(17,24,39,.92);backdrop-filter:blur(8px);color:#fff}
+  .pc-tag i{font-size:16px;color:var(--rose-500)}
+  .pc-tag.dark i{color:#fda4af}
+
+  /* Branding flotante reutilizable */
+  .pc-brand{
+    display:flex;flex-direction:column;align-items:flex-end;gap:4px;
+    color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.4);
+  }
+  .pc-brand .logo{font-family:"Playfair Display",serif;font-weight:800;font-size:30px;letter-spacing:.04em}
+  .pc-brand .logo span{color:#ffd5dc}
+  .pc-brand .url{font-size:14px;font-weight:600;opacity:.95}
+  .pc-brand.dark{color:var(--gray-900);text-shadow:none}
+  .pc-brand.dark .logo span{color:var(--rose-600)}
+  .pc-brand.dark .url{color:var(--gray-500)}
+
+  /* Hero icon "sello" */
+  .pc-icon{
+    width:140px;height:140px;border-radius:36px;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:68px;
+    box-shadow:0 25px 50px -10px rgba(0,0,0,.35), 0 0 0 8px #fff;
+    flex-shrink:0;
+  }
+
+  /* Highlight + badge + textos comunes */
+  .pc-highlight{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 26px;border-radius:999px;
+    font-family:"Playfair Display",serif;font-weight:700;font-size:46px;line-height:1;
+    color:#fff;
+    box-shadow:0 12px 30px -10px rgba(0,0,0,.2);
+    align-self:flex-start;
+  }
+  .pc-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 16px;border-radius:999px;
+    background:var(--gray-900);color:#fff;
+    font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    align-self:flex-start;
+  }
+  .pc-title{
+    font-family:"Playfair Display",serif;font-weight:700;
+    line-height:1.04;letter-spacing:-.02em;color:var(--gray-900);
+  }
+  .pc-desc{line-height:1.45;color:var(--gray-700);font-weight:400}
+  .pc-cta{
+    display:inline-flex;align-items:center;gap:12px;
+    background:var(--gray-900);color:#fff;
+    padding:18px 28px;border-radius:999px;
+    font-size:19px;font-weight:700;
+  }
+  .pc-cta i{color:var(--amber-300);font-size:22px}
+  .pc-meta{text-align:right;color:var(--gray-500);font-size:15px;line-height:1.5;font-weight:500}
+  .pc-meta strong{color:var(--gray-900);font-weight:700}
+
+  /* ─── L1 — Banner image arriba ─── */
+  .promo-card.L1{display:flex;flex-direction:column}
+  .L1 .banner{position:relative;width:100%;height:380px;flex-shrink:0;overflow:hidden}
+  .L1 .banner::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(244,63,94,.16) 0%,rgba(244,63,94,.06) 60%,rgba(255,255,255,0) 85%, #fff 100%);
+  }
+  .L1 .banner .pc-tag{position:absolute;top:32px;left:36px}
+  .L1 .banner .pc-brand{position:absolute;top:32px;right:36px}
+  .L1 .frame{padding:0 72px 56px;flex:1;display:flex;flex-direction:column;position:relative}
+  .L1 .pc-icon{margin-top:-70px;position:relative;z-index:2}
+  .L1 .pc-highlight{margin-top:28px}
+  .L1 .pc-badge{margin-top:20px}
+  .L1 .pc-title{font-size:64px;margin-top:22px;max-width:920px}
+  .L1 .pc-desc{font-size:24px;margin-top:18px;max-width:880px}
+
+  /* ─── L2 — Polaroid editorial: foto rotada flotando a la derecha ─── */
+  .promo-card.L2{
+    position:relative;
+    background:linear-gradient(135deg,#fff1f2 0%,#ffe4e6 45%,#fed7aa 100%);
+  }
+  /* Círculos decorativos en el fondo */
+  .L2::before{
+    content:"";position:absolute;width:560px;height:560px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,rgba(244,63,94,.18),transparent 70%);
+    top:-180px;left:-160px;pointer-events:none;
+  }
+  .L2::after{
+    content:"";position:absolute;width:480px;height:480px;border-radius:50%;
+    background:radial-gradient(circle at 60% 60%,rgba(251,191,36,.22),transparent 70%);
+    bottom:-160px;right:-120px;pointer-events:none;
+  }
+
+  .L2 .frame{
+    position:relative;padding:60px 70px 56px;height:100%;
+    display:flex;flex-direction:column;z-index:2;
+  }
+  .L2 .pc-tag-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+  .L2 .pc-tag-row .pc-brand{color:var(--gray-900);text-shadow:none}
+  .L2 .pc-tag-row .pc-brand .logo span{color:var(--rose-600)}
+  .L2 .pc-tag-row .pc-brand .url{color:var(--gray-500)}
+
+  .L2 .pc-icon{
+    margin-top:28px;width:120px;height:120px;border-radius:32px;font-size:60px;
+    box-shadow:0 18px 40px -10px rgba(0,0,0,.3), 0 0 0 7px rgba(255,255,255,.9);
+  }
+  .L2 .pc-highlight{margin-top:24px;font-size:42px}
+  .L2 .pc-badge{margin-top:16px}
+  /* Título y desc más estrechos para no chocar con la foto flotante */
+  .L2 .pc-title{font-size:54px;margin-top:20px;max-width:540px;color:var(--gray-900)}
+  .L2 .pc-desc{font-size:20px;margin-top:14px;max-width:520px;color:var(--gray-700)}
+
+  /* Polaroid + back card decorativa */
+  .L2 .polaroid-wrap{
+    position:absolute;top:160px;right:60px;width:400px;height:520px;z-index:3;
+  }
+  .L2 .polaroid{
+    position:relative;width:100%;height:100%;
+    background:#fff;border-radius:32px;padding:14px 14px 70px;
+    box-shadow:
+      0 35px 70px -20px rgba(0,0,0,.45),
+      0 12px 24px -8px rgba(244,63,94,.2);
+    transform:rotate(4deg);
+    display:flex;flex-direction:column;
+  }
+  .L2 .polaroid .photo{
+    width:100%;flex:1;border-radius:20px;overflow:hidden;
+  }
+  .L2 .polaroid .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .L2 .polaroid .caption-strip{
+    position:absolute;bottom:18px;left:0;right:0;text-align:center;
+    font-family:"Playfair Display",serif;font-style:italic;font-size:20px;
+    color:var(--gray-700);letter-spacing:.02em;
+  }
+  /* Back card sombra de color asomando */
+  .L2 .polaroid-wrap::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg,var(--rose-400),var(--amber-300));
+    border-radius:32px;
+    transform:rotate(-5deg);z-index:-1;
+    box-shadow:0 20px 40px -10px rgba(244,63,94,.4);
+  }
+
+  .L2 .pc-footer{padding-top:32px;max-width:540px}
+
+  /* ─── L3 — Split vertical: imagen lado derecho ─── */
+  .promo-card.L3{display:grid;grid-template-columns:600px 480px}
+  .L3 .frame{padding:60px 50px 56px;display:flex;flex-direction:column;height:100%}
+  .L3 .pc-icon{width:120px;height:120px;border-radius:30px;font-size:58px}
+  .L3 .pc-tag{align-self:flex-start;margin-bottom:24px}
+  .L3 .pc-highlight{margin-top:24px;font-size:42px}
+  .L3 .pc-badge{margin-top:16px}
+  .L3 .pc-title{font-size:54px;margin-top:18px}
+  .L3 .pc-desc{font-size:21px;margin-top:14px}
+  .L3 .side{position:relative;overflow:hidden}
+  .L3 .side::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,rgba(244,63,94,.10) 0%, rgba(0,0,0,0) 30%);
+  }
+  .L3 .side .pc-brand{position:absolute;top:28px;right:28px}
+
+  /* ─── L4 — Full bleed con overlay oscuro ─── */
+  .promo-card.L4{position:relative;color:#fff}
+  .L4 .bg{position:absolute;inset:0;overflow:hidden}
+  .L4 .bg::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(160deg,rgba(17,24,39,.78) 0%,rgba(17,24,39,.55) 45%,rgba(244,63,94,.55) 100%);
+  }
+  .L4 .frame{position:relative;padding:64px 72px 56px;height:100%;display:flex;flex-direction:column;z-index:2}
+  .L4 .pc-tag-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+  .L4 .pc-tag{margin-top:0}
+  .L4 .pc-icon{margin-top:auto;width:120px;height:120px;border-radius:32px;font-size:60px;box-shadow:0 25px 50px -10px rgba(0,0,0,.6), 0 0 0 6px rgba(255,255,255,.18)}
+  .L4 .pc-highlight{margin-top:24px;font-size:48px}
+  .L4 .pc-badge{margin-top:16px;background:rgba(255,255,255,.22);backdrop-filter:blur(6px)}
+  .L4 .pc-title{font-size:62px;margin-top:18px;color:#fff;max-width:920px}
+  .L4 .pc-desc{font-size:22px;margin-top:14px;color:rgba(255,255,255,.92);max-width:860px}
+  .L4 .pc-cta{background:#fff;color:var(--gray-900)}
+  .L4 .pc-cta i{color:var(--rose-500)}
+  .L4 .pc-meta{color:rgba(255,255,255,.85)}
+  .L4 .pc-meta strong{color:#fff}
+
+  /* Footer común a todos los layouts */
+  .pc-footer{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding-top:32px;
+  }
+
+  /* Gradient utility classes for highlight & icon (tomados de promociones/page.tsx) */
+  .g-emerald-teal{background:linear-gradient(135deg,#34d399 0%,#14b8a6 100%)}
+  .g-rose-pink   {background:linear-gradient(135deg,#fb7185 0%,#ec4899 100%)}
+  .g-emerald-green{background:linear-gradient(135deg,#34d399 0%,#22c55e 100%)}
+  .g-amber-orange{background:linear-gradient(135deg,#fbbf24 0%,#f97316 100%)}
+  .g-amber-yellow{background:linear-gradient(135deg,#fbbf24 0%,#eab308 100%)}
+  .g-sky-blue    {background:linear-gradient(135deg,#38bdf8 0%,#3b82f6 100%)}
+  .g-pink-rose   {background:linear-gradient(135deg,#f472b6 0%,#f43f5e 100%)}
+  .g-violet-purp {background:linear-gradient(135deg,#a78bfa 0%,#a855f7 100%)}
+  .g-google      {background:linear-gradient(135deg,#fbbf24 0%,#f87171 50%,#3b82f6 100%)}
+  .g-fuchsia-pink{background:linear-gradient(135deg,#e879f9 0%,#ec4899 100%)}
+  .g-violet-fuch {background:linear-gradient(135deg,#a78bfa 0%,#e879f9 100%)}
+
+  /* ════════ Caption blocks (no se capturan en la imagen) ════════ */
+  .caption{
+    width:1080px;background:#fff;color:var(--gray-900);
+    border-radius:24px;padding:32px 36px;
+    box-shadow:0 12px 32px rgba(0,0,0,.18);
+    font-size:18px;line-height:1.55;
+    position:relative;
+  }
+  .caption .cap-head{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;margin-bottom:16px;padding-bottom:14px;
+    border-bottom:1px solid #f3f4f6;
+  }
+  .caption .cap-title{
+    font-family:"Playfair Display",serif;font-weight:700;font-size:22px;color:var(--gray-900);
+    display:flex;align-items:center;gap:10px;
+  }
+  .caption .cap-title i{color:var(--rose-500)}
+  .caption .copy-btn{
+    cursor:pointer;border:0;background:var(--gray-900);color:#fff;
+    padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;
+    display:inline-flex;align-items:center;gap:8px;font-family:inherit;
+    transition:transform .15s;
+  }
+  .caption .copy-btn:hover{transform:translateY(-1px)}
+  .caption .copy-btn.copied{background:#10b981}
+  .caption pre{
+    white-space:pre-wrap;word-break:break-word;
+    font-family:"DM Sans",system-ui,sans-serif;font-size:16px;line-height:1.55;
+    color:var(--gray-700);background:#fafafa;
+    border-radius:14px;padding:20px 22px;margin:0;
+    border:1px solid #f3f4f6;
+  }
+  .caption .hashtags{color:var(--rose-600);font-weight:600}
+
+  /* Print/export helpers */
+  @media print { body{background:#fff;padding:0} .canvas, .canvas2, .promo-card, .caption{box-shadow:none} .caption{display:none} }
+</style>
+</head>
+<body>
+  <div class="canvas" id="canvas">
+    <div class="bokeh b1"></div>
+    <div class="bokeh b2"></div>
+    <div class="bokeh b3"></div>
+
+    <div class="frame">
+      <div class="brand">
+        <div class="logo">NAIL<span>OX</span></div>
+        <div class="url">nailox.com/tarjeta-regalo</div>
+      </div>
+
+      <span class="badge"><i class="ri-gift-2-fill"></i> Tarjeta Regalo</span>
+
+      <h1>
+        Regala una experiencia
+        <span class="accent">de manicura única</span>
+      </h1>
+
+      <p class="lede">
+        Válida 12 meses para cualquier servicio NAILOX en el Eixample.
+        Se envía por email al instante.
+      </p>
+
+      <div class="promo">
+        <div class="coin1"></div>
+        <div class="coin2"></div>
+        <i class="ri-coin-fill big-icon"></i>
+        <div class="row">
+          <div class="iconbox"><i class="ri-coin-fill"></i></div>
+          <div>
+            <span class="mini-badge"><i class="ri-sparkling-fill"></i> Doble bonus</span>
+            <h2>+100 puntos por cada 10€</h2>
+            <p>Tú y quien la recibe ganáis puntos canjeables en próximas reservas. Una tarjeta de 50€ da 500 pts a cada uno.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="cta">Reserva con tu tarjeta <i class="ri-arrow-right-line"></i></span>
+        <div class="meta">
+          <strong>NAILOX · Eixample, Barcelona</strong><br />
+          Carrer del Rosselló 497 · +34 636 68 91 01
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Caption — Tarjeta Regalo -->
+  <div class="caption">
+    <div class="cap-head">
+      <div class="cap-title"><i class="ri-instagram-line"></i> Caption · Tarjeta Regalo</div>
+      <button class="copy-btn" data-target="cap-tarjeta">📋 Copiar</button>
+    </div>
+<pre id="cap-tarjeta">🎁 Regala una experiencia NAILOX
+
+La tarjeta regalo perfecta para esa persona que se merece un mimo. Válida 12 meses para cualquiera de nuestros servicios en el Eixample: manicura rusa con nivelación, semipermanente, uñas en gel, pedicura spa…
+
+✨ Doble bonus: por cada 10€ de tarjeta, tú y quien la recibe ganáis 100 puntos. Una tarjeta de 50€ = +500 pts a cada una para canjear en próximas reservas.
+
+📩 Entrega al instante por email · o tarjeta física premium
+
+📝 Cómo comprarla:
+1. Entra en nailox.com/tarjeta-regalo
+2. Elige importe (10€ a 500€) y formato (email/SMS/WhatsApp gratis o física +20€)
+3. Personaliza mensaje y fecha de envío
+4. Paga → entrega automática + puntos a ambas (100 pts por cada 10€)
+
+👉 Compra la tuya en nailox.com/tarjeta-regalo
+📍 Carrer del Rosselló 497 · Eixample, Barcelona
+📞 636 68 91 01
+
+<span class="hashtags">#nailox #tarjetaregalo #regalooriginal #manicurabarcelona #manicuraeixample #unasbarcelona #beautysalonbarcelona #regaloperfecto #regalomujer #regalonavidad #barcelonabeauty #salondebellezabarcelona #semipermanente #manicurarusa #pedicurabarcelona #regalospersonalizados #experienciasregalo #eixample #bcn #nailsbarcelona</span></pre>
+  </div>
+
+  <!-- ═════════════════════ Lienzo 2 — Promociones ═════════════════════ -->
+  <div class="canvas canvas2" id="canvas2">
+    <div class="bokeh b1"></div>
+    <div class="bokeh b2"></div>
+    <div class="bokeh b3"></div>
+
+    <div class="frame promo-hero">
+      <div class="brand">
+        <div class="logo">NAIL<span>OX</span></div>
+        <div class="url">nailox.com/promociones</div>
+      </div>
+
+      <span class="badge"><i class="ri-sparkling-2-fill"></i> Promociones activas</span>
+
+      <h1>
+        Más beneficios
+        <span class="accent">por ser cliente</span>
+      </h1>
+
+      <p class="lede">
+        Descuentos, puntos canjeables y experiencias únicas. Acumula desde tu primera reserva.
+      </p>
+
+      <div class="stats">
+        <div class="stat s1">
+          <i class="ri-bank-card-2-fill ico"></i>
+          <div>
+            <div class="val">-5%</div>
+            <div class="lbl">Descuento con tarjeta</div>
+          </div>
+        </div>
+        <div class="stat s2">
+          <i class="ri-coin-fill ico"></i>
+          <div>
+            <div class="val">+500</div>
+            <div class="lbl">Puntos de bienvenida</div>
+          </div>
+        </div>
+        <div class="stat s3">
+          <i class="ri-user-add-fill ico"></i>
+          <div>
+            <div class="val">+300</div>
+            <div class="lbl">Puntos por referida</div>
+          </div>
+        </div>
+        <div class="stat s4">
+          <i class="ri-gift-fill ico"></i>
+          <div>
+            <div class="val">12<span style="font-size:36px;font-weight:600">&nbsp;meses</span></div>
+            <div class="lbl">Tarjeta regalo válida</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="cta">Ver todas <i class="ri-arrow-right-line"></i></span>
+        <div class="meta">
+          <strong>NAILOX · Eixample, Barcelona</strong><br />
+          Carrer del Rosselló 497 · +34 636 68 91 01
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Caption — Promociones overview -->
+  <div class="caption">
+    <div class="cap-head">
+      <div class="cap-title"><i class="ri-instagram-line"></i> Caption · Promociones</div>
+      <button class="copy-btn" data-target="cap-promos">📋 Copiar</button>
+    </div>
+<pre id="cap-promos">✨ Más beneficios por ser cliente NAILOX ✨
+
+En NAILOX premiamos tu confianza desde el primer minuto:
+
+💳 -5% al pagar tu reserva con tarjeta
+🎁 +500 puntos de bienvenida al completar tu perfil
+👯 +300 puntos por cada amiga referida
+🎫 Tarjeta regalo válida 12 meses
+
+100 puntos = 1€ de descuento en tu próxima cita. Sin letra pequeña, sin caducidad mientras tu cuenta esté activa.
+
+📝 Cómo empezar a sumar (en 5 min):
+1. Crea tu cuenta en nailox.com/registro
+2. Verifica tu email → +100 pts
+3. Añade tu fecha de cumpleaños → +100 pts
+4. Activa notificaciones desde tu móvil → +200 pts
+5. Reseña en Google + avísanos → +100 pts
+6. Listo: +500 pts gratis para tu primera reserva
+
+👉 Mira todas en nailox.com/promociones
+📍 Eixample · Carrer del Rosselló 497
+📞 636 68 91 01
+
+<span class="hashtags">#nailox #promocionesbarcelona #manicurabarcelona #manicuraeixample #unasbarcelona #beautysalonbarcelona #descuentobarcelona #puntosfidelidad #programafidelidad #semipermanente #manicurarusa #pedicurabarcelona #salonbellezabarcelona #nailsalon #nailsbcn #barcelonabeauty #eixample #bcn #ofertasbarcelona #manicuraprofesional</span></pre>
+  </div>
+
+  <!-- ═════════════════════ Lienzos individuales por promoción ═════════════════════ -->
+  <div id="promo-cards"></div>
+
+  <script>
+    // Hashtags base (siempre presentes en cada caption)
+    const HT_BASE = "#nailox #manicurabarcelona #manicuraeixample #unasbarcelona #beautysalonbarcelona #salondeunasbarcelona #pedicurabarcelona #semipermanente #manicurarusa #unasengel #barcelonabeauty #nailsalonbarcelona #nailsbcn #eixample #bcn";
+
+    // Datos tomados literalmente de src/pages/promociones/page.tsx
+    const PROMOS = [
+      // ─── Al reservar ───
+      { section:"Al reservar", icon:"ri-bank-card-2-fill", grad:"g-emerald-teal",
+        highlight:"-5%", title:"5% de descuento con tarjeta",
+        desc:"Paga el total de tu reserva con tarjeta y obtén un 5% de descuento automático en el momento de pagar.",
+        cta:"Reservar ahora · nailox.com/reservar",
+        caption:`💳 -5% AL PAGAR CON TARJETA
+
+Reserva tu cita en NAILOX y paga el total con tarjeta: te aplicamos un 5% de descuento automáticamente al cerrar la reserva. Sin códigos, sin letra pequeña.
+
+Manicura, pedicura, semipermanente, uñas en gel… cualquier servicio cuenta.
+
+📝 Cómo aprovecharla:
+1. Entra en nailox.com/reservar
+2. Elige servicio, profesional y hora
+3. En el paso de pago, marca "Tarjeta"
+4. -5% aplicado automáticamente al total
+
+👉 nailox.com/reservar
+📍 Eixample · Carrer del Rosselló 497`,
+        extra:"#descuentobarcelona #ofertabarcelona #pagocontarjeta"
+      },
+      { section:"Al reservar", icon:"ri-percent-line", grad:"g-rose-pink",
+        highlight:"10%", title:"Anticipo flexible",
+        desc:"Si lo prefieres, paga solo el 10% al reservar y el 90% restante en cita. Sin recargos.",
+        cta:"Reserva flexible · nailox.com/reservar",
+        caption:`✨ Reserva tu cita pagando solo el 10%
+
+Sabemos que a veces no quieres adelantar el total. En NAILOX puedes pagar solo el 10% al reservar y el 90% restante en tu cita. Sin recargos, sin sorpresas.
+
+Tu hueco queda bloqueado, tú flexible.
+
+📝 Cómo aprovecharla:
+1. Reserva en nailox.com/reservar
+2. En el paso de pago elige "Anticipo del 10%"
+3. Pagas solo el 10% ahora
+4. Abonas el 90% restante en la cita, sin recargos
+
+👉 nailox.com/reservar
+📍 Eixample, Barcelona`,
+        extra:"#reservaflexible #manicurasinprisa"
+      },
+      { section:"Al reservar", icon:"ri-smartphone-line", grad:"g-emerald-green",
+        badge:"Bizum", title:"Pago por Bizum",
+        desc:"Coordinamos contigo el pago por Bizum vía WhatsApp. Sin recargos, ideal si prefieres no usar tarjeta.",
+        cta:"Pregúntanos por WhatsApp",
+        caption:`📲 ¿Prefieres pagar por Bizum?
+
+En NAILOX te lo ponemos fácil: coordinamos contigo el pago por Bizum vía WhatsApp. Sin recargos, sin tener que sacar la tarjeta.
+
+Tu reserva igual de segura, tu pago como tú quieras.
+
+📝 Cómo aprovecharla:
+1. Escríbenos al WhatsApp 636 68 91 01
+2. Te confirmamos disponibilidad y servicio
+3. Te enviamos el número Bizum
+4. Pagas y tu reserva queda lista
+
+👉 nailox.com/reservar
+📞 636 68 91 01`,
+        extra:"#bizum #pagobizum #manicurafacil"
+      },
+
+      // ─── Sistema de puntos ───
+      { section:"Sistema de puntos", icon:"ri-coin-line", grad:"g-amber-orange",
+        highlight:"100 pts = 1€", title:"Puntos por cada servicio",
+        desc:"Cada servicio reservado te da puntos automáticamente. Una manicura + pedicura te da 200 puntos.",
+        cta:"Reservar y ganar puntos",
+        caption:`🪙 Cada cita te da puntos canjeables
+
+Cada vez que reservas un servicio en NAILOX ganas puntos automáticamente. Una manicura + pedicura ya son 200 puntos. 100 pts = 1€ de descuento real en tu próxima cita.
+
+Sin tarjeta de fidelidad de plástico. Todo automático desde tu cuenta.
+
+📝 Cómo aprovecharla:
+1. Crea tu cuenta en nailox.com/registro
+2. Reserva cualquier servicio estando logueada
+3. Acude a tu cita
+4. Los puntos se suman solos en Mi Cuenta al finalizar
+
+👉 nailox.com/reservar
+📍 Eixample, Barcelona`,
+        extra:"#programafidelidad #puntosfidelidad #clientafiel"
+      },
+      { section:"Sistema de puntos", icon:"ri-money-euro-circle-line", grad:"g-amber-yellow",
+        highlight:"100 pts = 1€", title:"Canjea puntos por euros",
+        desc:"Tus puntos se convierten en descuento directo en futuras reservas. 100 puntos equivalen a 1€.",
+        cta:"Aplica al reservar",
+        caption:`💸 Tus puntos = euros reales de descuento
+
+Los puntos que acumulas en NAILOX se canjean directo al pagar tu próxima cita: 100 pts = 1€. Sin caducidad mientras tu cuenta esté activa.
+
+Cuanto más vienes, menos pagas.
+
+📝 Cómo aprovecharla:
+1. Acumula al menos 100 pts (=1€)
+2. Reserva tu próxima cita logueada
+3. En el paso de pago verás "Canjear X puntos"
+4. Se restan directos del total a pagar
+
+👉 nailox.com/reservar
+📍 Eixample · Rosselló 497`,
+        extra:"#descuentoacumulado #ahorramanicura"
+      },
+
+      // ─── Bonus de bienvenida ───
+      { section:"Bonus de bienvenida", icon:"ri-mail-check-line", grad:"g-sky-blue",
+        highlight:"+100 pts", title:"Verifica tu email",
+        desc:"Confirma tu dirección de correo electrónico en Mi Cuenta y suma 100 puntos.",
+        cta:"Verificar en Mi Cuenta",
+        caption:`📩 +100 PUNTOS por verificar tu email
+
+Empieza a ahorrar antes incluso de tu primera cita: solo por confirmar tu email en Mi Cuenta NAILOX te regalamos 100 puntos (=1€ de descuento).
+
+Y es el primero de 4 bonus de bienvenida. Hasta +500 pts gratis.
+
+📝 Cómo aprovecharla:
+1. Entra en nailox.com/mi-cuenta
+2. Click en "Verificar email"
+3. Abre el correo que te llegará
+4. Click en el enlace → +100 pts al instante
+
+👉 nailox.com/mi-cuenta`,
+        extra:"#regalobienvenida #puntosgratis"
+      },
+      { section:"Bonus de bienvenida", icon:"ri-cake-2-line", grad:"g-pink-rose",
+        highlight:"+100 pts", title:"Añade tu cumpleaños",
+        desc:"Cuéntanos cuándo es tu cumpleaños para sorprenderte ese día.",
+        cta:"Añadir en Mi Cuenta",
+        caption:`🎂 +100 PUNTOS por contarnos tu cumpleaños
+
+Añade tu fecha de cumpleaños en tu cuenta NAILOX y suma 100 puntos al instante. Además, recibirás una sorpresa especial en el mes de tu cumple 🎁
+
+Pequeño detalle, gran intención.
+
+📝 Cómo aprovecharla:
+1. Entra en Mi Cuenta → Perfil
+2. Añade tu fecha de nacimiento
+3. Guarda → +100 pts al instante
+4. Bonus: recibirás una sorpresa el mes de tu cumple
+
+👉 nailox.com/mi-cuenta`,
+        extra:"#cumpleaños #regalocumpleaños #birthdaybarcelona"
+      },
+      { section:"Bonus de bienvenida", icon:"ri-notification-3-line", grad:"g-violet-purp",
+        highlight:"+200 pts", title:"Activa notificaciones",
+        desc:"Recibe recordatorios de tu cita 30 min antes y novedades. Suma 200 puntos al activarlas.",
+        cta:"Activar notificaciones",
+        caption:`🔔 +200 PUNTOS por activar las notificaciones
+
+No te vuelvas a olvidar de una cita. Activa las notificaciones de NAILOX y te avisamos 30 min antes de tu reserva. De regalo: +200 puntos (=2€ de descuento).
+
+Es el bonus de bienvenida con más recompensa.
+
+📝 Cómo aprovecharla:
+1. Abre nailox.com/mi-cuenta desde tu móvil
+2. El navegador te pedirá permiso de notificaciones → acepta
+3. +200 pts directos a tu saldo
+4. Empezarás a recibir recordatorios de cita
+
+👉 nailox.com/mi-cuenta`,
+        extra:"#recordatoriocita #notificacionesnailox"
+      },
+      { section:"Bonus de bienvenida", icon:"ri-google-fill", grad:"g-google",
+        highlight:"+100 pts", title:"Deja una reseña en Google",
+        desc:"Tu opinión nos ayuda a crecer. Una sola vez por cuenta — y sumas 100 puntos.",
+        cta:"Dejar reseña",
+        caption:`⭐ +100 PUNTOS por tu reseña en Google
+
+Tu opinión nos ayuda a llegar a más clientas como tú. Deja una reseña honesta de NAILOX en Google y suma 100 puntos a tu cuenta. Una sola vez por cuenta.
+
+Lo bueno se comparte.
+
+📝 Cómo aprovecharla:
+1. Busca "NAILOX Eixample" en Google Maps
+2. Click en "Escribir reseña"
+3. Deja tu opinión honesta + estrellas
+4. Avísanos en Mi Cuenta → +100 pts (una sola vez por cuenta)
+
+👉 nailox.com/mi-cuenta`,
+        extra:"#reseñagoogle #opinionescliente"
+      },
+
+      // ─── Programa de referidos ───
+      { section:"Programa de referidos", icon:"ri-user-add-line", grad:"g-fuchsia-pink",
+        highlight:"+300 pts", badge:"Sin límite",
+        title:"+300 puntos por amiga referida",
+        desc:"Comparte tu código. Cada vez que una amiga reserve con tu código, ganas 300 puntos.",
+        cta:"Ver mi código en Mi Cuenta",
+        caption:`👯 +300 PUNTOS por cada amiga que recomiendes
+
+Tu mejor plan: trae a tus amigas a NAILOX. Cada vez que una de ellas reserve con tu código de referido, sumas 300 puntos (=3€ de descuento) a tu cuenta. SIN LÍMITE.
+
+Trae a 5 amigas = 1.500 pts. Y manicura compartida vale por dos.
+
+📝 Cómo aprovecharla:
+1. Mi Cuenta → "Mi código de referido"
+2. Comparte tu código por WhatsApp/Instagram
+3. Tu amiga lo introduce al reservar
+4. Cuando complete su cita: +300 pts a tu saldo
+
+👉 Saca tu código en nailox.com/mi-cuenta`,
+        extra:"#programareferidos #amigas #planamigas #manicuracomparida"
+      },
+
+      // ─── Tarjetas regalo ───
+      { section:"Tarjetas regalo", icon:"ri-coin-fill", grad:"g-amber-orange",
+        highlight:"+100 pts / 10€", badge:"Doble bonus",
+        title:"100 puntos por cada 10€ — ¡para los dos!",
+        desc:"Por cada 10€ de tarjeta regalo, tú y la persona a la que regalas recibís 100 puntos. 50€ = +500 pts a cada uno.",
+        cta:"Comprar · nailox.com/tarjeta-regalo",
+        caption:`🎁 DOBLE BONUS en cada tarjeta regalo
+
+Por cada 10€ de tarjeta regalo NAILOX que compres, tú Y quien la recibe os lleváis 100 puntos cada una. Una tarjeta de 50€ = 500 pts a cada una para canjear en próximas reservas.
+
+Tú regalas, las dos ganáis.
+
+📝 Cómo aprovecharla:
+1. Entra en nailox.com/tarjeta-regalo
+2. Elige el importe (10€ a 500€)
+3. Personaliza mensaje y formato de envío
+4. Completa el pago → recibís puntos automáticos: 100 pts por cada 10€ para ti y para quien la canjee
+
+👉 nailox.com/tarjeta-regalo`,
+        extra:"#tarjetaregalo #regalodoble #regalooriginal"
+      },
+      { section:"Tarjetas regalo", icon:"ri-gift-2-fill", grad:"g-rose-pink",
+        highlight:"Desde 10€", title:"Tarjetas regalo desde 10€",
+        desc:"Regala una experiencia NAILOX desde 10€ hasta 500€. Válidas 12 meses en cualquier servicio.",
+        cta:"Comprar · nailox.com/tarjeta-regalo",
+        caption:`🎀 Tarjetas regalo NAILOX desde 10€
+
+Regala una experiencia, no un objeto. Tarjetas desde 10€ hasta 500€, válidas 12 meses en cualquier servicio NAILOX. Manicura, pedicura, semipermanente, uñas en gel…
+
+La sorpresa que siempre acierta.
+
+📝 Cómo comprarla:
+1. Entra en nailox.com/tarjeta-regalo
+2. Elige importe (10€-500€) y formato (email/SMS/WhatsApp gratis o física +20€)
+3. Personaliza mensaje y fecha de envío
+4. Paga → entrega automática
+
+👉 nailox.com/tarjeta-regalo`,
+        extra:"#tarjetaregalo #regaloperfecto #regalomujer #regaloamiga"
+      },
+      { section:"Tarjetas regalo", icon:"ri-team-fill", grad:"g-violet-fuch",
+        badge:"Novedad", title:"Tarjeta regalo grupal",
+        desc:"Reúne dinero entre varias personas para regalar una experiencia a alguien especial. Cada uno aporta su parte.",
+        cta:"Crear tarjeta grupal",
+        caption:`👯‍♀️ NOVEDAD · Tarjeta regalo GRUPAL
+
+¿Cumple, despedida, agradecimiento? Reuníos entre varias personas para regalar una experiencia NAILOX. Cada una aporta su parte y juntáis un regalo de verdad.
+
+Sin grupos de WhatsApp eternos pidiendo Bizums.
+
+📝 Cómo aprovecharla:
+1. Entra en nailox.com/tarjeta-regalo
+2. Selecciona "Tarjeta grupal"
+3. Indica importe objetivo y destinataria
+4. Comparte el link → cada amiga aporta su parte
+5. Cuando se complete, se envía automáticamente
+
+👉 nailox.com/tarjeta-regalo`,
+        extra:"#regalogrupal #regalocompartido #despedidadesoltera #regalocumpleaños"
+      },
+      { section:"Tarjetas regalo", icon:"ri-mail-send-line", grad:"g-amber-orange",
+        title:"Múltiples formas de entrega",
+        desc:"Email, SMS o WhatsApp (gratis), o entrega postal en tarjeta física premium (+20€).",
+        cta:"Elige tu formato",
+        caption:`📬 Tu tarjeta regalo, como tú quieras
+
+Entrega instantánea por email, SMS o WhatsApp (gratis). ¿Quieres algo tangible? Tarjeta física premium enviada a casa por +20€.
+
+Tan urgente o tan especial como necesites.
+
+📝 Cómo elegir el formato:
+1. nailox.com/tarjeta-regalo
+2. Selecciona importe
+3. Elige formato: email / SMS / WhatsApp (gratis) o tarjeta física (+20€)
+4. Indica si la entrega es al instante o programada
+5. Pago → envío automático
+
+👉 nailox.com/tarjeta-regalo`,
+        extra:"#tarjetafisica #entregainmediata #regalodigital"
+      },
+
+      // ─── Beneficios especiales ───
+      { section:"Beneficios especiales", icon:"ri-cake-3-line", grad:"g-pink-rose",
+        badge:"Auto", title:"Sorpresa de cumpleaños",
+        desc:"Si tienes tu fecha de cumpleaños registrada, recibirás un detalle especial en el mes de tu cumple.",
+        cta:"Activa en Mi Cuenta",
+        caption:`🎉 SORPRESA en tu mes de cumple
+
+Si tienes tu fecha de cumpleaños registrada en NAILOX, recibirás un detalle especial el mes de tu cumple. Sin pedirlo, sin códigos, sin condiciones raras.
+
+Porque mereces que te recuerden.
+
+📝 Cómo activarla:
+1. Entra en Mi Cuenta → Perfil
+2. Añade tu fecha de nacimiento (y suma +100 pts de bonus)
+3. El mes de tu cumple recibirás un email con tu regalo
+4. Reserva ese mes y disfruta del detalle especial
+
+👉 Añade tu fecha en nailox.com/mi-cuenta`,
+        extra:"#sorpresacumpleaños #birthdaygift #cumpleañosbarcelona"
+      },
+      { section:"Beneficios especiales", icon:"ri-coupon-3-line", grad:"g-amber-yellow",
+        title:"Cupones promocionales",
+        desc:"Usa códigos de descuento al reservar (% o importe fijo). Combinables con puntos.",
+        cta:"Síguenos para recibirlos",
+        caption:`🎫 Cupones de descuento NAILOX
+
+Suelta el ojo a nuestro perfil: lanzamos cupones promocionales con descuentos en %  o importes fijos. Los aplicas al reservar y, mejor todavía, son combinables con tus puntos acumulados.
+
+Síguenos para no perdértelos.
+
+📝 Cómo aprovecharlos:
+1. Sigue @nailox_academy en Instagram
+2. Cuando lancemos un cupón, copia el código
+3. Al reservar en nailox.com, pégalo en "Código promocional"
+4. Descuento aplicado automático (combinable con tus puntos)
+
+👉 nailox.com/reservar`,
+        extra:"#cupondescuento #ofertasbarcelona #promocodes"
+      },
+      { section:"Beneficios especiales", icon:"ri-time-line", grad:"g-sky-blue",
+        badge:"Auto", title:"Recordatorio 30 min antes",
+        desc:"Te avisamos por push 30 minutos antes de tu cita para que no se te pase.",
+        cta:"Activa notificaciones",
+        caption:`⏰ No volverás a llegar tarde a tu cita
+
+Activa las notificaciones de NAILOX y te avisaremos automáticamente 30 minutos antes de tu reserva. Ni alarmas en el móvil ni post-its.
+
+Tu cita, tu hueco, tu tiempo.
+
+📝 Cómo activarlo:
+1. Abre nailox.com/mi-cuenta en tu móvil
+2. Acepta el permiso de notificaciones (+200 pts de bonus)
+3. Reserva cualquier servicio
+4. 30 min antes recibirás un push automático
+
+👉 nailox.com/mi-cuenta`,
+        extra:"#recordatorios #organizacion #manicuraplaneada"
+      },
+    ];
+
+    // 6 imágenes locales · cada promo recibe una asignación + crop único
+    // [src, object-position] — variando el crop, la misma imagen parece distinta
+    const ASSIGNMENT = [
+      // p1  -5% tarjeta            (L1 banner-top)
+      { img:'../assets/manicure-premium.png',    pos:'center 40%' },
+      // p2  Anticipo 10%           (L2 banner-bottom)
+      { img:'../assets/manicure-pastel.jpg',     pos:'center 35%' },
+      // p3  Bizum                  (L3 split-right)
+      { img:'../assets/manicure-exotic.jpg',     pos:'center 50%' },
+      // p4  Puntos por servicio    (L4 full-bleed)
+      { img:'../assets/pedicure-luxury.jpg',     pos:'center 30%' },
+      // p5  Canjea puntos          (L1)
+      { img:'../assets/extensions-premium.png',  pos:'center 50%' },
+      // p6  +100 email             (L2)
+      { img:'../assets/manicure-pastel.jpg',     pos:'right 60%' },
+      // p7  +100 cumpleaños        (L3)
+      { img:'../assets/manicure-exotic.jpg',     pos:'left 40%' },
+      // p8  +200 notificaciones    (L4)
+      { img:'../assets/manicure-premium.png',    pos:'center 60%' },
+      // p9  Reseña Google          (L1)
+      { img:'../assets/service-fallback.png',    pos:'center 50%' },
+      // p10 +300 referidos         (L2)
+      { img:'../assets/manicure-pastel.jpg',     pos:'center 50%' },
+      // p11 Doble bonus tarjeta    (L3)
+      { img:'../assets/extensions-premium.png',  pos:'right 30%' },
+      // p12 Tarjetas desde 10€     (L4)
+      { img:'../assets/manicure-exotic.jpg',     pos:'center 30%' },
+      // p13 Tarjeta grupal         (L1)
+      { img:'../assets/pedicure-luxury.jpg',     pos:'center 60%' },
+      // p14 Formas entrega         (L2)
+      { img:'../assets/manicure-premium.png',    pos:'left 50%' },
+      // p15 Sorpresa cumpleaños    (L3)
+      { img:'../assets/manicure-exotic.jpg',     pos:'center 65%' },
+      // p16 Cupones                (L4)
+      { img:'../assets/manicure-pastel.jpg',     pos:'center 65%' },
+      // p17 Recordatorio 30 min    (L1)
+      { img:'../assets/pedicure-luxury.jpg',     pos:'center 50%' },
+    ];
+
+    // Rota entre 4 layouts: L1 banner-top, L2 banner-bottom, L3 split-right, L4 full-bleed
+    const LAYOUT_CYCLE = ['L1','L2','L3','L4'];
+
+    function renderCard(p, i, layout, asset) {
+      const imgStyle = `object-position:${asset.pos}`;
+      const highlightHtml = p.highlight
+        ? `<span class="pc-highlight ${p.grad}">${p.highlight}</span>` : '';
+      const badgeHtml = p.badge
+        ? `<span class="pc-badge"><i class="ri-sparkling-fill"></i> ${p.badge}</span>` : '';
+      const cta = p.cta || 'Reservar ahora';
+      const tagLight = `<span class="pc-tag light"><i class="ri-sparkling-2-fill"></i> ${p.section}</span>`;
+      const tagDark  = `<span class="pc-tag dark"><i class="ri-sparkling-2-fill"></i> ${p.section}</span>`;
+      const brandLight = `<div class="pc-brand"><div class="logo">NAIL<span>OX</span></div><div class="url">nailox.com/promociones</div></div>`;
+      const brandDark  = `<div class="pc-brand dark"><div class="logo">NAIL<span>OX</span></div><div class="url">nailox.com/promociones</div></div>`;
+      const footer = `
+        <div class="pc-footer">
+          <span class="pc-cta">${cta} <i class="ri-arrow-right-line"></i></span>
+          <div class="pc-meta"><strong>NAILOX · Eixample, Barcelona</strong><br/>Carrer del Rosselló 497 · +34 636 68 91 01</div>
+        </div>`;
+
+      if (layout === 'L1') {
+        return `
+          <div class="promo-card L1" id="promo-${i+1}">
+            <div class="banner">
+              <img class="pc-img" src="${asset.img}" alt="${p.title}" style="${imgStyle}" loading="eager"/>
+              ${tagLight}
+              ${brandLight}
+            </div>
+            <div class="frame">
+              <div class="pc-icon ${p.grad}"><i class="${p.icon}"></i></div>
+              ${highlightHtml}${badgeHtml}
+              <h1 class="pc-title">${p.title}</h1>
+              <p class="pc-desc">${p.desc}</p>
+              ${footer}
+            </div>
+          </div>`;
+      }
+      if (layout === 'L2') {
+        // Frase manuscrita corta para la polaroid (deriva del highlight o del título)
+        const polaroidCaption = p.highlight
+          ? p.highlight.replace(/\s+/g,' ')
+          : (p.badge || 'NAILOX · Barcelona');
+        return `
+          <div class="promo-card L2" id="promo-${i+1}">
+            <div class="frame">
+              <div class="pc-tag-row">${tagLight}${brandDark}</div>
+              <div class="pc-icon ${p.grad}"><i class="${p.icon}"></i></div>
+              ${highlightHtml}${badgeHtml}
+              <h1 class="pc-title">${p.title}</h1>
+              <p class="pc-desc">${p.desc}</p>
+              ${footer}
+            </div>
+            <div class="polaroid-wrap">
+              <div class="polaroid">
+                <div class="photo">
+                  <img class="pc-img" src="${asset.img}" alt="${p.title}" style="${imgStyle}" loading="eager"/>
+                </div>
+                <div class="caption-strip">${polaroidCaption}</div>
+              </div>
+            </div>
+          </div>`;
+      }
+      if (layout === 'L3') {
+        return `
+          <div class="promo-card L3" id="promo-${i+1}">
+            <div class="frame">
+              ${tagDark}
+              <div class="pc-icon ${p.grad}"><i class="${p.icon}"></i></div>
+              ${highlightHtml}${badgeHtml}
+              <h1 class="pc-title">${p.title}</h1>
+              <p class="pc-desc">${p.desc}</p>
+              ${footer}
+            </div>
+            <div class="side">
+              <img class="pc-img" src="${asset.img}" alt="${p.title}" style="${imgStyle}" loading="eager"/>
+              ${brandLight}
+            </div>
+          </div>`;
+      }
+      // L4 — full-bleed overlay
+      return `
+        <div class="promo-card L4" id="promo-${i+1}">
+          <div class="bg">
+            <img class="pc-img" src="${asset.img}" alt="${p.title}" style="${imgStyle}" loading="eager"/>
+          </div>
+          <div class="frame">
+            <div class="pc-tag-row">${tagLight}${brandLight}</div>
+            <div class="pc-icon ${p.grad}"><i class="${p.icon}"></i></div>
+            ${highlightHtml}${badgeHtml}
+            <h1 class="pc-title">${p.title}</h1>
+            <p class="pc-desc">${p.desc}</p>
+            ${footer}
+          </div>
+        </div>`;
+    }
+
+    const root = document.getElementById('promo-cards');
+    PROMOS.forEach((p, i) => {
+      const layout = LAYOUT_CYCLE[i % LAYOUT_CYCLE.length];
+      const asset = ASSIGNMENT[i] || { img:'../assets/manicure-premium.png', pos:'center 50%' };
+      const capId = 'cap-promo-' + (i + 1);
+      const hashtags = `${HT_BASE}${p.extra ? ' ' + p.extra : ''}`;
+      const fullCaption = `${p.caption}\n\n${hashtags}`;
+
+      root.insertAdjacentHTML('beforeend', renderCard(p, i, layout, asset));
+      root.insertAdjacentHTML('beforeend', `
+        <div class="caption">
+          <div class="cap-head">
+            <div class="cap-title">
+              <i class="ri-instagram-line"></i>
+              Caption · ${p.section} · ${p.title} <span style="font-weight:500;color:#9ca3af;font-family:'DM Sans';font-size:14px;letter-spacing:.06em">· ${layout}</span>
+            </div>
+            <button class="copy-btn" data-target="${capId}">📋 Copiar</button>
+          </div>
+          <pre id="${capId}">${escapeHtml(fullCaption)}</pre>
+        </div>
+      `);
+    });
+
+    function escapeHtml(s){
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // Wrap hashtags (#…) in a span so se vean en rosa
+    document.querySelectorAll('.caption pre').forEach(pre => {
+      pre.innerHTML = pre.innerHTML.replace(
+        /(#[A-Za-zÀ-ÿ0-9_]+(?:\s+#[A-Za-zÀ-ÿ0-9_]+)*)\s*$/m,
+        '<span class="hashtags">$1</span>'
+      );
+    });
+
+    // Modo aislado: ?only=ID muestra solo ese lienzo (para Chrome headless screenshot)
+    (function isolate(){
+      const params = new URLSearchParams(location.search);
+      const only = params.get('only');
+      if (!only) return;
+      const target = document.getElementById(only);
+      if (!target) return;
+      document.body.classList.add('isolate');
+      target.classList.add('show');
+    })();
+
+    // Botón copiar (delegación global)
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      const target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      const text = target.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '✓ Copiado';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 1800);
+      });
+    });
+  </script>
+</body>
+</html>

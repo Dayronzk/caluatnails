@@ -1,0 +1,75 @@
+{
+  "outputDirectory": "out",
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/((?!assets/|api/).*)", "destination": "/index.html" }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "nailox.com" }],
+      "destination": "https://www.nailox.com/:path*",
+      "permanent": true
+    },
+
+    { "source": "/about-us", "destination": "/", "permanent": true },
+    { "source": "/about", "destination": "/", "permanent": true },
+    { "source": "/contact", "destination": "/contacto", "permanent": true },
+    { "source": "/contact-us", "destination": "/contacto", "permanent": true },
+    { "source": "/home", "destination": "/", "permanent": true },
+    { "source": "/index.php", "destination": "/", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/sample-page", "destination": "/", "permanent": true },
+    { "source": "/hello-world", "destination": "/blog", "permanent": true },
+
+    { "source": "/services", "destination": "/servicios", "permanent": true },
+    { "source": "/services/:slug*", "destination": "/servicios/:slug*", "permanent": true },
+    { "source": "/shop", "destination": "/tienda", "permanent": true },
+    { "source": "/shop/:path*", "destination": "/tienda/:path*", "permanent": true },
+    { "source": "/booking", "destination": "/reservar", "permanent": true },
+    { "source": "/book", "destination": "/reservar", "permanent": true },
+    { "source": "/team", "destination": "/profesionales", "permanent": true },
+    { "source": "/staff", "destination": "/profesionales", "permanent": true },
+    { "source": "/gift-card", "destination": "/tarjeta-regalo", "permanent": true },
+    { "source": "/gift-cards", "destination": "/tarjeta-regalo", "permanent": true },
+    { "source": "/promotions", "destination": "/promociones", "permanent": true },
+
+    { "source": "/blog/page/:n", "destination": "/blog", "permanent": true },
+    { "source": "/page/:n", "destination": "/", "permanent": true },
+    { "source": "/feed", "destination": "/blog", "permanent": true },
+    { "source": "/comments/feed", "destination": "/blog", "permanent": true },
+
+    { "source": "/wp-login.php", "destination": "/login", "permanent": true },
+    { "source": "/wp-admin", "destination": "/", "permanent": true },
+    { "source": "/wp-admin/:path*", "destination": "/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/assets/wifi-nailox.mobileconfig",
+      "headers": [
+        { "key": "Content-Type", "value": "application/x-apple-aspen-config; charset=utf-8" },
+        { "key": "Content-Disposition", "value": "attachment; filename=\"WiFi-NAILOX.mobileconfig\"" }
+      ]
+    },
+    {
+      "source": "/assets/nailox.vcf",
+      "headers": [
+        { "key": "Content-Type", "value": "text/vcard; charset=utf-8" },
+        { "key": "Content-Disposition", "value": "inline; filename=\"NAILOX.vcf\"" }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" },
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" }
+      ]
+    }
+  ]
+}

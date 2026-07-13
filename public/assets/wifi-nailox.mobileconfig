@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>AutoJoin</key>
+			<true/>
+			<key>CaptiveBypass</key>
+			<false/>
+			<key>EncryptionType</key>
+			<string>WPA</string>
+			<key>HIDDEN_NETWORK</key>
+			<false/>
+			<key>Password</key>
+			<string>3UFPX73FD8</string>
+			<key>PayloadDescription</key>
+			<string>Configura el acceso WiFi del salón NAILOX en el Eixample, Barcelona.</string>
+			<key>PayloadDisplayName</key>
+			<string>WiFi NAILOX Eixample</string>
+			<key>PayloadIdentifier</key>
+			<string>com.nailox.wifi.eixample.network</string>
+			<key>PayloadType</key>
+			<string>com.apple.wifi.managed</string>
+			<key>PayloadUUID</key>
+			<string>6DB2E7C9-0BC3-4D01-B4E5-D78B533A2061</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>ProxyType</key>
+			<string>None</string>
+			<key>SSID_STR</key>
+			<string>DIGIFIBRA-PLUS-4AE4</string>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Instala este perfil para conectarte automáticamente al WiFi del salón NAILOX. Puedes eliminarlo cuando quieras desde Ajustes → General → VPN y Dispositivos → Perfiles.</string>
+	<key>PayloadDisplayName</key>
+	<string>WiFi NAILOX Eixample</string>
+	<key>PayloadIdentifier</key>
+	<string>com.nailox.wifi.eixample</string>
+	<key>PayloadOrganization</key>
+	<string>NAILOX</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>3191D9BE-533D-46A2-AFDA-6E4C723175A6</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

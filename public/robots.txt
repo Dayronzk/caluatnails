@@ -1,0 +1,127 @@
+# ════════════════════════════════════════════
+#  NAILOX — robots.txt
+#  Manicura y Pedicura en Barcelona (Eixample)
+# ════════════════════════════════════════════
+
+# ─── Buscadores tradicionales ───
+User-agent: *
+Allow: /
+
+# Áreas privadas / funcionales (no indexar)
+Disallow: /admin/
+Disallow: /admin
+Disallow: /api/
+Disallow: /login
+Disallow: /registro
+Disallow: /mi-cuenta
+Disallow: /mi-cuenta/
+Disallow: /mis-citas
+Disallow: /mis-citas/
+Disallow: /recuperar
+Disallow: /recuperar-password
+Disallow: /reset-password
+Disallow: /nueva-contrasena
+Disallow: /confirmar-email
+Disallow: /certificado/verificar
+
+# Parámetros de tracking (evitar duplicados)
+Disallow: /*?utm_*
+Disallow: /*?ref=*
+Disallow: /*?fbclid=*
+Disallow: /*?gclid=*
+Disallow: /*?gbraid=*
+Disallow: /*?wbraid=*
+Disallow: /*?msclkid=*
+
+# Legacy WordPress / theme (devolveremos 410 además)
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /wp-json/
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+Disallow: /cgi-bin/
+Disallow: /category/
+Disallow: /tag/
+Disallow: /author/
+Disallow: /trackback
+Disallow: /feed
+Disallow: /comments/feed
+Disallow: /*?rivax-template=
+Disallow: /*&rivax-template=
+Disallow: /*?replytocom=
+Disallow: /*?attachment_id=
+Disallow: /*?p=
+Disallow: /*?s=
+Disallow: /search
+
+# Permitir explícitamente assets para que Google renderice bien la página
+Allow: /assets/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.woff2$
+
+# ─── Crawlers de IA (ChatGPT, Claude, Gemini, Perplexity) ───
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /mi-cuenta/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+# ─── Sitemap ───
+Sitemap: https://www.nailox.com/sitemap.xml
