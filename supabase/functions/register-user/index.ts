@@ -204,7 +204,7 @@ Deno.serve(async (req: Request) => {
 
     // ── Step 3: Generate confirmation link via Admin API
     // Load site_url from center_settings for the redirect
-    let siteUrl = "https://nailox.com";
+    let siteUrl = "https://caluatnails.com";
     try {
       const settingsRes = await fetch(
         `${supabaseUrl}/rest/v1/center_settings?id=eq.main&select=site_url`,
@@ -301,7 +301,7 @@ Deno.serve(async (req: Request) => {
           body: JSON.stringify({
             channel: "email",
             notification_type: "signup_confirmation",
-            title: "Confirma tu cuenta NAILOX",
+            title: "Confirma tu cuenta CALUATNAILS",
             body: `Destinatario: ${email}`,
             recipient_email: email,
             recipient_name: name || null,

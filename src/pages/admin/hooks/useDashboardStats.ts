@@ -226,7 +226,7 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
 
         professionalStats.push({
           id: 'global-total',
-          name: 'TOTAL NAILOX',
+          name: 'TOTAL CALUATNAILS',
           daily: professionalStats.reduce((acc, s) => acc + s.daily, 0),
           monthly: professionalStats.reduce((acc, s) => acc + s.monthly, 0),
           yearly: professionalStats.reduce((acc, s) => acc + s.yearly, 0),

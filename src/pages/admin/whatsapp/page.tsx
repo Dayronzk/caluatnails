@@ -99,7 +99,7 @@ export default function AdminWhatsAppPage() {
     booking_error_template: "",
     human_escalation_template: "",
     session_timeout_hours: 24,
-    bot_name: "Asistente de NAILOX",
+    bot_name: "Asistente de CALUATNAILS",
     summary_upsell_template: "",
     closing_template: ""
   });
@@ -128,7 +128,7 @@ export default function AdminWhatsAppPage() {
   const copySmsMessage = (phone: string, name: string) => {
     const firstName = (name || "").split(" ")[0].replace(/\(.*\)/, "").trim();
     const greeting = firstName && firstName !== "(sin" ? `Hola ${firstName}` : "Hola";
-    const msg = `${greeting}, te escribimos desde NAILOX 💅. Hemos actualizado nuestro WhatsApp. Si nos quieres escribir y te aparece que ya no estamos disponibles, borra el contacto +34 636 68 91 01 de tu agenda y vuélvelo a guardar. Después podrás escribirnos normalmente. ¡Te esperamos!`;
+    const msg = `${greeting}, te escribimos desde CALUATNAILS 💅. Hemos actualizado nuestro WhatsApp. Si nos quieres escribir y te aparece que ya no estamos disponibles, borra el contacto +34 636 68 91 01 de tu agenda y vuélvelo a guardar. Después podrás escribirnos normalmente. ¡Te esperamos!`;
     navigator.clipboard?.writeText(msg);
     setCopiedPhone(phone);
     setTimeout(() => setCopiedPhone(null), 2500);
@@ -319,7 +319,7 @@ export default function AdminWhatsAppPage() {
         booking_error_template: data.booking_error_template || "",
         human_escalation_template: data.human_escalation_template || "",
         session_timeout_hours: data.session_timeout_hours || 24,
-        bot_name: data.bot_name || "Asistente de NAILOX",
+        bot_name: data.bot_name || "Asistente de CALUATNAILS",
         summary_upsell_template: data.summary_upsell_template || "",
         closing_template: data.closing_template || ""
       });
@@ -909,7 +909,7 @@ export default function AdminWhatsAppPage() {
                         value={config.greeting}
                         onChange={(e) => setConfig({ ...config, greeting: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 min-h-[100px]"
-                        placeholder="Ej: ¡Hola! Soy el asistente de NAILOX..."
+                        placeholder="Ej: ¡Hola! Soy el asistente de CALUATNAILS..."
                       />
                     </div>
 
@@ -932,7 +932,7 @@ export default function AdminWhatsAppPage() {
                           value={config.bot_name}
                           onChange={(e) => setConfig({ ...config, bot_name: e.target.value })}
                           className="w-full px-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/20"
-                          placeholder="Ej: Asistente de NAILOX"
+                          placeholder="Ej: Asistente de CALUATNAILS"
                         />
                       </div>
                       <div>

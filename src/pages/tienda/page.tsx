@@ -48,8 +48,8 @@ function getProductImage(product: ShopProduct): string {
 export default function TiendaPage() {
   useSEO({
     title: "Tienda Profesional de Manicura — Kits, Geles y Herramientas",
-    description: "Compra productos profesionales de manicura y pedicura seleccionados por expertas NAILOX. Kits, geles, esmaltes y herramientas con envío a domicilio. Gana puntos con cada compra.",
-    ogTitle: "Tienda NAILOX — Todo lo que necesitas para brillar en cada cita",
+    description: "Compra productos profesionales de manicura y pedicura seleccionados por expertas CALUATNAILS. Kits, geles, esmaltes y herramientas con envío a domicilio. Gana puntos con cada compra.",
+    ogTitle: "Tienda CALUATNAILS — Todo lo que necesitas para brillar en cada cita",
     ogDescription: "Productos profesionales de manicura y pedicura. Kits completos, geles, esmaltes y herramientas. Gana puntos con cada compra y canjéalos en tus próximos pedidos.",
     ogImage: "https://readdy.ai/api/search-image?query=professional%20nail%20art%20products%20shop%20elegant%20flat%20lay%20rose%20gold%20marble%20surface%20beauty%20salon%20premium%20manicure%20supplies%20gel%20polish%20brushes%20tools%20luxury%20minimal%20branding&width=1200&height=630&seq=og-tienda-v1&orientation=landscape",
     ogUrl: "/tienda",
@@ -370,7 +370,7 @@ export default function TiendaPage() {
       {/* Footer */}
       <footer className="bg-rose-50 border-t border-rose-100 py-8 mt-10">
         <div className="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
-          <p>© 2025 NAILOX · <Link to="/privacidad" className="hover:text-rose-600 cursor-pointer">Privacidad</Link> · <Link to="/terminos" className="hover:text-rose-600 cursor-pointer">Términos</Link></p>
+          <p>© 2025 CALUATNAILS · <Link to="/privacidad" className="hover:text-rose-600 cursor-pointer">Privacidad</Link> · <Link to="/terminos" className="hover:text-rose-600 cursor-pointer">Términos</Link></p>
         </div>
       </footer>
 

@@ -79,7 +79,7 @@ const SECTIONS: { title: string; subtitle: string; promos: Promo[] }[] = [
     ],
   },
   {
-    title: "Sistema de puntos NAILOX",
+    title: "Sistema de puntos CALUATNAILS",
     subtitle: "Acumula puntos y canjéalos por descuentos",
     promos: [
       {
@@ -142,7 +142,7 @@ const SECTIONS: { title: string; subtitle: string; promos: Promo[] }[] = [
   },
   {
     title: "Programa de referidos",
-    subtitle: "Comparte NAILOX y gana puntos por cada amiga",
+    subtitle: "Comparte CALUATNAILS y gana puntos por cada amiga",
     promos: [
       {
         icon: "ri-user-add-line",
@@ -173,7 +173,7 @@ const SECTIONS: { title: string; subtitle: string; promos: Promo[] }[] = [
       {
         icon: "ri-gift-2-fill",
         title: "Tarjetas desde 10€",
-        desc: "Regala una experiencia NAILOX desde 10€ hasta 500€. Válidas durante 12 meses en cualquier servicio.",
+        desc: "Regala una experiencia CALUATNAILS desde 10€ hasta 500€. Válidas durante 12 meses en cualquier servicio.",
         highlight: "Desde 10€",
         gradient: "from-rose-400 to-pink-500",
         iconColor: "text-rose-500 bg-rose-50",
@@ -231,25 +231,25 @@ export default function PromocionesPage() {
   return (
     <>
       <Helmet>
-        <title>Promociones y Descuentos | NAILOX Barcelona</title>
+        <title>Promociones y Descuentos | CALUATNAILS Barcelona</title>
         <meta
           name="description"
-          content="Descubre todas las promociones de NAILOX: Club VIP con hasta 25% de ahorro, 5% descuento con tarjeta, hasta 500 pts gratis, programa de referidos y más."
+          content="Descubre todas las promociones de CALUATNAILS: Club VIP con hasta 25% de ahorro, 5% descuento con tarjeta, hasta 500 pts gratis, programa de referidos y más."
         />
-        <link rel="canonical" href="https://www.nailox.com/promociones" />
-        <meta property="og:site_name" content="NAILOX" />
+        <link rel="canonical" href="https://www.caluatnails.com/promociones" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.nailox.com/promociones" />
-        <meta property="og:title" content="Promociones y Descuentos | NAILOX Barcelona" />
-        <meta property="og:description" content="Descubre todas las promociones de NAILOX: Club VIP con hasta 25% de ahorro, 5% descuento con tarjeta, hasta 500 pts gratis, programa de referidos y más." />
-        <meta property="og:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta property="og:url" content="https://www.caluatnails.com/promociones" />
+        <meta property="og:title" content="Promociones y Descuentos | CALUATNAILS Barcelona" />
+        <meta property="og:description" content="Descubre todas las promociones de CALUATNAILS: Club VIP con hasta 25% de ahorro, 5% descuento con tarjeta, hasta 500 pts gratis, programa de referidos y más." />
+        <meta property="og:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="es_ES" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Promociones y Descuentos | NAILOX Barcelona" />
+        <meta name="twitter:title" content="Promociones y Descuentos | CALUATNAILS Barcelona" />
         <meta name="twitter:description" content="Club VIP con hasta 25% de ahorro, 5% descuento con tarjeta, hasta 500 pts gratis, programa de referidos y más." />
-        <meta name="twitter:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta name="twitter:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
       </Helmet>
 
       <Navbar />
@@ -265,7 +265,7 @@ export default function PromocionesPage() {
               Más beneficios <span className="text-rose-600">por ser cliente</span>
             </h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-              En NAILOX premiamos tu confianza con descuentos, puntos y experiencias únicas.
+              En CALUATNAILS premiamos tu confianza con descuentos, puntos y experiencias únicas.
               Aquí tienes todas las promociones que tenemos para ti.
             </p>
           </div>

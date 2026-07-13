@@ -20,7 +20,7 @@ const EVENT_LABELS: Record<string, { label: string; icon: string; color: string 
 function generateCode(userId: string): string {
   // Generate a short unique code from user id
   const base = userId.replace(/-/g, "").slice(0, 8).toUpperCase();
-  return `NAILOX-${base}`;
+  return `CALUATNAILS-${base}`;
 }
 
 export default function ReferralTab({ clientPhone, clientAccountId }: { clientPhone?: string; clientAccountId?: string }) {
@@ -121,7 +121,7 @@ export default function ReferralTab({ clientPhone, clientAccountId }: { clientPh
   };
 
   const shareWhatsApp = () => {
-    const msg = `¡Hola! Te recomiendo NAILOX 💅 Te dejo mi invitación personal: si reservas con este link, tu primer esmaltado semipermanente te sale por solo 5€ (precio normal 18€) ✨\n\n${invitaLink}`;
+    const msg = `¡Hola! Te recomiendo CALUATNAILS 💅 Te dejo mi invitación personal: si reservas con este link, tu primer esmaltado semipermanente te sale por solo 5€ (precio normal 18€) ✨\n\n${invitaLink}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -129,7 +129,7 @@ export default function ReferralTab({ clientPhone, clientAccountId }: { clientPh
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: "Te invito a NAILOX",
+          title: "Te invito a CALUATNAILS",
           text: "Tu primer esmaltado semipermanente por solo 5€ usando mi invitación 💅",
           url: invitaLink,
         });

@@ -8,7 +8,7 @@ const corsHeaders = {
 
 const getEmailHtml = (name: string, content: string, imageUrl?: string, subject?: string, logId?: string, baseUrl?: string) => {
   const trackingPixel = `${baseUrl}/functions/v1/track-campaign?type=open&logId=${logId}`;
-  const trackingClick = `${baseUrl}/functions/v1/track-campaign?type=click&logId=${logId}&url=https://nailox.com/reservar`;
+  const trackingClick = `${baseUrl}/functions/v1/track-campaign?type=click&logId=${logId}&url=https://caluatnails.com/reservar`;
 
   return `
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ const getEmailHtml = (name: string, content: string, imageUrl?: string, subject?
 </head>
 <body>
   <div class="container">
-    <div class="header"><a href="https://nailox.com" class="logo">NAILOX</a></div>
+    <div class="header"><a href="https://caluatnails.com" class="logo">CALUATNAILS</a></div>
     ${imageUrl ? `<img src="${imageUrl}" class="hero-image">` : ""}
     <div class="content">
       <div class="greeting">¡Hola ${name}! 💅</div>
@@ -41,7 +41,7 @@ const getEmailHtml = (name: string, content: string, imageUrl?: string, subject?
       </div>
     </div>
     <div class="footer">
-      <p>© 2024 Nailox Barcelona. Instagram: @nailox.bcn</p>
+      <p>© 2024 Caluatnails Barcelona. Instagram: @caluatnails.bcn</p>
       <img src="${trackingPixel}" width="1" height="1" style="display:none !important;">
     </div>
   </div>
@@ -243,7 +243,7 @@ serve(async (req) => {
             await fetch(`${baseUrl}/functions/v1/resend-email`, {
               method: "POST",
               headers: { "Content-Type": "application/json", "Authorization": `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}` },
-              body: JSON.stringify({ to: recipient.email, subject: campaign.subject || "Novedades de Nailox", html })
+              body: JSON.stringify({ to: recipient.email, subject: campaign.subject || "Novedades de Caluatnails", html })
             });
           }
         }

@@ -132,7 +132,7 @@ export async function ensureClientAccount(phone: string, name?: string, email?: 
   }
 
   const id = crypto.randomUUID();
-  const referral_code = "NAILOX-" + id.replace(/-/g, "").slice(0, 8).toUpperCase();
+  const referral_code = "CALUATNAILS-" + id.replace(/-/g, "").slice(0, 8).toUpperCase();
   const { data: created, error: insertErr } = await supabase
     .from("client_accounts")
     .insert({ id, phone: normalized, name: name ?? null, email: email?.trim() || null, referral_code })

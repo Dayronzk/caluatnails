@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
         const occupancyRate = totalSlots > 0 ? Math.round((totalOccupied / totalSlots) * 100) : 0
         const freeSlots = Math.max(0, totalSlots - totalOccupied)
 
-        title = `📊 Estado Nailox: ${dateStr}`
+        title = `📊 Estado Caluatnails: ${dateStr}`
         message = occupancyRate >= 90 
           ? `¡Día completo! 🌟 Mañana estamos al ${occupancyRate}% con ${totalOccupied} servicios.`
           : `Disponibilidad Mañana: ${occupancyRate}% ocupado. Quedan ${freeSlots} huecos libres. 💅`
@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
       } else {
         // Generic Automation logic
         title = auto.template?.title || auto.name
-        message = auto.template?.body || "Aviso automático del sistema Nailox 💅"
+        message = auto.template?.body || "Aviso automático del sistema Caluatnails 💅"
         url = auto.template?.url || "/admin"
         
         // Audience filtering

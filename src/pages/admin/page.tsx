@@ -53,7 +53,7 @@ function SkeletonCard() {
 export default function AdminDashboard() {
   useSEO({
     title: "Panel Admin",
-    description: "Panel de administración NAILOX.",
+    description: "Panel de administración CALUATNAILS.",
     canonical: "/admin",
     noindex: true,
   });

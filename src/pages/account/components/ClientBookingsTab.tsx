@@ -95,7 +95,7 @@ function buildCalendarLinks(booking: ClientBooking) {
   const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(title)}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&body=${encodeURIComponent(description)}`;
 
   const icsContent = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Nailox//Agenda//ES",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Caluatnails//Agenda//ES",
     "BEGIN:VEVENT",
     `DTSTART:${gcalStart}`, `DTEND:${gcalEnd}`,
     `SUMMARY:${title}`,

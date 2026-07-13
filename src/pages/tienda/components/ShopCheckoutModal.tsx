@@ -43,7 +43,7 @@ export default function ShopCheckoutModal({ product, qty, user, getImage, onClos
 
   const [deliveryType, setDeliveryType] = useState<DeliveryType>("pickup");
   const [centerInfo, setCenterInfo] = useState<CenterInfo>({
-    center_name: "NAILOX Centro",
+    center_name: "CALUATNAILS Centro",
     address: "Calle Ejemplo 123",
     city: "Madrid",
     postal_code: "28001",

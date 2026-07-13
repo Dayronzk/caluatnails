@@ -4,9 +4,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 export default function ContactoPage() {
   useSEO({
-    title: "Contacto — Soporte NAILOX",
+    title: "Contacto — Soporte CALUATNAILS",
     description: "¿Tienes dudas o necesitas ayuda? Escríbenos y te respondemos en menos de 24 horas. Soporte por email, WhatsApp e Instagram.",
-    ogTitle: "Contacta con NAILOX — Estamos aquí para ti",
+    ogTitle: "Contacta con CALUATNAILS — Estamos aquí para ti",
     ogDescription: "Nuestro equipo responde en menos de 24 horas. Escríbenos por email, WhatsApp o Instagram.",
     ogUrl: "/contacto",
     canonical: "/contacto",
@@ -59,9 +59,9 @@ export default function ContactoPage() {
   };
 
   const contactInfo = [
-    { icon: "ri-mail-line", label: "Correo electrónico", value: "hola@nailox.com" },
+    { icon: "ri-mail-line", label: "Correo electrónico", value: "hola@caluatnails.com" },
     { icon: "ri-time-line", label: "Horario de atención", value: "Lun – Vie, 9:00 – 18:00" },
-    { icon: "ri-instagram-line", label: "Instagram", value: "@nailox.oficial" },
+    { icon: "ri-instagram-line", label: "Instagram", value: "@caluatnails.oficial" },
     { icon: "ri-whatsapp-line", label: "WhatsApp", value: "+1 (555) 000-0000" },
   ];
 

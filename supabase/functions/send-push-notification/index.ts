@@ -121,7 +121,7 @@ serve(async (req) => {
         });
         const body = await encrypt(payload, sub.p256dh, sub.auth);
         const u = new URL(sub.endpoint);
-        const jwtPre = `${b64UrlEncode(enc.encode(JSON.stringify({ typ: 'JWT', alg: 'ES256' })))}.${b64UrlEncode(enc.encode(JSON.stringify({ aud: `${u.protocol}//${u.host}`, exp: Math.floor(Date.now() / 1000) + 3600, sub: 'https://www.nailox.com' })))}`;
+        const jwtPre = `${b64UrlEncode(enc.encode(JSON.stringify({ typ: 'JWT', alg: 'ES256' })))}.${b64UrlEncode(enc.encode(JSON.stringify({ aud: `${u.protocol}//${u.host}`, exp: Math.floor(Date.now() / 1000) + 3600, sub: 'https://www.caluatnails.com' })))}`;
         const jwt = `${jwtPre}.${b64UrlEncode(new Uint8Array(await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, privKey, enc.encode(jwtPre))))}`;
 
         const pushHeaders: Record<string, string> = {

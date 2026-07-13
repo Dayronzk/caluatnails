@@ -36,7 +36,7 @@ Deno.serve(async (req) => {
     CREATE TABLE IF NOT EXISTS public.whatsapp_bot_config (
       id TEXT PRIMARY KEY DEFAULT 'main',
       enabled BOOLEAN DEFAULT true,
-      greeting TEXT DEFAULT 'Hola! Soy el asistente de NAILOX 💅',
+      greeting TEXT DEFAULT 'Hola! Soy el asistente de CALUATNAILS 💅',
       system_prompt TEXT,
       respect_business_hours BOOLEAN DEFAULT false,
       max_failed_turns INT DEFAULT 3,

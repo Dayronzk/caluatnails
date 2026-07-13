@@ -31,7 +31,7 @@ const DEFAULT_URGENCY: UrgencyConfig = {
 const DEFAULT_PRESALE: PresaleConfig = {
   presale_mode: true,
   presale_badge_text: "🎉 PREVENTA ESPECIAL",
-  presale_hero_title: "Únete a la\nPreventa del\nCurso NAILOX",
+  presale_hero_title: "Únete a la\nPreventa del\nCurso CALUATNAILS",
   presale_hero_subtitle: "Sé de las primeras en acceder al curso completo de manicura y pedicura con precio especial de lanzamiento. +80 lecciones, certificación incluida.",
   presale_cta_text: "Reservar mi plaza",
   presale_buy_btn_text: "Unirme a la preventa",
@@ -43,7 +43,7 @@ const COURSE_IMG = "/assets/extensions-premium.png";
 const COURSE_IMG_FALLBACK = "/assets/manicure-exotic.jpg";
 
 function getCountdownTarget(hours: number): number {
-  const KEY = `nailox_offer_end_${hours}`;
+  const KEY = `caluatnails_offer_end_${hours}`;
   const stored = sessionStorage.getItem(KEY);
   if (stored) {
     const ts = parseInt(stored, 10);

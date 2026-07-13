@@ -83,7 +83,7 @@ export default function AdminClientesPage() {
     const getOrCreateClient = (email?: string | null, phone?: string | null, id?: string, name?: string, created?: string) => {
       const eKey = email?.toLowerCase().trim();
       const pKey = normalizePhone(phone);
-      const isBusinessEmail = eKey === "nailoxcom@gmail.com";
+      const isBusinessEmail = eKey === "caluatnailscom@gmail.com";
       
       // 1. Try to find existing client by system ID, email or phone
       let existing: Client | undefined = 
@@ -913,7 +913,7 @@ export default function AdminClientesPage() {
                               )}
                             </div>
                             <div className="flex flex-col gap-0.5">
-                              {client.email && !client.email.toLowerCase().includes("nailoxcom") && (
+                              {client.email && !client.email.toLowerCase().includes("caluatnailscom") && (
                                 <div className="flex items-center gap-1 text-[11px] text-gray-400">
                                   <Mail className="w-3.5 h-3.5" />
                                   {client.email}

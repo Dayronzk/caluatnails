@@ -11,7 +11,7 @@ import 'react-phone-number-input/style.css';
 export default function LoginPage() {
   useSEO({
     title: "Iniciar Sesión",
-    description: "Accede a tu cuenta NAILOX.",
+    description: "Accede a tu cuenta CALUATNAILS.",
     ogUrl: "/login",
     canonical: "/login",
     noindex: true,
@@ -107,9 +107,9 @@ export default function LoginPage() {
 
     // Store the linked profile ID so the account page can load unified data
     if (account?.auth_user_id) {
-      sessionStorage.setItem("nailox_linked_profile_id", account.auth_user_id);
+      sessionStorage.setItem("caluatnails_linked_profile_id", account.auth_user_id);
     } else {
-      sessionStorage.removeItem("nailox_linked_profile_id");
+      sessionStorage.removeItem("caluatnails_linked_profile_id");
     }
 
     // Ensure client_accounts record exists
@@ -117,7 +117,7 @@ export default function LoginPage() {
     const clientName = account?.name || bookings?.[0]?.client_name || "Cliente";
     await ensureClientAccount(finalPhone, clientName);
 
-    sessionStorage.setItem("nailox_client_phone", finalPhone);
+    sessionStorage.setItem("caluatnails_client_phone", finalPhone);
     setPhoneLoading(false);
     navigate(redirectTo !== "/" ? redirectTo : "/mi-cuenta");
   };
@@ -168,7 +168,7 @@ export default function LoginPage() {
                       <button 
                         type="button" 
                         onClick={() => {
-                          if (phoneInput) sessionStorage.setItem("nailox_client_phone", phoneInput);
+                          if (phoneInput) sessionStorage.setItem("caluatnails_client_phone", phoneInput);
                           navigate("/reservar");
                         }}
                         className="text-rose-600 font-semibold underline mt-1 cursor-pointer block"
@@ -203,7 +203,7 @@ export default function LoginPage() {
                 ¿Aún no tienes cita?{" "}
                 <button 
                   onClick={() => {
-                    if (phoneInput) sessionStorage.setItem("nailox_client_phone", phoneInput);
+                    if (phoneInput) sessionStorage.setItem("caluatnails_client_phone", phoneInput);
                     navigate("/reservar");
                   }}
                   className="text-rose-600 font-medium hover:text-rose-700 cursor-pointer underline decoration-rose-200 underline-offset-4"

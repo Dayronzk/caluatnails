@@ -139,7 +139,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            {/* NAILOX Logo */}
+            {/* CALUATNAILS Logo */}
             <div className="mb-4">
               <span className="font-playfair text-3xl font-bold tracking-widest text-white">
                 NAIL<span className="text-rose-400">OX</span>
@@ -222,7 +222,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/30 text-xs">
-            &copy; {new Date().getFullYear()} NAILOX — Curso Profesional de Manicura y Pedicura. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} CALUATNAILS — Curso Profesional de Manicura y Pedicura. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-4">
             <button

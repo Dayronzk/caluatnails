@@ -754,7 +754,7 @@ async function saveClientName(ctx: ToolContext, name: string): Promise<string> {
     // Create a client_account if there isn't one yet
     const normalizedPhone = ctx.clientPhone.startsWith("+") ? ctx.clientPhone : `+${ctx.clientPhone}`;
     const id = crypto.randomUUID();
-    const referral_code = "NAILOX-" + id.replace(/-/g, "").slice(0, 8).toUpperCase();
+    const referral_code = "CALUATNAILS-" + id.replace(/-/g, "").slice(0, 8).toUpperCase();
     await ctx.supabase.from("client_accounts").insert({
       id,
       phone: normalizedPhone,

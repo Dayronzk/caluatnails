@@ -14,7 +14,7 @@ export default function PushTab() {
   const [manualModal, setManualModal] = useState<{ title: string; body: string; url: string } | null>(null);
   const [form, setForm] = useState({
     name: "", title: "", body: "",
-    url: "https://www.nailox.com/mi-cuenta",
+    url: "https://www.caluatnails.com/mi-cuenta",
     target_segment: "all",
     template_id: "",
     scheduled_at: "",
@@ -56,7 +56,7 @@ export default function PushTab() {
     load();
     setShowWizard(false);
     setCreateError(null);
-    setForm({ name: "", title: "", body: "", url: "https://www.nailox.com/mi-cuenta", target_segment: "all", template_id: "", scheduled_at: "" });
+    setForm({ name: "", title: "", body: "", url: "https://www.caluatnails.com/mi-cuenta", target_segment: "all", template_id: "", scheduled_at: "" });
   };
 
   const handleSend = async (campaign: any) => {

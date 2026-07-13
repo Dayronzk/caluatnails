@@ -147,7 +147,7 @@ const NEIGHBORHOODS_TEXT = "Estamos en el corazón del Eixample, a 5 minutos a p
 const TESTIMONIALS = [
   {
     name: "Carla M.",
-    text: "Llevo más de un año yendo a NAILOX y mis uñas nunca habían estado tan sanas. El acabado es impecable y duran semanas perfectas.",
+    text: "Llevo más de un año yendo a CALUATNAILS y mis uñas nunca habían estado tan sanas. El acabado es impecable y duran semanas perfectas.",
     rating: 5,
     service: "Manicura con nivelación",
   },
@@ -282,9 +282,9 @@ export default function ServiceLandingPage() {
           "Reserva de tu próximo mantenimiento",
         ],
         painPoints: [
-          { q: "Mis extensiones se levantan a los pocos días", a: "Probablemente el problema es la preparación de la uña natural. En NAILOX usamos imprimante profesional y aplicamos capa por capa con curado correcto en cada paso." },
+          { q: "Mis extensiones se levantan a los pocos días", a: "Probablemente el problema es la preparación de la uña natural. En CALUATNAILS usamos imprimante profesional y aplicamos capa por capa con curado correcto en cada paso." },
           { q: "Nunca me hacen el relleno bien y se nota el escalón", a: "El secreto es el limado de transición. Usamos fresas profesionales para fundir el límite del crecimiento con la extensión existente. Acabado plano garantizado." },
-          { q: "Cada vez tengo la uña más fina", a: "Eso ocurre cuando la retirada se hace mal. Si vienes a NAILOX, valoramos antes si conviene retirar y empezar de cero para regenerar la uña natural." },
+          { q: "Cada vez tengo la uña más fina", a: "Eso ocurre cuando la retirada se hace mal. Si vienes a CALUATNAILS, valoramos antes si conviene retirar y empezar de cero para regenerar la uña natural." },
           { q: "¿Qué pasa si tengo una uña rota?", a: "La reparamos sin coste adicional dentro del mismo relleno. Aplicamos seda o tela de fibra antes de la reaplicación de gel." },
           { q: "Llevo mucho sin hacérmelas, ¿hay que empezar de cero?", a: "Depende. Si pasaron más de 5 semanas y hay levantamientos serios, sí conviene retirar. Te lo diremos en la primera revisión sin compromiso." },
         ] as PainPoint[],
@@ -296,7 +296,7 @@ export default function ServiceLandingPage() {
         ] as GalleryItem[],
         faqs: [
           { q: "¿Cada cuánto debo hacerme el relleno?", a: "Recomendamos hacer el relleno cada 3-4 semanas dependiendo del crecimiento de tu uña natural. Esperar más puede comprometer la estructura." },
-          { q: "¿Cuánto cuesta el relleno en Barcelona?", a: `En Nailox, el precio del relleno de gel/acrílico es de ${service.price}€ y la duración es de ${service.duration_minutes} minutos.` },
+          { q: "¿Cuánto cuesta el relleno en Barcelona?", a: `En Caluatnails, el precio del relleno de gel/acrílico es de ${service.price}€ y la duración es de ${service.duration_minutes} minutos.` },
           { q: "¿Hacéis relleno aunque me las hayan puesto en otro centro?", a: "Sí, atendemos rellenos de uñas hechas en otros salones siempre que el estado lo permita. Nuestras técnicas revisarán cada uña antes de empezar." },
           { q: "¿Puedo cambiar de color en el relleno?", a: "¡Por supuesto! El relleno incluye un cambio completo de color o diseño sin coste adicional." },
           { q: "¿Política de cancelación?", a: "Cancela o reprograma sin coste hasta 24h antes. Más tarde se aplica el 50% del anticipo." },
@@ -348,7 +348,7 @@ export default function ServiceLandingPage() {
         ] as GalleryItem[],
         faqs: [
           { q: "¿Cuánto duran las uñas en gel?", a: "Entre 3 y 4 semanas con un acabado impecable. Después recomendamos una sesión de relleno." },
-          { q: "¿Cuánto cuestan las uñas en gel en Barcelona?", a: `En Nailox cuestan ${service.price}€ con una duración de la sesión de ${service.duration_minutes} minutos.` },
+          { q: "¿Cuánto cuestan las uñas en gel en Barcelona?", a: `En Caluatnails cuestan ${service.price}€ con una duración de la sesión de ${service.duration_minutes} minutos.` },
           { q: "¿Las uñas en gel dañan mi uña natural?", a: "No, siempre que la retirada se haga correctamente. Usamos técnicas y productos profesionales que respetan la salud de la uña." },
           { q: "¿Puedo elegir cualquier longitud y forma?", a: "Sí. Asesoramos sobre la longitud y forma ideal según tu profesión, manos y preferencias estéticas." },
           { q: "¿Qué incluye el servicio de uñas en gel?", a: "Diagnóstico, materiales premium, esculpido completo, esmaltado básico o nail art simple, sellado y cuidado final." },
@@ -454,7 +454,7 @@ export default function ServiceLandingPage() {
         faqs: [
           { q: "¿Cada cuánto debo hacerme la pedicura?", a: "Recomendamos una sesión cada 4-6 semanas para mantener la salud y suavidad de tus pies durante todo el año." },
           { q: "¿Tratáis durezas y callosidades?", a: "Sí, nuestro proceso incluye la eliminación suave y profesional de durezas para dejar tus pies como nuevos." },
-          { q: `¿Cuánto cuesta la pedicura ${isSemiPerm ? "semipermanente" : "tradicional"} en Barcelona?`, a: `En Nailox cuesta ${service.price}€ y la sesión dura ${service.duration_minutes} minutos.` },
+          { q: `¿Cuánto cuesta la pedicura ${isSemiPerm ? "semipermanente" : "tradicional"} en Barcelona?`, a: `En Caluatnails cuesta ${service.price}€ y la sesión dura ${service.duration_minutes} minutos.` },
           { q: "¿Atendéis pedicura podológica?", a: "Realizamos pedicura estética. Si necesitas tratamiento de uñas encarnadas, hongos u otras patologías, te recomendamos un podólogo." },
           { q: isSemiPerm ? "¿Cuánto dura la pedicura semipermanente?" : "¿Cuánto dura la pedicura tradicional?", a: isSemiPerm ? "El esmaltado semipermanente en pedicura dura entre 3 y 4 semanas con brillo intacto." : "El esmalte tradicional aguanta entre 5 y 7 días dependiendo del uso." },
           { q: "¿Política de cancelación?", a: "Cancela hasta 24h antes sin coste. Después, 50% del anticipo." },
@@ -492,7 +492,7 @@ export default function ServiceLandingPage() {
           "Asesoramiento sobre cuándo volver",
         ],
         painPoints: [
-          { q: "El semipermanente se me desconcha a los pocos días", a: "Probablemente la preparación previa fue insuficiente. En NAILOX deshidratamos la uña técnicamente antes de la base. Garantizamos 3-4 semanas." },
+          { q: "El semipermanente se me desconcha a los pocos días", a: "Probablemente la preparación previa fue insuficiente. En CALUATNAILS deshidratamos la uña técnicamente antes de la base. Garantizamos 3-4 semanas." },
           { q: "Tengo las uñas finas y débiles después de quitarlo", a: "Eso pasa cuando se retira mal (raspando o tirando). Nosotras retiramos con producto profesional y técnica respetuosa. Tras 1-2 sesiones notarás la diferencia." },
           { q: "Quiero un acabado que dure de verdad", a: "Nuestro top coat es de larga duración profesional. Con el cuidado correcto, dura 4 semanas con brillo intacto." },
           { q: "No sé qué color me favorece", a: "Te asesoramos en consulta. Analizamos tu tono de piel para sugerir los nudes, rosas, rojos o tonos en tendencia que mejor te quedan." },
@@ -506,7 +506,7 @@ export default function ServiceLandingPage() {
         ] as GalleryItem[],
         faqs: [
           { q: "¿Cuánto dura el esmaltado semipermanente?", a: "Entre 3 y 4 semanas manteniendo el brillo y color como el primer día. Tras ese tiempo recomendamos retirar y reaplicar." },
-          { q: "¿Cuánto cuesta el esmaltado semipermanente en Barcelona?", a: `En Nailox cuesta ${service.price}€ y la sesión dura ${service.duration_minutes} minutos.` },
+          { q: "¿Cuánto cuesta el esmaltado semipermanente en Barcelona?", a: `En Caluatnails cuesta ${service.price}€ y la sesión dura ${service.duration_minutes} minutos.` },
           { q: "¿El semipermanente daña la uña?", a: "No, siempre que la retirada se haga correctamente con producto profesional. Nunca tirando o picando." },
           { q: "¿Puedo combinarlo con nail art?", a: "¡Sí! Podemos añadir diseños, francesas, glitter o pedrería. Pregúntanos al reservar." },
           { q: "¿Puedo llevar mi propio esmalte?", a: "Para semipermanente usamos siempre nuestros productos profesionales por compatibilidad con el secado LED y duración garantizada." },
@@ -560,7 +560,7 @@ export default function ServiceLandingPage() {
         faqs: [
           { q: "¿Qué es la manicura rusa o con nivelación?", a: "Es una técnica avanzada que usa torno para tratar la cutícula y aplica gel constructor para nivelar la placa ungueal, consiguiendo un acabado plano, simétrico y de larga duración." },
           { q: "¿Cuánto dura la manicura con nivelación?", a: "Entre 4 y 5 semanas con brillo y forma impecables. Más que un semipermanente convencional." },
-          { q: "¿Cuánto cuesta la manicura con nivelación en Barcelona?", a: `En Nailox cuesta ${service.price}€ y dura ${service.duration_minutes} minutos.` },
+          { q: "¿Cuánto cuesta la manicura con nivelación en Barcelona?", a: `En Caluatnails cuesta ${service.price}€ y dura ${service.duration_minutes} minutos.` },
           { q: "¿Es lo mismo manicura rusa que japonesa?", a: "No. La rusa usa torno y nivelación con gel. La japonesa usa polvo de sílice y se centra en hidratación natural sin esmaltado." },
           { q: "¿Es agresivo para la cutícula?", a: "No si lo hace una técnica formada. Nuestras profesionales tienen formación específica en manicura rusa para una experiencia 100% segura." },
           { q: "¿Política de cancelación?", a: "Cancela hasta 24h antes sin coste. Después, 50% del anticipo." },
@@ -658,7 +658,7 @@ export default function ServiceLandingPage() {
         { src: "/assets/manicure-premium.png", title: "Resultado de salón" },
       ] as GalleryItem[],
       faqs: [
-        { q: `¿Cuánto cuesta ${service.name} en Barcelona?`, a: `En Nailox cuesta ${service.price}€ y dura ${service.duration_minutes} minutos.` },
+        { q: `¿Cuánto cuesta ${service.name} en Barcelona?`, a: `En Caluatnails cuesta ${service.price}€ y dura ${service.duration_minutes} minutos.` },
         { q: "¿Dónde está el salón?", a: "En Carrer del Rosselló 497, Eixample, Barcelona. A 5 minutos de Sagrada Familia." },
       ],
     };
@@ -676,9 +676,9 @@ export default function ServiceLandingPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 text-center">
         <Helmet>
-          <title>Servicio no encontrado | NAILOX</title>
+          <title>Servicio no encontrado | CALUATNAILS</title>
           <meta name="robots" content="noindex, follow" />
-          <link rel="canonical" href="https://www.nailox.com/servicios" />
+          <link rel="canonical" href="https://www.caluatnails.com/servicios" />
         </Helmet>
         <h1 className="text-4xl font-black text-gray-900 mb-4">Servicio no encontrado</h1>
         <p className="text-gray-500 mb-8">Lo sentimos, el servicio que buscas no está disponible o ha cambiado de nombre.</p>
@@ -690,8 +690,8 @@ export default function ServiceLandingPage() {
   }
 
   const serviceData = getServiceData()!;
-  const canonicalUrl = `https://www.nailox.com/servicios/${slug}`;
-  const seoTitle = `${service.name} en Barcelona desde ${service.price}€ | NAILOX Eixample`;
+  const canonicalUrl = `https://www.caluatnails.com/servicios/${slug}`;
+  const seoTitle = `${service.name} en Barcelona desde ${service.price}€ | CALUATNAILS Eixample`;
   const seoDesc = `${service.name} profesional en Barcelona (Eixample). ${serviceData.intro.slice(0, 110)}... Reserva online — ${service.duration_minutes} min · desde ${service.price}€.`;
   const whatsappUrl = `https://wa.me/34636689101?text=${encodeURIComponent(`Hola, quiero reservar ${service.name}`)}`;
 
@@ -707,15 +707,15 @@ export default function ServiceLandingPage() {
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={seoDesc} />
-        <meta property="og:image" content={`https://www.nailox.com${serviceData.image}`} />
+        <meta property="og:image" content={`https://www.caluatnails.com${serviceData.image}`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content="NAILOX" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:description" content={seoDesc} />
-        <meta name="twitter:image" content={`https://www.nailox.com${serviceData.image}`} />
+        <meta name="twitter:image" content={`https://www.caluatnails.com${serviceData.image}`} />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -726,14 +726,14 @@ export default function ServiceLandingPage() {
                 "@id": `${canonicalUrl}#service`,
                 name: service.name,
                 description: serviceData.intro,
-                image: `https://www.nailox.com${serviceData.image}`,
+                image: `https://www.caluatnails.com${serviceData.image}`,
                 serviceType: serviceData.category,
                 category: serviceData.category,
                 url: canonicalUrl,
                 provider: {
                   "@type": "BeautySalon",
-                  "@id": "https://www.nailox.com/#salon",
-                  name: "NAILOX",
+                  "@id": "https://www.caluatnails.com/#salon",
+                  name: "CALUATNAILS",
                   telephone: "+34 636 68 91 01",
                   address: {
                     "@type": "PostalAddress",
@@ -763,8 +763,8 @@ export default function ServiceLandingPage() {
               {
                 "@type": "BreadcrumbList",
                 itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Inicio", item: "https://www.nailox.com/" },
-                  { "@type": "ListItem", position: 2, name: "Servicios", item: "https://www.nailox.com/servicios" },
+                  { "@type": "ListItem", position: 1, name: "Inicio", item: "https://www.caluatnails.com/" },
+                  { "@type": "ListItem", position: 2, name: "Servicios", item: "https://www.caluatnails.com/servicios" },
                   { "@type": "ListItem", position: 3, name: service.name, item: canonicalUrl },
                 ],
               },
@@ -852,7 +852,7 @@ export default function ServiceLandingPage() {
 
             <div className="order-1 lg:order-2 relative">
               <div className="aspect-[4/5] bg-gray-100 rounded-[3rem] overflow-hidden relative shadow-2xl">
-                <img src={serviceData.image} alt={`${service.name} profesional en NAILOX, salón de uñas en el Eixample de Barcelona`} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                <img src={serviceData.image} alt={`${service.name} profesional en CALUATNAILS, salón de uñas en el Eixample de Barcelona`} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                 <div className="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur-md p-6 rounded-3xl border border-white/50 shadow-lg">
                   <div className="flex items-center gap-4">
@@ -893,7 +893,7 @@ export default function ServiceLandingPage() {
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">{serviceData.intro}</p>
           <p className="text-lg text-gray-600 leading-relaxed mt-4">
-            En <strong>NAILOX</strong>, en pleno corazón del Eixample, combinamos <strong>técnica avanzada</strong>, <strong>higiene certificada</strong> y <strong>atención 100% personalizada</strong> para que cada cita sea una experiencia única.
+            En <strong>CALUATNAILS</strong>, en pleno corazón del Eixample, combinamos <strong>técnica avanzada</strong>, <strong>higiene certificada</strong> y <strong>atención 100% personalizada</strong> para que cada cita sea una experiencia única.
           </p>
           <p className="text-base text-gray-500 leading-relaxed mt-6 text-balance">
             {NEIGHBORHOODS_TEXT}
@@ -955,7 +955,7 @@ export default function ServiceLandingPage() {
               <h2 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
                 ¿Cómo es tu cita paso a paso?
               </h2>
-              <p className="text-gray-500">Sin sorpresas — esto es exactamente lo que vivirás en NAILOX.</p>
+              <p className="text-gray-500">Sin sorpresas — esto es exactamente lo que vivirás en CALUATNAILS.</p>
             </div>
             <div className="space-y-4">
               {serviceData.steps.map((step, i) => (
@@ -1048,7 +1048,7 @@ export default function ServiceLandingPage() {
                   <a href="https://www.instagram.com/gloria_hernandez_nails_studio/" target="_blank" rel="noopener noreferrer" className="font-bold text-gray-900 text-sm hover:text-rose-500 transition-colors">
                     gloria_hernandez_nails_studio
                   </a>
-                  <p className="text-xs text-gray-500">NAILOX · Barcelona</p>
+                  <p className="text-xs text-gray-500">CALUATNAILS · Barcelona</p>
                 </div>
               </div>
               <a
@@ -1072,7 +1072,7 @@ export default function ServiceLandingPage() {
                   rel="noopener noreferrer"
                   className="group relative aspect-square overflow-hidden bg-gray-100"
                 >
-                  <img src={g.src} alt={`${g.title} — ${service.name} NAILOX Barcelona Eixample`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                  <img src={g.src} alt={`${g.title} — ${service.name} CALUATNAILS Barcelona Eixample`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <i className="ri-instagram-line text-white text-3xl"></i>
                   </div>
@@ -1139,7 +1139,7 @@ export default function ServiceLandingPage() {
           <div className="text-center mb-12">
             <p className="text-xs font-bold text-rose-500 uppercase tracking-widest mb-3">Cómo llegar</p>
             <h2 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
-              Llegar a NAILOX es muy fácil
+              Llegar a CALUATNAILS es muy fácil
             </h2>
             <p className="text-gray-500">
               Estamos en <strong className="text-gray-900">Carrer del Rosselló 497, 08025 Barcelona</strong> — pleno Eixample, a 5 min de Sagrada Família.
@@ -1150,7 +1150,7 @@ export default function ServiceLandingPage() {
             {/* Mapa Google */}
             <div className="lg:col-span-3 rounded-3xl overflow-hidden border border-gray-100 shadow-sm bg-gray-100 min-h-[400px]">
               <iframe
-                title="Ubicación de NAILOX en Barcelona"
+                title="Ubicación de CALUATNAILS en Barcelona"
                 src="https://maps.google.com/maps?q=Carrer+del+Rossell%C3%B3+497,+08025+Barcelona&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
@@ -1282,7 +1282,7 @@ export default function ServiceLandingPage() {
               <h2 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
                 Servicios que también te pueden interesar
               </h2>
-              <p className="text-gray-500">Explora otras opciones de manicura y pedicura disponibles en NAILOX.</p>
+              <p className="text-gray-500">Explora otras opciones de manicura y pedicura disponibles en CALUATNAILS.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {(RELATED_SERVICES[serviceData.serviceKey] || RELATED_SERVICES.fallback).map(r => (
@@ -1314,7 +1314,7 @@ export default function ServiceLandingPage() {
             <h2 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
               Consejos sobre {service.name.toLowerCase()} en nuestro blog
             </h2>
-            <p className="text-gray-500">Guías y tendencias profesionales del equipo NAILOX.</p>
+            <p className="text-gray-500">Guías y tendencias profesionales del equipo CALUATNAILS.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {(RELATED_BLOG[serviceData.serviceKey] || RELATED_BLOG.fallback).map(b => (
@@ -1367,7 +1367,7 @@ export default function ServiceLandingPage() {
         <div className="font-playfair text-xl font-bold tracking-widest text-gray-900 mb-2">
           NAIL<span className="text-rose-400">OX</span>
         </div>
-        <p className="text-xs text-gray-400">© {new Date().getFullYear()} NAILOX Barcelona. Todos los derechos reservados.</p>
+        <p className="text-xs text-gray-400">© {new Date().getFullYear()} CALUATNAILS Barcelona. Todos los derechos reservados.</p>
       </footer>
     </div>
   );

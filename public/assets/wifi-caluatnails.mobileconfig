@@ -16,11 +16,11 @@
 			<key>Password</key>
 			<string>3UFPX73FD8</string>
 			<key>PayloadDescription</key>
-			<string>Configura el acceso WiFi del salón NAILOX en el Eixample, Barcelona.</string>
+			<string>Configura el acceso WiFi del salón CALUATNAILS en el Eixample, Barcelona.</string>
 			<key>PayloadDisplayName</key>
-			<string>WiFi NAILOX Eixample</string>
+			<string>WiFi CALUATNAILS Eixample</string>
 			<key>PayloadIdentifier</key>
-			<string>com.nailox.wifi.eixample.network</string>
+			<string>com.caluatnails.wifi.eixample.network</string>
 			<key>PayloadType</key>
 			<string>com.apple.wifi.managed</string>
 			<key>PayloadUUID</key>
@@ -34,13 +34,13 @@
 		</dict>
 	</array>
 	<key>PayloadDescription</key>
-	<string>Instala este perfil para conectarte automáticamente al WiFi del salón NAILOX. Puedes eliminarlo cuando quieras desde Ajustes → General → VPN y Dispositivos → Perfiles.</string>
+	<string>Instala este perfil para conectarte automáticamente al WiFi del salón CALUATNAILS. Puedes eliminarlo cuando quieras desde Ajustes → General → VPN y Dispositivos → Perfiles.</string>
 	<key>PayloadDisplayName</key>
-	<string>WiFi NAILOX Eixample</string>
+	<string>WiFi CALUATNAILS Eixample</string>
 	<key>PayloadIdentifier</key>
-	<string>com.nailox.wifi.eixample</string>
+	<string>com.caluatnails.wifi.eixample</string>
 	<key>PayloadOrganization</key>
-	<string>NAILOX</string>
+	<string>CALUATNAILS</string>
 	<key>PayloadRemovalDisallowed</key>
 	<false/>
 	<key>PayloadType</key>

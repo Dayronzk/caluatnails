@@ -26,7 +26,7 @@ export default function ManualSendModal({
   defaultTitle,
   defaultBody,
   defaultEmailBody,
-  defaultUrl = "https://www.nailox.com/mi-cuenta",
+  defaultUrl = "https://www.caluatnails.com/mi-cuenta",
   templateType = "custom",
   onClose,
 }: ManualSendModalProps) {
@@ -132,14 +132,14 @@ export default function ManualSendModal({
           const { error } = await supabase.functions.invoke("resend-email", {
             body: { 
               type: templateType, 
-              to: { email: testRecipient, name: "Prueba Nailox" },
+              to: { email: testRecipient, name: "Prueba Caluatnails" },
               data: { 
                 title,
                 customHtml: emailBody,
                 clientName: "Prueba", 
                 bookingTime: "10:00", 
                 bookingDate: "2024-05-10", 
-                professionalName: "Nailox Team", 
+                professionalName: "Caluatnails Team", 
                 services: ["Servicio de Prueba"], 
                 totalPrice: "0.00", 
                 points: "100", 

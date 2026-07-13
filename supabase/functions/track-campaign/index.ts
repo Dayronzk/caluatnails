@@ -39,7 +39,7 @@ serve(async (req) => {
       return new Response(pixel, { headers: { "Content-Type": "image/gif" } });
     } else {
       // Redirect to target URL
-      return Response.redirect(targetUrl || "https://nailox.com", 302);
+      return Response.redirect(targetUrl || "https://caluatnails.com", 302);
     }
 
   } catch (err) {

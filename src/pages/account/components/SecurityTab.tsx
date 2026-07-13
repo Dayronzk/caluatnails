@@ -84,7 +84,7 @@ export default function SecurityTab({ clientAccount }: Props) {
       .update({ phone_login_enabled: false, updated_at: new Date().toISOString() })
       .eq("id", clientAccount.id);
 
-    sessionStorage.removeItem("nailox_client_phone");
+    sessionStorage.removeItem("caluatnails_client_phone");
     navigate("/login");
   };
 

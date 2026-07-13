@@ -371,7 +371,7 @@ BEGIN
 
             IF v_client_id IS NULL THEN
               v_client_id := gen_random_uuid();
-              v_ref_code := 'NAILOX-' || upper(replace(substring(v_client_id::text, 1, 8), '-', ''));
+              v_ref_code := 'CALUATNAILS-' || upper(replace(substring(v_client_id::text, 1, 8), '-', ''));
               IF NEW.client_phone LIKE '+%' THEN
                 v_insert_phone := NEW.client_phone;
               ELSIF length(v_clean_phone) = 9 THEN
@@ -496,7 +496,7 @@ ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "public"."import_whatsapp_contacts"("p_contacts" "jsonb", "p_source" "text") RETURNS TABLE("out_action" "text", "out_phone" "text", "out_name" "text")
     LANGUAGE "plpgsql" SECURITY DEFINER
-    AS $$ DECLARE r record; v_last9 text; v_existing_id uuid; v_existing_name text; v_id uuid; v_ref text; BEGIN FOR r IN SELECT * FROM jsonb_to_recordset(p_contacts) AS x(phone text, name text) LOOP IF r.phone IS NULL OR r.phone = '' THEN CONTINUE; END IF; v_last9 := RIGHT(REGEXP_REPLACE(r.phone, '[^0-9]', '', 'g'), 9); SELECT ca.id, ca.name INTO v_existing_id, v_existing_name FROM client_accounts ca WHERE ca.phone ILIKE '%' || v_last9 LIMIT 1; IF v_existing_id IS NOT NULL THEN IF v_existing_name IS NULL OR TRIM(v_existing_name) = '' THEN UPDATE client_accounts SET name = TRIM(r.name), updated_at = NOW() WHERE id = v_existing_id; RETURN QUERY SELECT 'updated_name'::text, r.phone, TRIM(r.name); ELSE RETURN QUERY SELECT 'skipped'::text, r.phone, v_existing_name; END IF; ELSE v_id := gen_random_uuid(); v_ref := 'NAILOX-' || UPPER(REPLACE(SUBSTRING(v_id::text, 1, 8), '-', '')); BEGIN INSERT INTO client_accounts (id, phone, name, points, referral_code, import_source) VALUES (v_id, r.phone, NULLIF(TRIM(r.name), ''), 0, v_ref, p_source); RETURN QUERY SELECT 'inserted'::text, r.phone, TRIM(r.name); EXCEPTION WHEN unique_violation THEN RETURN QUERY SELECT 'conflict'::text, r.phone, TRIM(r.name); END; END IF; END LOOP; END; $$;
+    AS $$ DECLARE r record; v_last9 text; v_existing_id uuid; v_existing_name text; v_id uuid; v_ref text; BEGIN FOR r IN SELECT * FROM jsonb_to_recordset(p_contacts) AS x(phone text, name text) LOOP IF r.phone IS NULL OR r.phone = '' THEN CONTINUE; END IF; v_last9 := RIGHT(REGEXP_REPLACE(r.phone, '[^0-9]', '', 'g'), 9); SELECT ca.id, ca.name INTO v_existing_id, v_existing_name FROM client_accounts ca WHERE ca.phone ILIKE '%' || v_last9 LIMIT 1; IF v_existing_id IS NOT NULL THEN IF v_existing_name IS NULL OR TRIM(v_existing_name) = '' THEN UPDATE client_accounts SET name = TRIM(r.name), updated_at = NOW() WHERE id = v_existing_id; RETURN QUERY SELECT 'updated_name'::text, r.phone, TRIM(r.name); ELSE RETURN QUERY SELECT 'skipped'::text, r.phone, v_existing_name; END IF; ELSE v_id := gen_random_uuid(); v_ref := 'CALUATNAILS-' || UPPER(REPLACE(SUBSTRING(v_id::text, 1, 8), '-', '')); BEGIN INSERT INTO client_accounts (id, phone, name, points, referral_code, import_source) VALUES (v_id, r.phone, NULLIF(TRIM(r.name), ''), 0, v_ref, p_source); RETURN QUERY SELECT 'inserted'::text, r.phone, TRIM(r.name); EXCEPTION WHEN unique_violation THEN RETURN QUERY SELECT 'conflict'::text, r.phone, TRIM(r.name); END; END IF; END LOOP; END; $$;
 
 
 ALTER FUNCTION "public"."import_whatsapp_contacts"("p_contacts" "jsonb", "p_source" "text") OWNER TO "postgres";
@@ -1108,7 +1108,7 @@ ALTER TABLE "public"."campaign_logs" OWNER TO "postgres";
 
 CREATE TABLE IF NOT EXISTS "public"."center_settings" (
     "id" "text" DEFAULT 'main'::"text" NOT NULL,
-    "center_name" "text" DEFAULT 'NAILOX Centro'::"text" NOT NULL,
+    "center_name" "text" DEFAULT 'CALUATNAILS Centro'::"text" NOT NULL,
     "address" "text" DEFAULT 'Calle Ejemplo 123, Madrid, España'::"text" NOT NULL,
     "city" "text" DEFAULT 'Madrid'::"text" NOT NULL,
     "postal_code" "text" DEFAULT '28001'::"text" NOT NULL,
@@ -1120,14 +1120,14 @@ CREATE TABLE IF NOT EXISTS "public"."center_settings" (
     "instructor_name" "text" DEFAULT 'María González'::"text",
     "instructor_title" "text" DEFAULT 'Instructora Principal'::"text",
     "course_title" "text" DEFAULT 'Manicura y Nail Art Profesional'::"text",
-    "email_brand_name" "text" DEFAULT 'NAILOX'::"text",
-    "site_url" "text" DEFAULT 'https://nailox.com'::"text",
-    "contact_email" "text" DEFAULT 'hola@nailox.com'::"text",
-    "sender_email" "text" DEFAULT 'noreply@nailox.com'::"text",
+    "email_brand_name" "text" DEFAULT 'CALUATNAILS'::"text",
+    "site_url" "text" DEFAULT 'https://caluatnails.com'::"text",
+    "contact_email" "text" DEFAULT 'hola@caluatnails.com'::"text",
+    "sender_email" "text" DEFAULT 'noreply@caluatnails.com'::"text",
     "email_footer_text" "text" DEFAULT 'Curso Profesional de Manicura y Pedicura'::"text",
     "email_header_color" "text" DEFAULT '#f43f5e'::"text",
     "email_header_color2" "text" DEFAULT '#fb7185'::"text",
-    "email_logo_text" "text" DEFAULT 'NAILOX'::"text",
+    "email_logo_text" "text" DEFAULT 'CALUATNAILS'::"text",
     "email_accent_color" "text" DEFAULT '#f43f5e'::"text",
     "email_bg_color" "text" DEFAULT '#fdf2f4'::"text",
     "email_card_bg" "text" DEFAULT '#fff1f2'::"text",
@@ -1617,7 +1617,7 @@ CREATE TABLE IF NOT EXISTS "public"."notification_campaigns" (
     "template_id" "uuid",
     "title" "text" NOT NULL,
     "body" "text" NOT NULL,
-    "url" "text" DEFAULT 'https://www.nailox.com'::"text",
+    "url" "text" DEFAULT 'https://www.caluatnails.com'::"text",
     "target_segment" "text" DEFAULT 'all'::"text",
     "scheduled_at" timestamp with time zone,
     "status" "text" DEFAULT 'draft'::"text",
@@ -1671,7 +1671,7 @@ CREATE TABLE IF NOT EXISTS "public"."notification_templates" (
     "title" "text" NOT NULL,
     "body" "text" NOT NULL,
     "icon" "text",
-    "url" "text" DEFAULT 'https://www.nailox.com/reservar'::"text",
+    "url" "text" DEFAULT 'https://www.caluatnails.com/reservar'::"text",
     "is_active" boolean DEFAULT true,
     "trigger_hours" numeric,
     "created_at" timestamp with time zone DEFAULT "now"(),
@@ -1999,7 +1999,7 @@ ALTER VIEW "public"."unified_points_transactions" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."whatsapp_bot_config" (
     "id" "text" DEFAULT 'main'::"text" NOT NULL,
     "enabled" boolean DEFAULT true,
-    "greeting" "text" DEFAULT 'Hola! Soy el asistente de NAILOX 💅'::"text",
+    "greeting" "text" DEFAULT 'Hola! Soy el asistente de CALUATNAILS 💅'::"text",
     "system_prompt" "text",
     "respect_business_hours" boolean DEFAULT false,
     "max_failed_turns" integer DEFAULT 3,
@@ -2012,7 +2012,7 @@ CREATE TABLE IF NOT EXISTS "public"."whatsapp_bot_config" (
     "booking_error_template" "text",
     "human_escalation_template" "text",
     "session_timeout_hours" integer DEFAULT 24,
-    "bot_name" "text" DEFAULT 'Asistente de NAILOX'::"text",
+    "bot_name" "text" DEFAULT 'Asistente de CALUATNAILS'::"text",
     "summary_upsell_template" "text",
     "closing_template" "text"
 );

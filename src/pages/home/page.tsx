@@ -10,7 +10,7 @@ import RecursosDescargables from "./components/RecursosDescargables";
 import EvaluacionesAutomaticas from "./components/EvaluacionesAutomaticas";
 import ForoDiscusion from "./components/ForoDiscusion";
 import Footer from "./components/Footer";
-import MetodoNailox from "./components/MetodoNailox";
+import MetodoCaluatnails from "./components/MetodoCaluatnails";
 import ServiciosHome from "./components/ServiciosHome";
 import FloatingCart from "./components/FloatingCart";
 import KitPopup from "./components/KitPopup";
@@ -38,10 +38,10 @@ export default function Home() {
   useSEO({
     title: "Manicura y Pedicura Profesional en Barcelona (Eixample)",
     description: "Salón premium de manicura y pedicura en el Eixample, Barcelona. Especialistas en manicura con nivelación, esmaltado semipermanente, uñas en gel y pedicura spa. Reserva tu cita online.",
-    ogTitle: "NAILOX — Manicura y Pedicura Profesional en Barcelona",
+    ogTitle: "CALUATNAILS — Manicura y Pedicura Profesional en Barcelona",
     ogDescription: "Salón premium en el Eixample, Barcelona. Reserva tu cita online: manicura con nivelación, semipermanente, uñas en gel y pedicura.",
     canonical: "/",
-    ogImage: "https://www.nailox.com/assets/manicure-premium.png",
+    ogImage: "https://www.caluatnails.com/assets/manicure-premium.png",
     ogUrl: "/",
   });
 
@@ -113,7 +113,7 @@ export default function Home() {
   useEffect(() => {
     const urlRef = searchParams.get("ref");
     if (urlRef) {
-      sessionStorage.setItem("nailox_ref", urlRef);
+      sessionStorage.setItem("caluatnails_ref", urlRef);
     }
   }, [searchParams]);
 
@@ -127,7 +127,7 @@ export default function Home() {
       cart.clearCart();
 
       // Complete referral for course purchase
-      const storedRef = sessionStorage.getItem("nailox_ref");
+      const storedRef = sessionStorage.getItem("caluatnails_ref");
       if (storedRef && sessionId) {
         (async () => {
           const { data: referrer } = await supabase
@@ -177,7 +177,7 @@ export default function Home() {
                   .eq("id", referrer.id);
               }
 
-              sessionStorage.removeItem("nailox_ref");
+              sessionStorage.removeItem("caluatnails_ref");
             }
           }
         })();
@@ -238,7 +238,7 @@ export default function Home() {
 
       {/* Secondary Focus: Academy */}
       <div id="academia" className="scroll-mt-20">
-        <MetodoNailox />
+        <MetodoCaluatnails />
         <Introduccion />
         <TecnicasAvanzadas addItem={cart.addItem} isInCart={cart.isInCart} />
         <PracticaInteractiva />

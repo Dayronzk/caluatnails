@@ -37,21 +37,21 @@ export default function AllServicesPage() {
   return (
     <div className="min-h-screen bg-white font-inter">
       <Helmet>
-        <title>Servicios de Manicura y Pedicura en Barcelona | NAILOX Eixample</title>
+        <title>Servicios de Manicura y Pedicura en Barcelona | CALUATNAILS Eixample</title>
         <meta name="description" content="Catálogo completo de servicios de manicura y pedicura en Barcelona: manicura rusa con nivelación, esmaltado semipermanente, uñas en gel, pedicura spa y más. Reserva online en el Eixample." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href="https://www.nailox.com/servicios" />
+        <link rel="canonical" href="https://www.caluatnails.com/servicios" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.nailox.com/servicios" />
-        <meta property="og:title" content="Servicios de Manicura y Pedicura en Barcelona | NAILOX Eixample" />
+        <meta property="og:url" content="https://www.caluatnails.com/servicios" />
+        <meta property="og:title" content="Servicios de Manicura y Pedicura en Barcelona | CALUATNAILS Eixample" />
         <meta property="og:description" content="Manicura rusa, semipermanente, uñas en gel, pedicura spa y más. Reserva online tu cita en el Eixample, Barcelona." />
-        <meta property="og:image" content="https://www.nailox.com/og-home.jpg" />
+        <meta property="og:image" content="https://www.caluatnails.com/og-home.jpg" />
         <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content="NAILOX" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Servicios de Manicura y Pedicura en Barcelona | NAILOX" />
+        <meta name="twitter:title" content="Servicios de Manicura y Pedicura en Barcelona | CALUATNAILS" />
         <meta name="twitter:description" content="Catálogo completo de manicura y pedicura en el Eixample, Barcelona." />
-        <meta name="twitter:image" content="https://www.nailox.com/og-home.jpg" />
+        <meta name="twitter:image" content="https://www.caluatnails.com/og-home.jpg" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -60,24 +60,24 @@ export default function AllServicesPage() {
               {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.nailox.com/" },
-                  { "@type": "ListItem", "position": 2, "name": "Servicios", "item": "https://www.nailox.com/servicios" }
+                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.caluatnails.com/" },
+                  { "@type": "ListItem", "position": 2, "name": "Servicios", "item": "https://www.caluatnails.com/servicios" }
                 ]
               },
               {
                 "@type": "CollectionPage",
                 "name": "Servicios de manicura y pedicura en Barcelona",
-                "description": "Catálogo completo de servicios de uñas en el salón NAILOX, Eixample, Barcelona.",
-                "url": "https://www.nailox.com/servicios",
+                "description": "Catálogo completo de servicios de uñas en el salón CALUATNAILS, Eixample, Barcelona.",
+                "url": "https://www.caluatnails.com/servicios",
                 "inLanguage": "es",
-                "isPartOf": { "@id": "https://www.nailox.com/#website" },
+                "isPartOf": { "@id": "https://www.caluatnails.com/#website" },
                 "mainEntity": {
                   "@type": "ItemList",
                   "numberOfItems": services.length,
                   "itemListElement": services.map((s, i) => ({
                     "@type": "ListItem",
                     "position": i + 1,
-                    "url": `https://www.nailox.com/servicios/${toSlug(s.name)}`,
+                    "url": `https://www.caluatnails.com/servicios/${toSlug(s.name)}`,
                     "name": s.name
                   }))
                 }
@@ -171,10 +171,10 @@ export default function AllServicesPage() {
         <section className="max-w-4xl mx-auto px-6 mt-20 prose prose-rose">
           <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">El mejor salón de uñas en Barcelona</h2>
           <p className="text-lg text-gray-600 mb-6">
-            En <strong>NAILOX</strong> llevamos años perfeccionando cada técnica de manicura y pedicura para ofrecerte un servicio profesional, seguro y de larga duración. Nuestro salón está en <strong>Carrer del Rosselló 497</strong>, en pleno <strong>Eixample de Barcelona</strong>, a apenas 5 minutos andando de la Sagrada Familia y muy cerca de Gràcia, El Born, Sant Andreu y Sant Martí.
+            En <strong>CALUATNAILS</strong> llevamos años perfeccionando cada técnica de manicura y pedicura para ofrecerte un servicio profesional, seguro y de larga duración. Nuestro salón está en <strong>Carrer del Rosselló 497</strong>, en pleno <strong>Eixample de Barcelona</strong>, a apenas 5 minutos andando de la Sagrada Familia y muy cerca de Gràcia, El Born, Sant Andreu y Sant Martí.
           </p>
           <p className="text-lg text-gray-600 mb-10">
-            Trabajamos con marcas profesionales, técnicas avanzadas como la <strong>manicura rusa con torno</strong> y <strong>nivelación con gel constructor</strong>, y nuestras profesionales están certificadas por la <strong>Academia NAILOX</strong>, donde se forman cada año más de 3.200 manicuristas en toda España.
+            Trabajamos con marcas profesionales, técnicas avanzadas como la <strong>manicura rusa con torno</strong> y <strong>nivelación con gel constructor</strong>, y nuestras profesionales están certificadas por la <strong>Academia CALUATNAILS</strong>, donde se forman cada año más de 3.200 manicuristas en toda España.
           </p>
 
           <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">Tipos de manicura y pedicura disponibles</h2>
@@ -205,7 +205,7 @@ export default function AllServicesPage() {
             </div>
           </div>
 
-          <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">¿Por qué elegir NAILOX?</h2>
+          <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">¿Por qué elegir CALUATNAILS?</h2>
           <ul className="space-y-3 text-lg text-gray-600 mb-10">
             <li>✓ <strong>Profesionales certificadas</strong> con formación continua en técnicas internacionales.</li>
             <li>✓ <strong>Productos de marca premium</strong>: gel hipoalergénico, esmaltes profesionales y materiales de primera.</li>

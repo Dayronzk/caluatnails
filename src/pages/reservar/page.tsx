@@ -33,11 +33,11 @@ function buildCalendarLinks(booking: {
   location?: string;
 }) {
   const servicesList = booking.services.join(", ");
-  const title = `Cita Nailox: ${servicesList}`;
-  const description = `💅 Tu cita en Nailox\n\nServicios: ${servicesList}\nTotal: €${Number(booking.totalPrice).toFixed(2)}\n\n¡Te esperamos!`;
-  const location = booking.location && booking.location !== "Salón NAILOX"
-    ? `Nailox - ${booking.location}`
-    : "Nailox - Carrer del Rosselló, 497, Eixample, 08025 Barcelona";
+  const title = `Cita Caluatnails: ${servicesList}`;
+  const description = `💅 Tu cita en Caluatnails\n\nServicios: ${servicesList}\nTotal: €${Number(booking.totalPrice).toFixed(2)}\n\n¡Te esperamos!`;
+  const location = booking.location && booking.location !== "Salón CALUATNAILS"
+    ? `Caluatnails - ${booking.location}`
+    : "Caluatnails - Carrer del Rosselló, 497, Eixample, 08025 Barcelona";
 
   const [year, month, day] = booking.date.split("-").map(Number);
   const [hour, minute] = booking.time.split(":").map(Number);
@@ -55,7 +55,7 @@ function buildCalendarLinks(booking: {
   const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(title)}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
 
   const icsContent = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Nailox//Agenda//ES",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Caluatnails//Agenda//ES",
     "BEGIN:VEVENT",
     `DTSTART:${gcalStart}`, `DTEND:${gcalEnd}`,
     `SUMMARY:${title}`,
@@ -91,8 +91,8 @@ export interface Companion {
 export default function ReservarPage() {
   useSEO({
     title: "Reservar Cita de Manicura y Pedicura Profesional",
-    description: "Reserva tu cita de manicura o pedicura con profesionales certificadas NAILOX. Elige servicio, fecha y hora en minutos. Pago seguro del anticipo online.",
-    ogTitle: "Reserva tu Cita — Manicura y Pedicura Profesional NAILOX",
+    description: "Reserva tu cita de manicura o pedicura con profesionales certificadas CALUATNAILS. Elige servicio, fecha y hora en minutos. Pago seguro del anticipo online.",
+    ogTitle: "Reserva tu Cita — Manicura y Pedicura Profesional CALUATNAILS",
     ogDescription: "Agenda tu cita con profesionales certificadas. Selecciona el servicio, elige tu horario y paga el anticipo de forma segura. ¡Así de fácil!",
     ogImage: "https://readdy.ai/api/search-image?query=elegant%20nail%20salon%20appointment%20booking%20calendar%20professional%20manicure%20pedicure%20beauty%20spa%20rose%20gold%20warm%20tones%20luxury%20minimal%20clean%20aesthetic%20hands%20nails&width=1200&height=630&seq=og-reservar-v1&orientation=landscape",
     ogUrl: "/reservar",
@@ -204,8 +204,8 @@ export default function ReservarPage() {
     setCompanions(updatedCompanions);
   };
 
-  const [clientPhone, setClientPhone] = useState(() => sessionStorage.getItem("nailox_client_phone") ?? "");
-  const [phoneVerified, setPhoneVerified] = useState(() => !!sessionStorage.getItem("nailox_client_phone"));
+  const [clientPhone, setClientPhone] = useState(() => sessionStorage.getItem("caluatnails_client_phone") ?? "");
+  const [phoneVerified, setPhoneVerified] = useState(() => !!sessionStorage.getItem("caluatnails_client_phone"));
   const [phoneInput, setPhoneInput] = useState("");
   const [nameStep, setNameStep] = useState(false);
   const [clientNameInput, setClientNameInput] = useState("");
@@ -260,7 +260,7 @@ export default function ReservarPage() {
 
       if (existing && existing.name && existing.name.trim()) {
         // If returning customer with a name, save and skip to services
-        sessionStorage.setItem("nailox_client_phone", normalized);
+        sessionStorage.setItem("caluatnails_client_phone", normalized);
         setClientPhone(normalized);
         setClientData(prev => ({ ...prev, name: existing.name, phone: normalized }));
         setPhoneVerified(true);
@@ -287,7 +287,7 @@ export default function ReservarPage() {
       // Ensure client account is created/updated with the name
       await ensureClientAccount(normalizedPhone, clientNameInput.trim());
 
-      sessionStorage.setItem("nailox_client_phone", normalizedPhone);
+      sessionStorage.setItem("caluatnails_client_phone", normalizedPhone);
       setClientPhone(normalizedPhone);
       setClientData(prev => ({ ...prev, name: clientNameInput.trim(), phone: normalizedPhone }));
       setPhoneVerified(true);
@@ -305,9 +305,9 @@ export default function ReservarPage() {
     const urlRef = searchParams.get("ref");
     if (urlRef) {
       setRefCode(urlRef);
-      sessionStorage.setItem("nailox_ref", urlRef);
+      sessionStorage.setItem("caluatnails_ref", urlRef);
     } else {
-      const stored = sessionStorage.getItem("nailox_ref");
+      const stored = sessionStorage.getItem("caluatnails_ref");
       if (stored) setRefCode(stored);
     }
   }, [searchParams]);
@@ -353,7 +353,7 @@ export default function ReservarPage() {
     const bookingId = searchParams.get("booking");
     if (paymentStatus === "success" && bookingId) {
       fetchPoints();
-      sessionStorage.removeItem("nailox_ref");
+      sessionStorage.removeItem("caluatnails_ref");
       
       const fetchClientAndBooking = async () => {
         const ids = bookingId.split(",");
@@ -871,7 +871,7 @@ export default function ReservarPage() {
       
       // Update local points balance
       fetchPoints();
-      sessionStorage.removeItem("nailox_ref");
+      sessionStorage.removeItem("caluatnails_ref");
 
       const groupId = "group-" + crypto.randomUUID();
       await supabase.from("bookings").update({ stripe_session_id: groupId }).eq("id", booking.id);
@@ -951,7 +951,7 @@ export default function ReservarPage() {
       
       // Update local points balance
       fetchPoints();
-      sessionStorage.removeItem("nailox_ref");
+      sessionStorage.removeItem("caluatnails_ref");
 
       const groupId = "group-" + crypto.randomUUID();
       await supabase.from("bookings").update({ stripe_session_id: groupId }).eq("id", booking.id);
@@ -1024,7 +1024,7 @@ export default function ReservarPage() {
   };
 
   if (successBooking) {
-    const savedPhone = sessionStorage.getItem("nailox_client_phone") ?? clientData.phone;
+    const savedPhone = sessionStorage.getItem("caluatnails_client_phone") ?? clientData.phone;
     return (
       <div className="min-h-screen bg-rose-50 flex items-center justify-center px-4 py-10">
         <div className="bg-white rounded-3xl p-10 text-center max-w-md w-full shadow-sm space-y-6">

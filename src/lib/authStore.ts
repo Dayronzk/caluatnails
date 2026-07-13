@@ -22,7 +22,7 @@ interface AuthStore {
 // before the auth bootstrap completes.
 function hydrateInitialRole(): { role: UserRole | null; resolvedForUserId: string | null } {
   try {
-    const raw = localStorage.getItem('nailox_role_cache');
+    const raw = localStorage.getItem('caluatnails_role_cache');
     if (!raw) return { role: null, resolvedForUserId: null };
     const parsed = JSON.parse(raw) as { userId: string; role: UserRole };
     return { role: parsed.role, resolvedForUserId: parsed.userId };

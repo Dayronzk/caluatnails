@@ -69,7 +69,7 @@ export default function InvitaLandingPage() {
         }
         setReferrer(ref as ReferrerInfo);
         // Persist the ref code in sessionStorage so /reservar picks it up
-        sessionStorage.setItem("nailox_ref", code);
+        sessionStorage.setItem("caluatnails_ref", code);
 
         // Fetch a couple of headline services
         const { data: svcs } = await supabase
@@ -92,10 +92,10 @@ export default function InvitaLandingPage() {
 
   // CTA → reservar con el ref code ya aplicado
   const ctaHref = `/reservar?ref=${encodeURIComponent(code || "")}`;
-  const title = referrer ? `${firstName} te invita a NAILOX · 1ª manicura desde 5€` : "Invitación NAILOX";
+  const title = referrer ? `${firstName} te invita a CALUATNAILS · 1ª manicura desde 5€` : "Invitación CALUATNAILS";
   const description = referrer
-    ? `${firstName} te recomienda NAILOX, salón de manicura y pedicura premium en el Eixample, Barcelona. Tu primer esmaltado semipermanente por solo 5€ al reservar con su invitación. Plazas limitadas.`
-    : "Invitación a NAILOX. Salón premium de manicura y pedicura en el Eixample, Barcelona.";
+    ? `${firstName} te recomienda CALUATNAILS, salón de manicura y pedicura premium en el Eixample, Barcelona. Tu primer esmaltado semipermanente por solo 5€ al reservar con su invitación. Plazas limitadas.`
+    : "Invitación a CALUATNAILS. Salón premium de manicura y pedicura en el Eixample, Barcelona.";
 
   if (loading) {
     return (
@@ -134,21 +134,21 @@ export default function InvitaLandingPage() {
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
-        <link rel="canonical" href={`https://www.nailox.com/invita/${code}`} />
+        <link rel="canonical" href={`https://www.caluatnails.com/invita/${code}`} />
         <meta name="robots" content="noindex, follow" />
         {/* OG personalized */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.nailox.com/invita/${code}`} />
+        <meta property="og:url" content={`https://www.caluatnails.com/invita/${code}`} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta property="og:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="es_ES" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta name="twitter:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
       </Helmet>
 
       <Navbar />
@@ -163,7 +163,7 @@ export default function InvitaLandingPage() {
           <div className="relative max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">
               <span className="text-rose-600">{firstName}</span> te invita
-              <span className="block">a probar NAILOX</span>
+              <span className="block">a probar CALUATNAILS</span>
             </h1>
 
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-3">
@@ -231,7 +231,7 @@ export default function InvitaLandingPage() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {GALLERY.map((src, i) => (
                 <div key={i} className={`rounded-2xl overflow-hidden bg-rose-100 ${i === 0 ? "row-span-2 md:row-span-1" : ""}`}>
-                  <img src={src} alt={`Trabajo NAILOX ${i + 1}`} className="w-full h-full object-cover aspect-square" />
+                  <img src={src} alt={`Trabajo CALUATNAILS ${i + 1}`} className="w-full h-full object-cover aspect-square" />
                 </div>
               ))}
             </div>
@@ -318,7 +318,7 @@ export default function InvitaLandingPage() {
         <section className="px-4 pb-12">
           <div className="max-w-3xl mx-auto text-center text-xs text-gray-400 leading-relaxed">
             <i className="ri-information-line mr-1"></i>
-            La oferta de esmaltado semipermanente por 5€ aplica únicamente en la primera cita de clientas nuevas, usando esta invitación. Una sola vez por persona. NAILOX se reserva el derecho a verificar la elegibilidad.
+            La oferta de esmaltado semipermanente por 5€ aplica únicamente en la primera cita de clientas nuevas, usando esta invitación. Una sola vez por persona. CALUATNAILS se reserva el derecho a verificar la elegibilidad.
           </div>
         </section>
       </main>

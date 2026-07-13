@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const GENERIC_PASSWORD = "Nailox1234*";
+const GENERIC_PASSWORD = "Caluatnails1234*";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,10 +18,10 @@ interface BrandConfig {
 }
 
 const DEFAULT_BRAND: BrandConfig = {
-  email_brand_name: "NAILOX",
-  site_url: "https://nailox.com",
-  contact_email: "hola@nailox.com",
-  sender_email: "noreply@nailox.com",
+  email_brand_name: "CALUATNAILS",
+  site_url: "https://caluatnails.com",
+  contact_email: "hola@caluatnails.com",
+  sender_email: "noreply@caluatnails.com",
   email_footer_text: "Curso Profesional de Manicura y Pedicura",
   notification_email: "",
 };

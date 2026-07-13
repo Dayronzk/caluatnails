@@ -94,7 +94,7 @@ const ROLE_CONFIG: Record<AppRole, {
 export default function AccountPage() {
   useSEO({
     title: "Mi Cuenta",
-    description: "Área privada de cliente NAILOX.",
+    description: "Área privada de cliente CALUATNAILS.",
     ogUrl: "/mi-cuenta",
     canonical: "/mi-cuenta",
     noindex: true,
@@ -109,8 +109,8 @@ export default function AccountPage() {
   const { totalPercentage, completedLessons, totalLessons, isCourseComplete } = useProgress(lessonCounts, dbContext);
 
   // Phone-based identity
-  const clientPhone = sessionStorage.getItem("nailox_client_phone") ?? "";
-  const linkedProfileId = sessionStorage.getItem("nailox_linked_profile_id") ?? "";
+  const clientPhone = sessionStorage.getItem("caluatnails_client_phone") ?? "";
+  const linkedProfileId = sessionStorage.getItem("caluatnails_linked_profile_id") ?? "";
   const isPhoneMode = !user && !!clientPhone;
   const { account: clientAccount, transactions: clientTransactions, loading: clientLoading } = useClientAccount(
     isPhoneMode ? clientPhone : undefined,
@@ -538,7 +538,7 @@ export default function AccountPage() {
 
   const handleLogout = () => {
     if (isPhoneMode) {
-      sessionStorage.removeItem("nailox_client_phone");
+      sessionStorage.removeItem("caluatnails_client_phone");
       navigate("/login");
     } else {
       signOut();
@@ -724,7 +724,7 @@ export default function AccountPage() {
                   <h1 className="text-2xl font-bold text-gray-900">{displayName}</h1>
                   <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${rCfg.bg} text-${rCfg.color}-600 border border-${rCfg.color}-100 w-fit mx-auto sm:mx-0`}>
                     <i className={rCfg.icon}></i>
-                    {primaryRole === "professional" ? "Profesional Nailox" : primaryRole === "student" ? (isCourseComplete ? "Alumna Certificada" : "Estudiante") : "Cliente VIP"}
+                    {primaryRole === "professional" ? "Profesional Caluatnails" : primaryRole === "student" ? (isCourseComplete ? "Alumna Certificada" : "Estudiante") : "Cliente VIP"}
                   </span>
                 </div>
                 {displayEmail && <p className="text-gray-500 text-sm mt-0.5">{displayEmail}</p>}
@@ -1362,7 +1362,7 @@ export default function AccountPage() {
                     const progressPercent = Math.min(100, (sub.sessions_used / sub.sessions_total) * 100);
 
                     // Formulate WhatsApp pause/help text
-                    const waText = `Hola, soy cliente de NAILOX. Tengo contratado el bono "${sub.subscription_plans?.name || 'Bono'}" y me gustaría solicitar una consulta o gestionar una pausa por vacaciones.`;
+                    const waText = `Hola, soy cliente de CALUATNAILS. Tengo contratado el bono "${sub.subscription_plans?.name || 'Bono'}" y me gustaría solicitar una consulta o gestionar una pausa por vacaciones.`;
                     const waUrl = `https://wa.me/34636689101?text=${encodeURIComponent(waText)}`;
 
                     return (
@@ -1500,7 +1500,7 @@ export default function AccountPage() {
               </div>
               <div>
                 <h2 className="text-xl font-bold">Perfil Profesional</h2>
-                <p className="text-sm opacity-90">Apareces en la página pública de profesionales NAILOX</p>
+                <p className="text-sm opacity-90">Apareces en la página pública de profesionales CALUATNAILS</p>
                 <a href="/profesionales" target="_blank" rel="noopener noreferrer" className="text-xs underline opacity-80 hover:opacity-100 cursor-pointer">
                   Ver página de profesionales →
                 </a>

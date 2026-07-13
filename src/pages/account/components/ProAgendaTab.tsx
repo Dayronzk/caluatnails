@@ -290,7 +290,7 @@ function ProBookingsView() {
     const icsContent = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
-      "PRODID:-//Nailox//Agenda//ES",
+      "PRODID:-//Caluatnails//Agenda//ES",
       "BEGIN:VEVENT",
       `DTSTART:${icalStart}`,
       `DTEND:${icalEnd}`,

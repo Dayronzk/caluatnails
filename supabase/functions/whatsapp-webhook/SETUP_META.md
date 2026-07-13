@@ -16,7 +16,7 @@ En `supabase/functions/.env` (local) y en Supabase secrets (producción):
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
-WHATSAPP_VERIFY_TOKEN=nailox-verify-2026   # tú lo eliges, lo introduces en Meta
+WHATSAPP_VERIFY_TOKEN=caluatnails-verify-2026   # tú lo eliges, lo introduces en Meta
 WHATSAPP_PHONE_ID=...                       # de Meta (paso 4)
 WHATSAPP_ACCESS_TOKEN=...                   # de Meta (paso 4)
 ```
@@ -28,7 +28,7 @@ WHATSAPP_ACCESS_TOKEN=...                   # de Meta (paso 4)
 1. Ve a [business.facebook.com](https://business.facebook.com)
 2. Inicia sesión con tu Facebook (o crea una cuenta)
 3. Crea un **Business Manager** si no tienes:
-   - Nombre del negocio: NAILOX
+   - Nombre del negocio: CALUATNAILS
    - Tu nombre y email de empresa
 
 ---
@@ -38,9 +38,9 @@ WHATSAPP_ACCESS_TOKEN=...                   # de Meta (paso 4)
 1. Ve a [developers.facebook.com](https://developers.facebook.com)
 2. **Mis Apps** → **Crear App** → tipo **Empresa**
 3. Datos:
-   - Nombre: `NAILOX Bot`
+   - Nombre: `CALUATNAILS Bot`
    - Email: el tuyo
-   - Empresa: NAILOX
+   - Empresa: CALUATNAILS
 4. En el panel de la app: **Agregar producto** → **WhatsApp** → **Configurar**
 
 ---
@@ -64,7 +64,7 @@ Meta te da un **número de prueba gratuito** durante el desarrollo:
 2. **Webhook** → **Edit**
 3. Datos:
    - **Callback URL**: `https://expbduyqklpnnkyoapvi.supabase.co/functions/v1/whatsapp-webhook`
-   - **Verify token**: el mismo de tu `.env` (ej: `nailox-verify-2026`)
+   - **Verify token**: el mismo de tu `.env` (ej: `caluatnails-verify-2026`)
 4. **Verify and save** — Meta enviará un GET al webhook y debe responder correctamente
 5. **Webhook fields** → marca al menos:
    - ✅ `messages` (mensajes entrantes)
@@ -94,7 +94,7 @@ Cuando todo funcione local:
 export SUPABASE_ACCESS_TOKEN="your_supabase_access_token_here"
 npx supabase secrets set \
   ANTHROPIC_API_KEY="sk-ant-..." \
-  WHATSAPP_VERIFY_TOKEN="nailox-verify-2026" \
+  WHATSAPP_VERIFY_TOKEN="caluatnails-verify-2026" \
   WHATSAPP_PHONE_ID="..." \
   WHATSAPP_ACCESS_TOKEN="..."
 

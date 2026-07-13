@@ -19,7 +19,7 @@ export interface AuthState {
 }
 
 // Cache the role in localStorage so reloads are instant
-const ROLE_CACHE_KEY = 'nailox_role_cache';
+const ROLE_CACHE_KEY = 'caluatnails_role_cache';
 type RoleCache = { userId: string; role: UserRole; ts: number };
 
 function getCachedRole(userId: string): UserRole | null {

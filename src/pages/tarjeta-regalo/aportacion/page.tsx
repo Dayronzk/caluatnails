@@ -133,7 +133,7 @@ export default function AportacionPage() {
   if (notFound || !giftCard) {
     return (
       <>
-        <Helmet><title>Tarjeta regalo no encontrada | NAILOX</title></Helmet>
+        <Helmet><title>Tarjeta regalo no encontrada | CALUATNAILS</title></Helmet>
         <Navbar />
         <main className="min-h-screen bg-gradient-to-b from-rose-50 to-white pt-24 pb-20 px-4">
           <div className="max-w-lg mx-auto text-center">
@@ -157,21 +157,21 @@ export default function AportacionPage() {
   return (
     <>
       <Helmet>
-        <title>Aporta a la tarjeta grupal | NAILOX</title>
+        <title>Aporta a la tarjeta grupal | CALUATNAILS</title>
         <meta name="description" content={`Únete a la recaudación para ${giftCard.recipient_name}`} />
-        <meta property="og:site_name" content="NAILOX" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.nailox.com/tarjeta-regalo/aportacion/${giftCard.code}`} />
-        <meta property="og:title" content={`Aporta a la tarjeta regalo para ${giftCard.recipient_name} | NAILOX`} />
-        <meta property="og:description" content={`Contribuye a la tarjeta regalo grupal para ${giftCard.recipient_name}. Suma tu aporte para regalar una experiencia NAILOX.`} />
-        <meta property="og:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta property="og:url" content={`https://www.caluatnails.com/tarjeta-regalo/aportacion/${giftCard.code}`} />
+        <meta property="og:title" content={`Aporta a la tarjeta regalo para ${giftCard.recipient_name} | CALUATNAILS`} />
+        <meta property="og:description" content={`Contribuye a la tarjeta regalo grupal para ${giftCard.recipient_name}. Suma tu aporte para regalar una experiencia CALUATNAILS.`} />
+        <meta property="og:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="es_ES" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`Aporta a la tarjeta regalo para ${giftCard.recipient_name} | NAILOX`} />
+        <meta name="twitter:title" content={`Aporta a la tarjeta regalo para ${giftCard.recipient_name} | CALUATNAILS`} />
         <meta name="twitter:description" content={`Contribuye a la tarjeta regalo grupal. Suma tu aporte para regalar una experiencia de manicura.`} />
-        <meta name="twitter:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta name="twitter:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
       </Helmet>
 
       <Navbar />

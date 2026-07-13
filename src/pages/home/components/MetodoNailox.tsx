@@ -64,7 +64,7 @@ const STEPS = [
   },
 ];
 
-export default function MetodoNailox() {
+export default function MetodoCaluatnails() {
   const navigate = useNavigate();
 
   const handleScroll = () => {

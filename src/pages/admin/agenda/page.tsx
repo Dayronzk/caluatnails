@@ -24,7 +24,7 @@ const STATUS_LABELS: Record<string, { label: string; color: string }> = {
 
 // Origen de la reserva — mostrado como pill en cada tarjeta de la agenda
 const SOURCE_BADGES: Record<string, { label: string; icon: string; className: string; title: string }> = {
-  web:   { label: "Web",     icon: "ri-global-line",       className: "bg-emerald-50 text-emerald-700 border-emerald-200", title: "Reserva creada desde la web (nailox.com/reservar)" },
+  web:   { label: "Web",     icon: "ri-global-line",       className: "bg-emerald-50 text-emerald-700 border-emerald-200", title: "Reserva creada desde la web (caluatnails.com/reservar)" },
   bot:   { label: "Bot",     icon: "ri-robot-line",         className: "bg-indigo-50 text-indigo-700 border-indigo-200",     title: "Reserva creada por el bot de WhatsApp" },
   admin: { label: "Admin",   icon: "ri-user-settings-line", className: "bg-amber-50 text-amber-700 border-amber-200",        title: "Reserva creada manualmente desde el panel admin" },
 };

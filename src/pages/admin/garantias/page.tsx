@@ -40,7 +40,7 @@ interface ProfessionalStat {
 export default function AdminGarantiasPage() {
   useSEO({
     title: "Garantías y Reparaciones",
-    description: "Análisis y registro de garantías en NAILOX",
+    description: "Análisis y registro de garantías en CALUATNAILS",
     noindex: true,
   });
 

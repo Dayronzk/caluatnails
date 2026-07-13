@@ -66,13 +66,13 @@ const GRADIENT_COLORS = [
 export default function ProfesionalesPage() {
   useSEO({
     title: "Nuestras Profesionales — Manicura y Pedicura en Barcelona",
-    description: "Conoce al equipo de profesionales certificadas del salón NAILOX en Barcelona. Especialistas en manicura con nivelación, semipermanente, uñas en gel y pedicura. Reserva con tu favorita.",
-    ogTitle: "Equipo NAILOX — Profesionales de Manicura en Barcelona",
-    ogDescription: "Profesionales certificadas listas para atenderte en el salón NAILOX del Eixample. Revisa especialidades y reseñas, y reserva online.",
+    description: "Conoce al equipo de profesionales certificadas del salón CALUATNAILS en Barcelona. Especialistas en manicura con nivelación, semipermanente, uñas en gel y pedicura. Reserva con tu favorita.",
+    ogTitle: "Equipo CALUATNAILS — Profesionales de Manicura en Barcelona",
+    ogDescription: "Profesionales certificadas listas para atenderte en el salón CALUATNAILS del Eixample. Revisa especialidades y reseñas, y reserva online.",
     ogImage: "https://readdy.ai/api/search-image?query=professional%20nail%20technicians%20certified%20beauty%20salon%20team%20elegant%20rose%20gold%20warm%20tones%20luxury%20spa%20manicure%20pedicure%20experts%20women%20professionals%20minimal%20aesthetic&width=1200&height=630&seq=og-profesionales-v1&orientation=landscape",
     ogUrl: "/profesionales",
     canonical: "/profesionales",
-    keywords: "profesionales manicura certificadas, nail technician, pedicura profesional, alumnas NAILOX",
+    keywords: "profesionales manicura certificadas, nail technician, pedicura profesional, alumnas CALUATNAILS",
   });
 
   const [professionals, setProfessionals] = useState<Professional[]>([]);
@@ -213,7 +213,7 @@ export default function ProfesionalesPage() {
 
         <div className="relative max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-1.5 text-sm font-medium mb-6">
-            <i className="ri-award-line"></i> Profesionales certificadas NAILOX
+            <i className="ri-award-line"></i> Profesionales certificadas CALUATNAILS
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
             Encuentra a tu <span className="text-amber-200">profesional</span> ideal
@@ -480,7 +480,7 @@ export default function ProfesionalesPage() {
                 ¿Quieres formar parte del equipo?
               </h2>
               <p className="text-gray-600 mb-6">
-                Únete al curso de NAILOX y conviértete en profesional certificada. Aparecerás en esta página
+                Únete al curso de CALUATNAILS y conviértete en profesional certificada. Aparecerás en esta página
                 y empezarás a recibir reservas en tu propio salón o en el nuestro.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -592,7 +592,7 @@ export default function ProfesionalesPage() {
                       </div>
                     </div>
                     <p className="text-xs text-gray-600 leading-relaxed mb-3">
-                      Tu opinión nos ayuda a crecer y a que otras clientas descubran NAILOX. Menos de 1 minuto.
+                      Tu opinión nos ayuda a crecer y a que otras clientas descubran CALUATNAILS. Menos de 1 minuto.
                     </p>
                     <span className="inline-flex items-center gap-2 bg-rose-500 group-hover:bg-rose-600 transition-colors text-white px-4 py-2 rounded-full text-xs font-bold">
                       Escribir reseña <i className="ri-external-link-line"></i>

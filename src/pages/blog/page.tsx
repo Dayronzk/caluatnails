@@ -22,19 +22,19 @@ export default function BlogListPage() {
   return (
     <div className="min-h-screen bg-white font-inter">
       <Helmet>
-        <title>Blog NAILOX — Consejos de Manicura y Pedicura en Barcelona</title>
-        <meta name="description" content="Guías, tendencias y consejos profesionales sobre manicura, pedicura, uñas en gel, cuidado de cutículas y más. Por el equipo de NAILOX en Barcelona." />
+        <title>Blog CALUATNAILS — Consejos de Manicura y Pedicura en Barcelona</title>
+        <meta name="description" content="Guías, tendencias y consejos profesionales sobre manicura, pedicura, uñas en gel, cuidado de cutículas y más. Por el equipo de CALUATNAILS en Barcelona." />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href="https://www.nailox.com/blog" />
+        <link rel="canonical" href="https://www.caluatnails.com/blog" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.nailox.com/blog" />
-        <meta property="og:title" content="Blog NAILOX — Consejos profesionales de manicura y pedicura" />
-        <meta property="og:description" content="Guías, tendencias y consejos profesionales sobre uñas. Por NAILOX en Barcelona." />
-        <meta property="og:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta property="og:url" content="https://www.caluatnails.com/blog" />
+        <meta property="og:title" content="Blog CALUATNAILS — Consejos profesionales de manicura y pedicura" />
+        <meta property="og:description" content="Guías, tendencias y consejos profesionales sobre uñas. Por CALUATNAILS en Barcelona." />
+        <meta property="og:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
         <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content="NAILOX" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta name="twitter:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -43,24 +43,24 @@ export default function BlogListPage() {
               {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.nailox.com/" },
-                  { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.nailox.com/blog" },
+                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.caluatnails.com/" },
+                  { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.caluatnails.com/blog" },
                 ],
               },
               {
                 "@type": "Blog",
-                "name": "Blog NAILOX",
-                "description": "Consejos profesionales de manicura y pedicura por NAILOX Barcelona",
-                "url": "https://www.nailox.com/blog",
+                "name": "Blog CALUATNAILS",
+                "description": "Consejos profesionales de manicura y pedicura por CALUATNAILS Barcelona",
+                "url": "https://www.caluatnails.com/blog",
                 "inLanguage": "es",
-                "publisher": { "@id": "https://www.nailox.com/#organization" },
+                "publisher": { "@id": "https://www.caluatnails.com/#organization" },
                 "blogPost": sorted.map(p => ({
                   "@type": "BlogPosting",
                   "headline": p.title,
-                  "url": `https://www.nailox.com/blog/${p.slug}`,
+                  "url": `https://www.caluatnails.com/blog/${p.slug}`,
                   "datePublished": p.publishedAt,
-                  "image": `https://www.nailox.com${p.image}`,
-                  "author": { "@type": "Organization", "name": "NAILOX" },
+                  "image": `https://www.caluatnails.com${p.image}`,
+                  "author": { "@type": "Organization", "name": "CALUATNAILS" },
                 })),
               },
             ],
@@ -87,13 +87,13 @@ export default function BlogListPage() {
       <main className="pt-24 pb-20">
         <header className="max-w-4xl mx-auto px-6 mb-12 text-center">
           <span className="inline-block px-3 py-1 bg-rose-50 text-rose-600 rounded-full text-[10px] font-bold mb-4 uppercase tracking-widest">
-            Blog NAILOX
+            Blog CALUATNAILS
           </span>
           <h1 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 uppercase tracking-tight">
             Consejos de Manicura y Pedicura
           </h1>
           <p className="text-gray-500 max-w-2xl mx-auto text-base lg:text-lg leading-relaxed">
-            Guías profesionales, tendencias y trucos para cuidar tus uñas. Por el equipo de <strong>NAILOX</strong>, salón de manicura premium en el Eixample de Barcelona.
+            Guías profesionales, tendencias y trucos para cuidar tus uñas. Por el equipo de <strong>CALUATNAILS</strong>, salón de manicura premium en el Eixample de Barcelona.
           </p>
         </header>
 
@@ -195,7 +195,7 @@ export default function BlogListPage() {
         <section className="max-w-7xl mx-auto px-6 mt-20">
           <div className="bg-gray-900 rounded-[3rem] p-12 text-center text-white">
             <h2 className="text-3xl font-black mb-6">¿Lista para tu próxima manicura?</h2>
-            <p className="text-gray-400 mb-10 max-w-xl mx-auto">Aplica los consejos de nuestro blog reservando una cita con nuestras profesionales en NAILOX, Barcelona.</p>
+            <p className="text-gray-400 mb-10 max-w-xl mx-auto">Aplica los consejos de nuestro blog reservando una cita con nuestras profesionales en CALUATNAILS, Barcelona.</p>
             <button onClick={() => navigate("/reservar")} className="bg-rose-500 hover:bg-rose-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all shadow-xl shadow-rose-900/20">
               Reservar Mi Cita
             </button>

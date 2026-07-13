@@ -136,7 +136,7 @@ export default function ClientReviewsTab({ clientPhone }: { clientPhone?: string
         </div>
         <div className="flex-1">
           <h2 className="text-xl font-bold">Mis reseñas</h2>
-          <p className="text-sm opacity-90">Comparte tu experiencia con NAILOX en Google</p>
+          <p className="text-sm opacity-90">Comparte tu experiencia con CALUATNAILS en Google</p>
         </div>
       </div>
 
@@ -159,7 +159,7 @@ export default function ClientReviewsTab({ clientPhone }: { clientPhone?: string
               </div>
             </div>
             <p className="text-sm text-gray-500 leading-relaxed mb-4">
-              Tu opinión nos ayuda muchísimo y permite que otras clientas descubran NAILOX. Tarda menos de 1 minuto.
+              Tu opinión nos ayuda muchísimo y permite que otras clientas descubran CALUATNAILS. Tarda menos de 1 minuto.
             </p>
             <span className="inline-flex items-center gap-2 bg-rose-500 group-hover:bg-rose-600 transition-colors text-white px-5 py-2.5 rounded-full text-sm font-bold">
               <i className="ri-star-line"></i> Escribir reseña en Google

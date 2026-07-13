@@ -27,11 +27,11 @@ function buildCalendarLinks(booking: {
   location?: string;
 }) {
   const servicesList = booking.services.join(", ");
-  const title = `Cita Nailox: ${servicesList}`;
-  const description = `💅 Tu cita en Nailox\n\nServicios: ${servicesList}\nTotal: €${Number(booking.totalPrice).toFixed(2)}\n\n¡Te esperamos!`;
-  const location = booking.location && booking.location !== "Salón NAILOX"
-    ? `Nailox - ${booking.location}`
-    : "Nailox - Carrer del Rosselló, 497, Eixample, 08025 Barcelona";
+  const title = `Cita Caluatnails: ${servicesList}`;
+  const description = `💅 Tu cita en Caluatnails\n\nServicios: ${servicesList}\nTotal: €${Number(booking.totalPrice).toFixed(2)}\n\n¡Te esperamos!`;
+  const location = booking.location && booking.location !== "Salón CALUATNAILS"
+    ? `Caluatnails - ${booking.location}`
+    : "Caluatnails - Carrer del Rosselló, 497, Eixample, 08025 Barcelona";
 
   const [year, month, day] = booking.date.split("-").map(Number);
   const [hour, minute] = booking.time.split(":").map(Number);
@@ -49,7 +49,7 @@ function buildCalendarLinks(booking: {
   const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(title)}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&body=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
 
   const icsContent = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Nailox//Agenda//ES",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Caluatnails//Agenda//ES",
     "BEGIN:VEVENT",
     `DTSTART:${gcalStart}`, `DTEND:${gcalEnd}`,
     `SUMMARY:${title}`,
@@ -228,7 +228,7 @@ export default function BizumSuccessModal({ type, total, onClose, bookingData }:
             <i className="ri-information-line text-gray-400 text-sm shrink-0"></i>
             <p className="text-xs text-gray-500 text-left">
               {type === "efectivo"
-                ? "Tu cita se ha registrado en nuestra agenda. ¡Nos vemos pronto en NAILOX!"
+                ? "Tu cita se ha registrado en nuestra agenda. ¡Nos vemos pronto en CALUATNAILS!"
                 : "Tu compra quedará pendiente de validación hasta que el administrador confirme la recepción del pago."
               }
             </p>

@@ -8,7 +8,7 @@ const WIFI_SSID = "DIGIFIBRA-PLUS-4AE4";
 const WIFI_PASSWORD = "3UFPX73FD8";
 const WIFI_ENCRYPTION: "WPA" | "WEP" | "nopass" = "WPA";
 const WIFI_QR = `WIFI:T:${WIFI_ENCRYPTION};S:${WIFI_SSID};P:${WIFI_PASSWORD};H:false;;`;
-const MOBILECONFIG_URL = "/assets/wifi-nailox.mobileconfig";
+const MOBILECONFIG_URL = "/assets/wifi-caluatnails.mobileconfig";
 
 const ADDRESS = "Carrer del Rosselló, 497 · Eixample · Barcelona";
 const PHONE = "+34 636 68 91 01";
@@ -56,19 +56,19 @@ export default function SedeEixamplePage() {
   return (
     <>
       <Helmet>
-        <title>Bienvenida a NAILOX · Eixample Barcelona</title>
+        <title>Bienvenida a CALUATNAILS · Eixample Barcelona</title>
         <meta
           name="description"
-          content="Bienvenida a NAILOX Eixample. Conecta al WiFi gratis, deja tu reseña en Google y reserva tu próxima cita en un solo lugar."
+          content="Bienvenida a CALUATNAILS Eixample. Conecta al WiFi gratis, deja tu reseña en Google y reserva tu próxima cita en un solo lugar."
         />
-        <link rel="canonical" href="https://www.nailox.com/sede-eixample" />
-        <meta property="og:title" content="Bienvenida a NAILOX · Eixample Barcelona" />
+        <link rel="canonical" href="https://www.caluatnails.com/sede-eixample" />
+        <meta property="og:title" content="Bienvenida a CALUATNAILS · Eixample Barcelona" />
         <meta
           property="og:description"
           content="WiFi gratis, reseña en Google y reservas en segundos. Todo desde tu móvil."
         />
-        <meta property="og:image" content="https://www.nailox.com/assets/manicure-premium.png" />
-        <meta property="og:url" content="https://www.nailox.com/sede-eixample" />
+        <meta property="og:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
+        <meta property="og:url" content="https://www.caluatnails.com/sede-eixample" />
       </Helmet>
 
       <main className="min-h-screen bg-gradient-to-b from-rose-50 via-white to-rose-100/40 px-4 py-10">
@@ -76,10 +76,10 @@ export default function SedeEixamplePage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white shadow-lg shadow-rose-200/60 mb-4">
-              <img src="/favicon.png" alt="NAILOX" className="w-12 h-12 rounded-2xl" />
+              <img src="/favicon.png" alt="CALUATNAILS" className="w-12 h-12 rounded-2xl" />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-              Bienvenida a <span className="text-rose-600">NAILOX</span>
+              Bienvenida a <span className="text-rose-600">CALUATNAILS</span>
             </h1>
             <p className="text-sm text-gray-500 mt-1">Eixample · Barcelona</p>
           </div>
@@ -151,7 +151,7 @@ export default function SedeEixamplePage() {
             </div>
             <div className="mt-4 pt-4 border-t border-amber-100 flex items-center gap-2 text-xs text-amber-700">
               <i className="ri-coin-fill text-base"></i>
-              <span className="font-semibold">¡Ganas +100 puntos NAILOX!</span>
+              <span className="font-semibold">¡Ganas +100 puntos CALUATNAILS!</span>
             </div>
           </a>
 
@@ -237,7 +237,7 @@ export default function SedeEixamplePage() {
           </div>
 
           <p className="text-center text-[11px] text-gray-400 mt-8">
-            © NAILOX · {new Date().getFullYear()} · Carrer del Rosselló 497
+            © CALUATNAILS · {new Date().getFullYear()} · Carrer del Rosselló 497
           </p>
         </div>
 
@@ -269,7 +269,7 @@ export default function SedeEixamplePage() {
               <div className="bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-500 px-6 py-5 text-white sticky top-0 z-10">
                 <div className="flex items-center gap-2 mb-1">
                   <i className="ri-wifi-fill text-2xl"></i>
-                  <p className="text-[11px] uppercase tracking-widest opacity-90 font-semibold">WiFi NAILOX</p>
+                  <p className="text-[11px] uppercase tracking-widest opacity-90 font-semibold">WiFi CALUATNAILS</p>
                 </div>
                 <h3 className="text-2xl font-bold">Conéctate al WiFi</h3>
               </div>

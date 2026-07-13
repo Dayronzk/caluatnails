@@ -73,7 +73,7 @@ interface ServiceOption {
 export default function AllSubscriptionsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const clientPhone = sessionStorage.getItem("nailox_client_phone") ?? "";
+  const clientPhone = sessionStorage.getItem("caluatnails_client_phone") ?? "";
   const isPhoneMode = !user && !!clientPhone;
   const { account, loading: accountLoading } = useClientAccount(
     isPhoneMode ? clientPhone : undefined,
@@ -119,7 +119,7 @@ export default function AllSubscriptionsPage() {
         if (user?.email) {
           setGuestEmail(user.email || "");
         }
-        const storedPhone = sessionStorage.getItem("nailox_client_phone");
+        const storedPhone = sessionStorage.getItem("caluatnails_client_phone");
         if (storedPhone) {
           setGuestPhone(formatPhoneWithPrefix(storedPhone));
         }
@@ -598,7 +598,7 @@ export default function AllSubscriptionsPage() {
       }
       
       // Store in sessionStorage so they are logged in upon redirect back
-      sessionStorage.setItem("nailox_client_phone", targetPhone);
+      sessionStorage.setItem("caluatnails_client_phone", targetPhone);
       
       setShowGuestModal(false);
       await proceedToCheckout(targetAccountId, guestEmail.toLowerCase().trim());
@@ -624,8 +624,8 @@ export default function AllSubscriptionsPage() {
   return (
     <div className="min-h-screen bg-slate-50 font-inter text-slate-800 antialiased">
       <Helmet>
-        <title>Club de Uñas Perfectas: Bonos y Planes Prepago | NAILOX</title>
-        <meta name="description" content="Únete al Club NAILOX. Bonos trimestrales, semestrales y anuales de pago único. Ahorra hasta un 25%, asegura tu cita fija y disfruta de garantía de 7 días." />
+        <title>Club de Uñas Perfectas: Bonos y Planes Prepago | CALUATNAILS</title>
+        <meta name="description" content="Únete al Club CALUATNAILS. Bonos trimestrales, semestrales y anuales de pago único. Ahorra hasta un 25%, asegura tu cita fija y disfruta de garantía de 7 días." />
       </Helmet>
 
       {/* Header */}
@@ -662,7 +662,7 @@ export default function AllSubscriptionsPage() {
           </h1>
           
           <p className="text-slate-500 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-            Asegura tu hueco fijo en la agenda de NAILOX y congela precios. Compra tu bono prepago de sesiones de forma única, ahorra hasta un 25% y disfruta de Garantía Total de Calidad.
+            Asegura tu hueco fijo en la agenda de CALUATNAILS y congela precios. Compra tu bono prepago de sesiones de forma única, ahorra hasta un 25% y disfruta de Garantía Total de Calidad.
           </p>
 
           {/* Social Proof Badges */}
@@ -967,7 +967,7 @@ export default function AllSubscriptionsPage() {
                     <ShieldCheck className="w-4.5 h-4.5 text-rose-600 shrink-0" /> Garantía de Retención Total
                   </h4>
                   <p className="text-xs text-rose-700 leading-relaxed font-medium">
-                    En NAILOX garantizamos la máxima durabilidad. Si en los primeros 7 días posteriores a tu cita con semipermanente o nivelación tienes cualquier levantamiento, rotura o percance, lo reparamos **totalmente gratis en menos de 24 horas**. Sin preguntas.
+                    En CALUATNAILS garantizamos la máxima durabilidad. Si en los primeros 7 días posteriores a tu cita con semipermanente o nivelación tienes cualquier levantamiento, rotura o percance, lo reparamos **totalmente gratis en menos de 24 horas**. Sin preguntas.
                   </p>
                 </div>
 
@@ -979,7 +979,7 @@ export default function AllSubscriptionsPage() {
         {/* Benefits Detail Section */}
         <section className="mt-24 border-t border-slate-200/60 pt-16">
           <div className="text-center max-w-xl mx-auto mb-16">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-rose-500 bg-rose-50 px-3 py-1 rounded-full">Club de Socias NAILOX</span>
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-rose-500 bg-rose-50 px-3 py-1 rounded-full">Club de Socias CALUATNAILS</span>
             <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2 uppercase mt-3">Tus beneficios exclusivos por ser VIP</h2>
             <p className="text-xs text-slate-400 font-medium">Las ventajas de prepagar tus sesiones y unirte a nuestra agenda fija</p>
           </div>
@@ -1032,7 +1032,7 @@ export default function AllSubscriptionsPage() {
               </div>
               <div>
                 <h3 className="font-extrabold text-slate-900 mb-1 text-xs uppercase tracking-tight">Regalo Transferible</h3>
-                <p className="text-xs text-slate-500 leading-relaxed">El plan Anual incluye 1 sesión completa gratuita para que la regales a tu persona favorita. Comparte la experiencia NAILOX.</p>
+                <p className="text-xs text-slate-500 leading-relaxed">El plan Anual incluye 1 sesión completa gratuita para que la regales a tu persona favorita. Comparte la experiencia CALUATNAILS.</p>
               </div>
             </div>
 
@@ -1064,7 +1064,7 @@ export default function AllSubscriptionsPage() {
               <thead>
                 <tr className="border-b border-slate-800">
                   <th className="pb-4 font-bold text-slate-400 uppercase tracking-wider">Característica</th>
-                  <th className="pb-4 font-extrabold text-rose-400 uppercase tracking-wider">Con Bono VIP NAILOX</th>
+                  <th className="pb-4 font-extrabold text-rose-400 uppercase tracking-wider">Con Bono VIP CALUATNAILS</th>
                   <th className="pb-4 font-bold text-slate-500 uppercase tracking-wider">Citas Sueltas</th>
                 </tr>
               </thead>
@@ -1121,7 +1121,7 @@ export default function AllSubscriptionsPage() {
             <Star className="w-3.5 h-3.5 fill-rose-500" />
             <Star className="w-3.5 h-3.5 fill-rose-500" />
             <Star className="w-3.5 h-3.5 fill-rose-500" />
-            <span className="ml-1 text-slate-900">Calidad Certificada NAILOX</span>
+            <span className="ml-1 text-slate-900">Calidad Certificada CALUATNAILS</span>
           </div>
         </section>
 

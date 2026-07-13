@@ -224,7 +224,7 @@ export default function AdminCuponesPage() {
                     type="text"
                     value={form.code}
                     onChange={(e) => setForm((f) => ({ ...f, code: e.target.value.toUpperCase() }))}
-                    placeholder="NAILOX20"
+                    placeholder="CALUATNAILS20"
                     className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none text-sm font-mono tracking-widest transition-all"
                   />
                   <button

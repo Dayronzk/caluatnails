@@ -132,7 +132,7 @@ serve(async (req) => {
         body: JSON.stringify({
           type: type === 'new_booking' ? 'booking_new_admin' : 'booking_reminder',
           to: {
-            email: proEmail || Deno.env.get('ADMIN_EMAIL') || 'admin@nailox.com',
+            email: proEmail || Deno.env.get('ADMIN_EMAIL') || 'admin@caluatnails.com',
             name: professionalName
           },
           data: {

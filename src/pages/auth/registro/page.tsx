@@ -9,7 +9,7 @@ import 'react-phone-number-input/style.css';
 export default function RegistroPage() {
   useSEO({
     title: "Crear Cuenta",
-    description: "Crea tu cuenta NAILOX para reservar citas y gestionar tus servicios.",
+    description: "Crea tu cuenta CALUATNAILS para reservar citas y gestionar tus servicios.",
     ogUrl: "/registro",
     canonical: "/registro",
     noindex: true,

@@ -8,7 +8,7 @@ const faqs = [
     category: "Sobre el Curso",
     items: [
       {
-        q: "¿Qué incluye el curso de NAILOX?",
+        q: "¿Qué incluye el curso de CALUATNAILS?",
         a: "El curso incluye módulos de teoría y práctica, recursos descargables (fichas técnicas, guías de colores, plantillas), evaluaciones automáticas, acceso al foro de discusión y un certificado digital al completar el programa. Todo con acceso de por vida.",
       },
       {
@@ -21,7 +21,7 @@ const faqs = [
       },
       {
         q: "¿El certificado tiene validez oficial?",
-        a: "El certificado de NAILOX es un certificado de finalización digital que acredita tu formación. Es ampliamente reconocido en el sector de la belleza y puede ser compartido en redes profesionales como LinkedIn.",
+        a: "El certificado de CALUATNAILS es un certificado de finalización digital que acredita tu formación. Es ampliamente reconocido en el sector de la belleza y puede ser compartido en redes profesionales como LinkedIn.",
       },
     ],
   },
@@ -42,7 +42,7 @@ const faqs = [
       },
       {
         q: "¿Puedo acceder desde varios dispositivos?",
-        a: "Sí. Tu cuenta NAILOX funciona en computadora, tablet y móvil. Solo necesitas iniciar sesión con tu correo y contraseña.",
+        a: "Sí. Tu cuenta CALUATNAILS funciona en computadora, tablet y móvil. Solo necesitas iniciar sesión con tu correo y contraseña.",
       },
     ],
   },
@@ -84,10 +84,10 @@ const faqs = [
 
 export default function FaqPage() {
   useSEO({
-    title: "Preguntas Frecuentes — NAILOX Barcelona",
-    description: "Resuelve tus dudas sobre reservas, servicios, precios, ubicación y cancelaciones del salón NAILOX en Barcelona.",
-    ogTitle: "FAQ NAILOX — Preguntas Frecuentes",
-    ogDescription: "Todo sobre reservas, servicios y precios del salón NAILOX en el Eixample, Barcelona.",
+    title: "Preguntas Frecuentes — CALUATNAILS Barcelona",
+    description: "Resuelve tus dudas sobre reservas, servicios, precios, ubicación y cancelaciones del salón CALUATNAILS en Barcelona.",
+    ogTitle: "FAQ CALUATNAILS — Preguntas Frecuentes",
+    ogDescription: "Todo sobre reservas, servicios y precios del salón CALUATNAILS en el Eixample, Barcelona.",
     ogUrl: "/faq",
     canonical: "/faq",
   });
@@ -108,17 +108,17 @@ export default function FaqPage() {
               {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.nailox.com/" },
-                  { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://www.nailox.com/faq" },
+                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.caluatnails.com/" },
+                  { "@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://www.caluatnails.com/faq" },
                 ],
               },
               {
                 "@type": "FAQPage",
-                "@id": "https://www.nailox.com/faq#faq",
+                "@id": "https://www.caluatnails.com/faq#faq",
                 "inLanguage": "es",
-                "url": "https://www.nailox.com/faq",
-                "name": "Preguntas frecuentes — NAILOX",
-                "publisher": { "@id": "https://www.nailox.com/#organization" },
+                "url": "https://www.caluatnails.com/faq",
+                "name": "Preguntas frecuentes — CALUATNAILS",
+                "publisher": { "@id": "https://www.caluatnails.com/#organization" },
                 "mainEntity": allItems.map(({ q, a }) => ({
                   "@type": "Question",
                   "name": q,
@@ -153,7 +153,7 @@ export default function FaqPage() {
             Preguntas Frecuentes
           </h1>
           <p className="text-white/50 text-sm leading-relaxed">
-            Encuentra respuestas rápidas a las dudas más comunes sobre NAILOX, el curso, pagos y soporte técnico.
+            Encuentra respuestas rápidas a las dudas más comunes sobre CALUATNAILS, el curso, pagos y soporte técnico.
           </p>
         </div>
       </div>

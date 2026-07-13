@@ -51,10 +51,10 @@ interface BrandConfig {
 }
 
 const DEFAULT_BRAND: BrandConfig = {
-  email_brand_name: "NAILOX",
-  site_url: "https://nailox.com",
-  contact_email: "hola@nailox.com",
-  sender_email: "noreply@nailox.com",
+  email_brand_name: "CALUATNAILS",
+  site_url: "https://caluatnails.com",
+  contact_email: "hola@caluatnails.com",
+  sender_email: "noreply@caluatnails.com",
   email_footer_text: "Curso Profesional de Manicura y Pedicura",
   email_header_color: "#f43f5e",
   email_header_color2: "#fb7185",
@@ -216,7 +216,7 @@ function buildCalendarLinks(date: string, time: string, durationMinutes: number,
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${gcalStart}/${gcalEnd}&details=${encodeURIComponent(description)}`;
   const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(title)}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&body=${encodeURIComponent(description)}`;
   const icsContent = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Nailox//Agenda//ES",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Caluatnails//Agenda//ES",
     "BEGIN:VEVENT",
     `DTSTART:${gcalStart}`, `DTEND:${gcalEnd}`,
     `SUMMARY:${title}`, `DESCRIPTION:${description.replace(/\n/g, "\\n")}`,
@@ -236,7 +236,7 @@ function calendarButtons(date: string, time: string, durationMinutes: number, se
       <table cellpadding="0" cellspacing="0" style="border-collapse:separate;border-spacing:8px 0;">
         <tr>
           <td><a href="${googleUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;border:1.5px solid #e5e7eb;color:#374151;font-size:12px;font-weight:600;padding:9px 16px;border-radius:50px;text-decoration:none;">📅 Google Calendar</a></td>
-          <td><a href="${icsDataUri}" download="cita-nailox.ics" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;border:1.5px solid #e5e7eb;color:#374151;font-size:12px;font-weight:600;padding:9px 16px;border-radius:50px;text-decoration:none;">🍎 Apple Calendar</a></td>
+          <td><a href="${icsDataUri}" download="cita-caluatnails.ics" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;border:1.5px solid #e5e7eb;color:#374151;font-size:12px;font-weight:600;padding:9px 16px;border-radius:50px;text-decoration:none;">🍎 Apple Calendar</a></td>
           <td><a href="${outlookUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;border:1.5px solid #e5e7eb;color:#374151;font-size:12px;font-weight:600;padding:9px 16px;border-radius:50px;text-decoration:none;">📧 Outlook</a></td>
         </tr>
       </table>
@@ -627,11 +627,11 @@ function buildGiftCardReceived(data: Record<string, unknown>, brand: BrandConfig
   const occasion = (data.occasion as string) || "Porque sí";
 
   return {
-    subject: `🎁 ¡${buyerName} te ha regalado una tarjeta NAILOX!`,
+    subject: `🎁 ¡${buyerName} te ha regalado una tarjeta CALUATNAILS!`,
     html: wrapper(`
       <h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#1A1A1A;text-align:center;">¡Tienes un regalo! 🎁</h2>
       <p style="margin:0 0 24px;font-size:14px;color:#6b7280;line-height:1.7;text-align:center;">
-        Hola <strong>${recipientName}</strong>, <strong>${buyerName}</strong> te ha enviado una tarjeta regalo para disfrutar de los servicios de NAILOX.
+        Hola <strong>${recipientName}</strong>, <strong>${buyerName}</strong> te ha enviado una tarjeta regalo para disfrutar de los servicios de CALUATNAILS.
       </p>
 
       <!-- Gift card visual -->
@@ -659,7 +659,7 @@ function buildGiftCardReceived(data: Record<string, unknown>, brand: BrandConfig
       <div style="background:#f9fafb;border-radius:14px;padding:20px;margin:24px 0;">
         <p style="margin:0 0 12px;font-size:13px;font-weight:700;color:#1f2937;">¿Cómo canjearla?</p>
         <ol style="margin:0;padding-left:20px;font-size:13px;color:#4b5563;line-height:1.9;">
-          <li>Reserva una cita en NAILOX</li>
+          <li>Reserva una cita en CALUATNAILS</li>
           <li>Elige los servicios que quieras</li>
           <li>Introduce tu código <strong>${code}</strong> al pagar</li>
         </ol>
@@ -684,11 +684,11 @@ function buildGiftCardConfirmation(data: Record<string, unknown>, brand: BrandCo
   const occasion = (data.occasion as string) || "";
 
   return {
-    subject: `✅ Compra confirmada — Tarjeta Regalo NAILOX ${amount}€`,
+    subject: `✅ Compra confirmada — Tarjeta Regalo CALUATNAILS ${amount}€`,
     html: wrapper(`
       <h2 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#1A1A1A;">¡Compra exitosa! 🎁</h2>
       <p style="margin:0 0 24px;font-size:14px;color:#6b7280;line-height:1.7;">
-        Hola <strong>${buyerName}</strong>, hemos procesado correctamente tu compra de la tarjeta regalo NAILOX.
+        Hola <strong>${buyerName}</strong>, hemos procesado correctamente tu compra de la tarjeta regalo CALUATNAILS.
         ${recipientName ? `<br>Hemos enviado la tarjeta directamente a <strong>${recipientName}</strong>.` : ""}
       </p>
 
@@ -714,7 +714,7 @@ function buildGiftCardConfirmation(data: Record<string, unknown>, brand: BrandCo
         <a href="${brand.site_url}/mi-cuenta" style="display:inline-block;background:linear-gradient(135deg,${brand.email_header_color},${brand.email_header_color2});color:#ffffff;font-size:14px;font-weight:600;padding:14px 32px;border-radius:50px;text-decoration:none;">Ver mis tarjetas regalo</a>
       </div>
 
-      <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">Gracias por confiar en NAILOX para tus regalos especiales 💖</p>
+      <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">Gracias por confiar en CALUATNAILS para tus regalos especiales 💖</p>
     `, brand),
   };
 }
@@ -848,7 +848,7 @@ Deno.serve(async (req: Request) => {
     if (type === "signup_confirmation" || type === "verify_email") {
       let confirmationLink = (data.link as string) || null;
       if (!confirmationLink || confirmationLink === "#") {
-        const siteUrl = brand.site_url || "https://nailox.com";
+        const siteUrl = brand.site_url || "https://caluatnails.com";
         const redirectTo = `${siteUrl}/confirmar-email`;
         console.log(`🔗 Generating signup link for ${to.email}...`);
         const { link, error } = await generateSupabaseLink("signup", to.email, redirectTo);
@@ -858,7 +858,7 @@ Deno.serve(async (req: Request) => {
     } else if (type === "password_reset") {
       let recoveryLink = (data.link as string) || null;
       if (!recoveryLink || recoveryLink === "#") {
-        const siteUrl = brand.site_url || "https://nailox.com";
+        const siteUrl = brand.site_url || "https://caluatnails.com";
         const redirectTo = (data.redirectTo as string) || `${siteUrl}/nueva-contrasena`;
         console.log(`🔗 Generating recovery link for ${to.email}...`);
         const { link, error } = await generateSupabaseLink("recovery", to.email, redirectTo);
@@ -911,7 +911,7 @@ Deno.serve(async (req: Request) => {
     if (customTemplate) {
       console.log(`✨ Using custom DB template for [${type}]`);
       let body = customTemplate.email_body;
-      let subject = customTemplate.title || "Notificación de Nailox";
+      let subject = customTemplate.title || "Notificación de Caluatnails";
 
       // Simple placeholder replacement
       Object.entries(data).forEach(([key, val]) => {
@@ -963,7 +963,7 @@ Deno.serve(async (req: Request) => {
         default: 
           console.log(`⚠️ Unknown type [${type}], using default simple layout`);
           emailContent = {
-            subject: (data.title as string) || "Notificación de Nailox",
+            subject: (data.title as string) || "Notificación de Caluatnails",
             html: wrapper(`
               <h2 style="margin:0 0 10px;font-size:20px;font-weight:700;color:#1e293b;">${(data.title as string) || "Notificación"}</h2>
               <p style="margin:0;font-size:14px;color:#64748b;line-height:1.6;">${(data.body as string) || ""}</p>
@@ -977,7 +977,7 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    const senderEmail = brand.sender_email || "noreply@nailox.com";
+    const senderEmail = brand.sender_email || "noreply@caluatnails.com";
 
     const resendBody = {
       from: `${brand.email_brand_name} <${senderEmail}>`,

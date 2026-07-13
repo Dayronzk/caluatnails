@@ -217,7 +217,7 @@ export default function ProfessionalAvailability() {
     printWindow.document.write(`
       <html>
         <head>
-          <title>Reporte Diario - Nailox - ${dateStr}</title>
+          <title>Reporte Diario - Caluatnails - ${dateStr}</title>
           <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
           <script src="https://cdn.tailwindcss.com"></script>
           <style>
@@ -229,7 +229,7 @@ export default function ProfessionalAvailability() {
           <div class="flex justify-between items-start border-b-2 border-rose-500 pb-6 mb-8">
             <div>
               <h1 class="text-3xl font-black text-gray-900 tracking-tight">REPORTAJE DIARIO</h1>
-              <p class="text-rose-500 font-bold uppercase tracking-widest text-xs mt-1">Gestión Administrativa · Nailox</p>
+              <p class="text-rose-500 font-bold uppercase tracking-widest text-xs mt-1">Gestión Administrativa · Caluatnails</p>
             </div>
             <div class="text-right">
               <p class="text-sm font-bold text-gray-900">${dateStr}</p>
@@ -280,7 +280,7 @@ export default function ProfessionalAvailability() {
           <div class="mt-20 border-t border-dashed border-gray-200 pt-8 flex justify-between items-end">
             <div class="text-xs text-gray-400">
               <p>Este reporte es para uso interno administrativo.</p>
-              <p>© ${new Date().getFullYear()} Nailox Dashboard System</p>
+              <p>© ${new Date().getFullYear()} Caluatnails Dashboard System</p>
             </div>
             <button onclick="window.print()" class="no-print bg-rose-500 text-white px-8 py-3 rounded-2xl font-bold text-sm shadow-lg shadow-rose-200 hover:bg-rose-600 transition-all">
               Imprimir Reporte

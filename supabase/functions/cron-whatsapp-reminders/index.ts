@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
   })[]) {
     const phone = c.client_phone.replace(/\D/g, "");
     const firstName = (c.client_name || "").split(" ")[0].trim();
-    const proName = c.professional_name || "el equipo NAILOX";
+    const proName = c.professional_name || "el equipo CALUATNAILS";
 
     // ── Resolve conversation (if any) to send via whatsapp-outbound ──
     const last9 = phone.slice(-9);

@@ -4,7 +4,7 @@ import { useSEO } from "@/hooks/useSEO";
 const sections = [
   {
     title: "1. Información que recopilamos",
-    content: `Al registrarte en NAILOX, recopilamos la siguiente información personal:
+    content: `Al registrarte en CALUATNAILS, recopilamos la siguiente información personal:
     
 • Nombre completo y dirección de correo electrónico
 • Contraseña (almacenada de forma encriptada, nunca en texto plano)
@@ -29,7 +29,7 @@ Nunca vendemos, alquilamos ni compartimos tu información personal con terceros 
   },
   {
     title: "3. Cookies y tecnologías de seguimiento",
-    content: `NAILOX utiliza cookies esenciales para el funcionamiento de la plataforma (sesión de usuario, preferencias). También podemos usar cookies analíticas para entender cómo se usa el sitio y mejorar la experiencia.
+    content: `CALUATNAILS utiliza cookies esenciales para el funcionamiento de la plataforma (sesión de usuario, preferencias). También podemos usar cookies analíticas para entender cómo se usa el sitio y mejorar la experiencia.
 
 Puedes configurar tu navegador para rechazar cookies, aunque esto puede afectar algunas funcionalidades del sitio.`,
   },
@@ -45,7 +45,7 @@ Puedes configurar tu navegador para rechazar cookies, aunque esto puede afectar 
   },
   {
     title: "5. Tus derechos",
-    content: `Como usuario de NAILOX, tienes los siguientes derechos sobre tus datos personales:
+    content: `Como usuario de CALUATNAILS, tienes los siguientes derechos sobre tus datos personales:
 
 • Acceso: Puedes solicitar una copia de los datos que tenemos sobre ti
 • Rectificación: Puedes corregir información incorrecta desde tu perfil
@@ -53,7 +53,7 @@ Puedes configurar tu navegador para rechazar cookies, aunque esto puede afectar 
 • Portabilidad: Puedes solicitar tus datos en formato exportable
 • Oposición: Puedes cancelar la suscripción al newsletter en cualquier momento
 
-Para ejercer cualquiera de estos derechos, contáctanos en hola@nailox.com.`,
+Para ejercer cualquiera de estos derechos, contáctanos en hola@caluatnails.com.`,
   },
   {
     title: "6. Retención de datos",
@@ -67,15 +67,15 @@ Para ejercer cualquiera de estos derechos, contáctanos en hola@nailox.com.`,
     title: "8. Contacto",
     content: `Si tienes preguntas sobre esta política o sobre cómo manejamos tus datos, puedes contactarnos en:
 
-Correo: hola@nailox.com
-Plataforma: NAILOX — Curso Profesional de Manicura y Pedicura`,
+Correo: hola@caluatnails.com
+Plataforma: CALUATNAILS — Curso Profesional de Manicura y Pedicura`,
   },
 ];
 
 export default function PrivacidadPage() {
   useSEO({
     title: "Política de Privacidad",
-    description: "Política de privacidad de NAILOX: qué datos recopilamos, cómo los usamos y tus derechos.",
+    description: "Política de privacidad de CALUATNAILS: qué datos recopilamos, cómo los usamos y tus derechos.",
     ogUrl: "/privacidad",
     canonical: "/privacidad",
   });
@@ -113,7 +113,7 @@ export default function PrivacidadPage() {
       <div className="max-w-3xl mx-auto px-6 py-16">
         <div className="bg-rose-50 border border-rose-100 rounded-xl p-5 mb-10">
           <p className="text-sm text-gray-600 leading-relaxed">
-            En <strong>NAILOX</strong> nos comprometemos a proteger tu privacidad. Esta política explica qué información recopilamos, cómo la usamos y cuáles son tus derechos. Al usar nuestra plataforma, aceptas las prácticas descritas en este documento.
+            En <strong>CALUATNAILS</strong> nos comprometemos a proteger tu privacidad. Esta política explica qué información recopilamos, cómo la usamos y cuáles son tus derechos. Al usar nuestra plataforma, aceptas las prácticas descritas en este documento.
           </p>
         </div>
 

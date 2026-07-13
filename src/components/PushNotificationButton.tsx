@@ -55,7 +55,7 @@ export default function PushNotificationButton({
           
           <h3 className="text-xl font-bold text-slate-900 mb-3">Notificaciones en tu iPhone 📱</h3>
           <p className="text-sm text-slate-500 leading-relaxed mb-6">
-            Para recibir recordatorios en tiempo real, añade Nailox a tu pantalla de inicio:
+            Para recibir recordatorios en tiempo real, añade Caluatnails a tu pantalla de inicio:
           </p>
           
           <div className="w-full space-y-4 text-left">

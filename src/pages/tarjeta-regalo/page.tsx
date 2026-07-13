@@ -254,7 +254,7 @@ export default function TarjetaRegaloPage() {
   if (window.location.pathname.includes("/exito") || successCode) {
     return (
       <>
-        <Helmet><title>¡Tarjeta regalo comprada! | NAILOX Barcelona</title></Helmet>
+        <Helmet><title>¡Tarjeta regalo comprada! | CALUATNAILS Barcelona</title></Helmet>
         <Navbar />
         <main className="min-h-screen bg-gradient-to-b from-rose-50 to-white pt-24 pb-20 px-4">
           <div className="max-w-lg mx-auto text-center">
@@ -268,7 +268,7 @@ export default function TarjetaRegaloPage() {
                 <div className="bg-white rounded-2xl border-2 border-dashed border-rose-200 p-8">
                   <p className="text-sm text-gray-500 mb-2">Tu código de tarjeta regalo</p>
                   <p className="text-3xl font-mono font-bold text-rose-600 tracking-wider">{successCode}</p>
-                  <p className="text-xs text-gray-400 mt-3">Válido durante 12 meses en cualquier servicio NAILOX</p>
+                  <p className="text-xs text-gray-400 mt-3">Válido durante 12 meses en cualquier servicio CALUATNAILS</p>
                 </div>
 
                 {isGroupGift && (
@@ -323,29 +323,29 @@ export default function TarjetaRegaloPage() {
   return (
     <>
       <Helmet>
-        <title>Tarjeta Regalo | NAILOX — Manicura y Pedicura Profesional Barcelona</title>
-        <meta name="description" content="Regala una experiencia de manicura y pedicura profesional en Barcelona. Tarjetas regalo NAILOX desde 10€. Entrega inmediata por email, válidas 1 año." />
-        <link rel="canonical" href="https://www.nailox.com/tarjeta-regalo" />
-        <meta property="og:site_name" content="NAILOX" />
+        <title>Tarjeta Regalo | CALUATNAILS — Manicura y Pedicura Profesional Barcelona</title>
+        <meta name="description" content="Regala una experiencia de manicura y pedicura profesional en Barcelona. Tarjetas regalo CALUATNAILS desde 10€. Entrega inmediata por email, válidas 1 año." />
+        <link rel="canonical" href="https://www.caluatnails.com/tarjeta-regalo" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.nailox.com/tarjeta-regalo" />
-        <meta property="og:title" content="Tarjeta Regalo NAILOX — Regala Manicura en Barcelona" />
+        <meta property="og:url" content="https://www.caluatnails.com/tarjeta-regalo" />
+        <meta property="og:title" content="Tarjeta Regalo CALUATNAILS — Regala Manicura en Barcelona" />
         <meta property="og:description" content="Regala una experiencia de manicura y pedicura profesional en Barcelona. Tarjetas regalo desde 10€, válidas 12 meses." />
-        <meta property="og:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta property="og:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="es_ES" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Tarjeta Regalo NAILOX — Regala Manicura en Barcelona" />
+        <meta name="twitter:title" content="Tarjeta Regalo CALUATNAILS — Regala Manicura en Barcelona" />
         <meta name="twitter:description" content="Regala una experiencia de manicura y pedicura profesional. Tarjetas desde 10€, válidas 12 meses." />
-        <meta name="twitter:image" content="https://www.nailox.com/assets/manicure-premium.png" />
+        <meta name="twitter:image" content="https://www.caluatnails.com/assets/manicure-premium.png" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            name: "Tarjeta Regalo NAILOX",
+            name: "Tarjeta Regalo CALUATNAILS",
             description: "Tarjeta regalo para servicios de manicura y pedicura profesional en Barcelona",
-            brand: { "@type": "Brand", name: "NAILOX" },
+            brand: { "@type": "Brand", name: "CALUATNAILS" },
             offers: { "@type": "AggregateOffer", lowPrice: "10", highPrice: "500", priceCurrency: "EUR", availability: "https://schema.org/InStock" },
           })}
         </script>
@@ -366,7 +366,7 @@ export default function TarjetaRegaloPage() {
             </h1>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
               La tarjeta regalo perfecta para sorprender a alguien especial.
-              Válida para cualquier servicio NAILOX durante 12 meses.
+              Válida para cualquier servicio CALUATNAILS durante 12 meses.
             </p>
           </div>
         </section>

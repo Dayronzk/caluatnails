@@ -9,7 +9,7 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY as strin
 export default function RecuperarPage() {
   useSEO({
     title: "Recuperar Contraseña",
-    description: "Recupera tu contraseña de NAILOX.",
+    description: "Recupera tu contraseña de CALUATNAILS.",
     ogUrl: "/recuperar",
     canonical: "/recuperar",
     noindex: true,
@@ -138,7 +138,7 @@ export default function RecuperarPage() {
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none transition-all text-sm"
                 />
                 <p className="text-xs text-gray-400 mt-2">
-                  Ingresa el email con el que te registraste en NAILOX.
+                  Ingresa el email con el que te registraste en CALUATNAILS.
                 </p>
               </div>
 

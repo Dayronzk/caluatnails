@@ -100,7 +100,7 @@ function drawCertificate(canvas: HTMLCanvasElement, cert: CertData) {
   const centerX = cardX + cardW / 2;
   const contentY = cardY + 80;
 
-  // NAILOX branding
+  // CALUATNAILS branding
   ctx.font = 'bold 14px "Helvetica Neue", Arial, sans-serif';
   ctx.fillStyle = '#9ca3af';
   ctx.textAlign = 'center';
@@ -229,9 +229,9 @@ export default function CertificadoPublicoPage() {
   const [copied, setCopied] = useState(false);
 
   useSEO({
-    title: cert ? `Certificado de ${cert.student_name} — ${cert.course_title}` : "Certificado Profesional NAILOX",
-    description: cert ? `${cert.student_name} completó exitosamente el curso ${cert.course_title} en ${cert.academy_name}. Certificación online verificada.` : "Certificado de finalización profesional emitido por NAILOX Academia.",
-    ogTitle: cert ? `${cert.student_name} obtuvo su Certificado NAILOX` : "Certificado Profesional NAILOX",
+    title: cert ? `Certificado de ${cert.student_name} — ${cert.course_title}` : "Certificado Profesional CALUATNAILS",
+    description: cert ? `${cert.student_name} completó exitosamente el curso ${cert.course_title} en ${cert.academy_name}. Certificación online verificada.` : "Certificado de finalización profesional emitido por CALUATNAILS Academia.",
+    ogTitle: cert ? `${cert.student_name} obtuvo su Certificado CALUATNAILS` : "Certificado Profesional CALUATNAILS",
     ogDescription: cert ? `Completó el curso "${cert.course_title}" — ${cert.total_hours} de formación profesional. Emitido por ${cert.academy_name}.` : "Certificado de finalización profesional.",
     ogImage: "https://readdy.ai/api/search-image?query=professional%20certificate%20diploma%20elegant%20rose%20gold%20award%20achievement%20beauty%20nail%20course%20graduation%20luxury%20minimal%20clean%20design&width=1200&height=630&seq=og-cert-v1&orientation=landscape",
     ogUrl: `/certificado/${certId}`,

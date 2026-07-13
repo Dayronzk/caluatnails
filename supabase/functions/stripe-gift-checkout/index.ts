@@ -108,7 +108,7 @@ Deno.serve(async (req: Request) => {
             currency: "eur",
             unit_amount: Math.round(totalAmount * 100),
             product_data: {
-              name: `Tarjeta Regalo NAILOX — ${amount} €`,
+              name: `Tarjeta Regalo CALUATNAILS — ${amount} €`,
               description: recipientName ? `Para: ${recipientName}` : "Tarjeta regalo manicura y pedicura",
             },
           },
@@ -177,7 +177,7 @@ Deno.serve(async (req: Request) => {
             currency: "eur",
             unit_amount: Math.round(amount * 100),
             product_data: {
-              name: `Tarjeta Regalo NAILOX — ${amount} €`,
+              name: `Tarjeta Regalo CALUATNAILS — ${amount} €`,
               description: `Lote de ${recipients.length} tarjetas regalo`,
             },
           },
@@ -256,7 +256,7 @@ Deno.serve(async (req: Request) => {
             currency: "eur",
             unit_amount: Math.round(totalAmount * 100),
             product_data: {
-              name: `Aportación Tarjeta Grupal NAILOX`,
+              name: `Aportación Tarjeta Grupal CALUATNAILS`,
               description: `Tu aportación de ${amount} € para ${recipientName} (objetivo: ${targetAmount} €)`,
             },
           },

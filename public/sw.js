@@ -1,7 +1,7 @@
-// Service Worker — Nailox push notifications (v2: urgent + actions + tags)
+// Service Worker — Caluatnails push notifications (v2: urgent + actions + tags)
 self.addEventListener('push', (event) => {
   let data = {
-    title: 'Nailox 💅',
+    title: 'Caluatnails 💅',
     body: 'Tienes una actualización.',
     url: '/',
     urgent: false,
@@ -39,7 +39,7 @@ self.addEventListener('push', (event) => {
     requireInteraction: isUrgent,             // no desaparece sola hasta que el admin la toque
     renotify: isUrgent,                       // re-vibrar incluso si hay otra con el mismo tag
     silent: false,
-    tag: data.tag || (isUrgent ? 'nailox-urgent' : 'nailox-default'),
+    tag: data.tag || (isUrgent ? 'caluatnails-urgent' : 'caluatnails-default'),
     timestamp: Date.now(),
     data: {
       url: data.url || '/',

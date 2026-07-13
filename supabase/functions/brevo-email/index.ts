@@ -51,10 +51,10 @@ interface BrandConfig {
 }
 
 const DEFAULT_BRAND: BrandConfig = {
-  email_brand_name: "NAILOX",
-  site_url: "https://nailox.com",
-  contact_email: "hola@nailox.com",
-  sender_email: "noreply@nailox.com",
+  email_brand_name: "CALUATNAILS",
+  site_url: "https://caluatnails.com",
+  contact_email: "hola@caluatnails.com",
+  sender_email: "noreply@caluatnails.com",
   email_footer_text: "Curso Profesional de Manicura y Pedicura",
   email_header_color: "#f43f5e",
   email_header_color2: "#fb7185",
@@ -477,7 +477,7 @@ Deno.serve(async (req: Request) => {
     }
 
     // Use sender_email from brand config (must be verified in Brevo)
-    const senderEmail = brand.sender_email || "noreply@nailox.com";
+    const senderEmail = brand.sender_email || "noreply@caluatnails.com";
 
     const brevoBody = {
       sender: { name: brand.email_brand_name, email: senderEmail },

@@ -4,13 +4,13 @@ import { useSEO } from "@/hooks/useSEO";
 const sections = [
   {
     title: "1. Aceptación de los términos",
-    content: `Al acceder y usar la plataforma NAILOX, aceptas quedar vinculado por estos Términos de Uso. Si no estás de acuerdo con alguna parte de estos términos, no debes usar nuestra plataforma.
+    content: `Al acceder y usar la plataforma CALUATNAILS, aceptas quedar vinculado por estos Términos de Uso. Si no estás de acuerdo con alguna parte de estos términos, no debes usar nuestra plataforma.
 
 Estos términos se aplican a todos los usuarios, incluyendo visitantes, estudiantes registrados y administradores.`,
   },
   {
     title: "2. Descripción del servicio",
-    content: `NAILOX es una plataforma educativa en línea que ofrece:
+    content: `CALUATNAILS es una plataforma educativa en línea que ofrece:
 
 • Curso de manicura y pedicura profesional con módulos de video y texto
 • Recursos descargables (fichas técnicas, guías, plantillas)
@@ -38,11 +38,11 @@ No puedes compartir tu cuenta con otras personas. Cada licencia es personal e in
 • Recibirás un correo de confirmación con los detalles de tu compra
 • El acceso al curso se activa automáticamente tras el pago exitoso
 
-Política de reembolso: Ofrecemos reembolso completo dentro de los primeros 7 días naturales desde la compra, siempre que no hayas completado más del 20% del contenido del curso. Para solicitar un reembolso, contáctanos en hola@nailox.com.`,
+Política de reembolso: Ofrecemos reembolso completo dentro de los primeros 7 días naturales desde la compra, siempre que no hayas completado más del 20% del contenido del curso. Para solicitar un reembolso, contáctanos en hola@caluatnails.com.`,
   },
   {
     title: "5. Propiedad intelectual",
-    content: `Todo el contenido de NAILOX — incluyendo videos, textos, imágenes, recursos descargables, diseño y código — es propiedad exclusiva de NAILOX y está protegido por leyes de derechos de autor.
+    content: `Todo el contenido de CALUATNAILS — incluyendo videos, textos, imágenes, recursos descargables, diseño y código — es propiedad exclusiva de CALUATNAILS y está protegido por leyes de derechos de autor.
 
 Está estrictamente prohibido:
 • Reproducir, distribuir o vender el contenido del curso
@@ -54,35 +54,35 @@ El incumplimiento puede resultar en la cancelación inmediata de tu acceso sin r
   },
   {
     title: "6. Conducta en el foro",
-    content: `El foro de NAILOX es un espacio de aprendizaje y comunidad. Al participar, te comprometes a:
+    content: `El foro de CALUATNAILS es un espacio de aprendizaje y comunidad. Al participar, te comprometes a:
 
 • Mantener un trato respetuoso con otros estudiantes
 • No publicar contenido ofensivo, discriminatorio o spam
 • No compartir información personal de terceros sin su consentimiento
 • No promocionar productos o servicios externos sin autorización
 
-NAILOX se reserva el derecho de eliminar contenido inapropiado y suspender cuentas que violen estas normas.`,
+CALUATNAILS se reserva el derecho de eliminar contenido inapropiado y suspender cuentas que violen estas normas.`,
   },
   {
     title: "7. Limitación de responsabilidad",
-    content: `NAILOX proporciona el contenido educativo con fines informativos y formativos. No garantizamos resultados económicos específicos derivados del uso del curso.
+    content: `CALUATNAILS proporciona el contenido educativo con fines informativos y formativos. No garantizamos resultados económicos específicos derivados del uso del curso.
 
 La plataforma se ofrece "tal como está". No somos responsables de interrupciones del servicio, pérdida de datos o daños indirectos derivados del uso de la plataforma.`,
   },
   {
     title: "8. Modificaciones",
-    content: `NAILOX se reserva el derecho de modificar estos Términos de Uso en cualquier momento. Los cambios significativos serán notificados por correo electrónico con al menos 15 días de anticipación. El uso continuado de la plataforma tras los cambios implica la aceptación de los nuevos términos.`,
+    content: `CALUATNAILS se reserva el derecho de modificar estos Términos de Uso en cualquier momento. Los cambios significativos serán notificados por correo electrónico con al menos 15 días de anticipación. El uso continuado de la plataforma tras los cambios implica la aceptación de los nuevos términos.`,
   },
   {
     title: "9. Ley aplicable",
-    content: `Estos términos se rigen por las leyes aplicables en la jurisdicción donde opera NAILOX. Cualquier disputa será resuelta mediante negociación amistosa o, en su defecto, ante los tribunales competentes.`,
+    content: `Estos términos se rigen por las leyes aplicables en la jurisdicción donde opera CALUATNAILS. Cualquier disputa será resuelta mediante negociación amistosa o, en su defecto, ante los tribunales competentes.`,
   },
 ];
 
 export default function TerminosPage() {
   useSEO({
     title: "Términos y Condiciones",
-    description: "Términos y condiciones de uso del salón y la plataforma NAILOX.",
+    description: "Términos y condiciones de uso del salón y la plataforma CALUATNAILS.",
     ogUrl: "/terminos",
     canonical: "/terminos",
   });
@@ -120,7 +120,7 @@ export default function TerminosPage() {
       <div className="max-w-3xl mx-auto px-6 py-16">
         <div className="bg-rose-50 border border-rose-100 rounded-xl p-5 mb-10">
           <p className="text-sm text-gray-600 leading-relaxed">
-            Bienvenida a <strong>NAILOX</strong>. Por favor, lee estos Términos de Uso detenidamente antes de usar nuestra plataforma. Al registrarte o acceder al contenido, confirmas que has leído, entendido y aceptado estos términos.
+            Bienvenida a <strong>CALUATNAILS</strong>. Por favor, lee estos Términos de Uso detenidamente antes de usar nuestra plataforma. Al registrarte o acceder al contenido, confirmas que has leído, entendido y aceptado estos términos.
           </p>
         </div>
 

@@ -18,16 +18,16 @@ interface CenterSettings {
 }
 
 const DEFAULT_CENTER: CenterSettings = {
-  center_name: "NAILOX Centro",
+  center_name: "CALUATNAILS Centro",
   address: "Calle Ejemplo 123",
   city: "Madrid",
   postal_code: "28001",
   phone: "+34 600 000 000",
-  email: "info@nailox.es",
+  email: "info@caluatnails.es",
   schedule: "Lun-Vie 9:00-20:00 · Sáb 9:00-14:00",
   bizum_whatsapp: "",
-  pwa_name: "NAILOX",
-  pwa_short_name: "NAILOX",
+  pwa_name: "CALUATNAILS",
+  pwa_short_name: "CALUATNAILS",
   pwa_icon_url: "",
 };
 
@@ -46,10 +46,10 @@ interface EmailBrand {
 }
 
 const DEFAULT_EMAIL_BRAND: EmailBrand = {
-  email_brand_name: "NAILOX",
-  site_url: "https://nailox.com",
-  contact_email: "hola@nailox.com",
-  sender_email: "noreply@nailox.com",
+  email_brand_name: "CALUATNAILS",
+  site_url: "https://caluatnails.com",
+  contact_email: "hola@caluatnails.com",
+  sender_email: "noreply@caluatnails.com",
   notification_email: "",
   email_footer_text: "Curso Profesional de Manicura y Pedicura",
   email_header_color: "#f43f5e",
@@ -519,7 +519,7 @@ export default function AdminSettings() {
                   type="text" 
                   value={center.pwa_name} 
                   onChange={e => setCenter({...center, pwa_name: e.target.value})} 
-                  placeholder="Ej: Nailox Academia" 
+                  placeholder="Ej: Caluatnails Academia" 
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition-all" 
                 />
               </div>
@@ -529,7 +529,7 @@ export default function AdminSettings() {
                   type="text" 
                   value={center.pwa_short_name} 
                   onChange={e => setCenter({...center, pwa_short_name: e.target.value})} 
-                  placeholder="Ej: Nailox" 
+                  placeholder="Ej: Caluatnails" 
                   maxLength={12}
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition-all" 
                 />

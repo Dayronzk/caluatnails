@@ -13,7 +13,7 @@ interface Props {
 
 const MAX_NAME_CHANGES = 2;
 const COURSE_TITLE = 'Profesional en Manicura y Pedicura';
-const ACADEMY_NAME = 'NAILOX';
+const ACADEMY_NAME = 'CALUATNAILS';
 
 // ── LocalStorage helpers ──────────────────────────────────────────────────────
 
@@ -152,7 +152,7 @@ export function drawCertificateCanvas(
   const centerX = cardX + cardW / 2;
   const contentY = cardY + 80;
 
-  // NAILOX branding
+  // CALUATNAILS branding
   ctx.font = 'bold 14px "Helvetica Neue", Arial, sans-serif';
   ctx.fillStyle = '#9ca3af';
   ctx.textAlign = 'center';

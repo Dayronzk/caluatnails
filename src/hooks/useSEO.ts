@@ -16,10 +16,10 @@ interface SEOProps {
   noindex?: boolean;
 }
 
-const SITE_NAME = "NAILOX";
-const BASE_URL = "https://www.nailox.com";
+const SITE_NAME = "CALUATNAILS";
+const BASE_URL = "https://www.caluatnails.com";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/assets/manicure-premium.png`;
-const DEFAULT_TITLE = "NAILOX — Manicura y Pedicura Profesional en Barcelona (Eixample)";
+const DEFAULT_TITLE = "CALUATNAILS — Manicura y Pedicura Profesional en Barcelona (Eixample)";
 const DEFAULT_ROBOTS = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
 function setMeta(selector: string, attr: string, value: string) {

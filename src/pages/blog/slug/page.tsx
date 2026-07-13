@@ -12,9 +12,9 @@ export default function BlogPostPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 text-center">
         <Helmet>
-          <title>Artículo no encontrado | NAILOX</title>
+          <title>Artículo no encontrado | CALUATNAILS</title>
           <meta name="robots" content="noindex, follow" />
-          <link rel="canonical" href="https://www.nailox.com/blog" />
+          <link rel="canonical" href="https://www.caluatnails.com/blog" />
         </Helmet>
         <h1 className="text-4xl font-black text-gray-900 mb-4">Artículo no encontrado</h1>
         <p className="text-gray-500 mb-8">El artículo que buscas no existe o ha cambiado de URL.</p>
@@ -26,7 +26,7 @@ export default function BlogPostPage() {
   }
 
   const related = getRelatedPosts(post.slug, 3);
-  const canonical = `https://www.nailox.com/blog/${post.slug}`;
+  const canonical = `https://www.caluatnails.com/blog/${post.slug}`;
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
 
   const wordCount = post.content.reduce((acc, b) => {
@@ -38,7 +38,7 @@ export default function BlogPostPage() {
   return (
     <div className="min-h-screen bg-white font-inter">
       <Helmet>
-        <title>{post.title} | NAILOX Blog</title>
+        <title>{post.title} | CALUATNAILS Blog</title>
         <meta name="description" content={post.excerpt} />
         <meta name="keywords" content={post.keywords} />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
@@ -48,15 +48,15 @@ export default function BlogPostPage() {
         <meta property="og:url" content={canonical} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
-        <meta property="og:image" content={`https://www.nailox.com${post.image}`} />
+        <meta property="og:image" content={`https://www.caluatnails.com${post.image}`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content="NAILOX" />
+        <meta property="og:site_name" content="CALUATNAILS" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.excerpt} />
-        <meta name="twitter:image" content={`https://www.nailox.com${post.image}`} />
+        <meta name="twitter:image" content={`https://www.caluatnails.com${post.image}`} />
 
         <script type="application/ld+json">
           {JSON.stringify({
@@ -65,8 +65,8 @@ export default function BlogPostPage() {
               {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.nailox.com/" },
-                  { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.nailox.com/blog" },
+                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.caluatnails.com/" },
+                  { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.caluatnails.com/blog" },
                   { "@type": "ListItem", "position": 3, "name": post.title, "item": canonical },
                 ],
               },
@@ -76,7 +76,7 @@ export default function BlogPostPage() {
                 "description": post.excerpt,
                 "image": {
                   "@type": "ImageObject",
-                  "url": `https://www.nailox.com${post.image}`,
+                  "url": `https://www.caluatnails.com${post.image}`,
                   "width": 1200,
                   "height": 630,
                 },
@@ -84,11 +84,11 @@ export default function BlogPostPage() {
                 "dateModified": post.publishedAt,
                 "author": {
                   "@type": "Organization",
-                  "@id": "https://www.nailox.com/#organization",
-                  "name": "Equipo NAILOX",
-                  "url": "https://www.nailox.com/",
+                  "@id": "https://www.caluatnails.com/#organization",
+                  "name": "Equipo CALUATNAILS",
+                  "url": "https://www.caluatnails.com/",
                 },
-                "publisher": { "@id": "https://www.nailox.com/#organization" },
+                "publisher": { "@id": "https://www.caluatnails.com/#organization" },
                 "mainEntityOfPage": { "@type": "WebPage", "@id": canonical },
                 "articleSection": post.category,
                 "inLanguage": "es",
@@ -102,9 +102,9 @@ export default function BlogPostPage() {
                 },
                 "isPartOf": {
                   "@type": "Blog",
-                  "@id": "https://www.nailox.com/blog#blog",
-                  "name": "Blog NAILOX",
-                  "url": "https://www.nailox.com/blog",
+                  "@id": "https://www.caluatnails.com/blog#blog",
+                  "name": "Blog CALUATNAILS",
+                  "url": "https://www.caluatnails.com/blog",
                 },
               },
             ],
@@ -215,7 +215,7 @@ export default function BlogPostPage() {
           <div className="mt-16 pt-8 border-t border-gray-100 flex items-center gap-4">
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center text-white font-black text-xl">N</div>
             <div>
-              <p className="font-bold text-gray-900">Equipo NAILOX</p>
+              <p className="font-bold text-gray-900">Equipo CALUATNAILS</p>
               <p className="text-sm text-gray-500">Salón de manicura y pedicura premium · Eixample, Barcelona</p>
             </div>
           </div>
@@ -249,7 +249,7 @@ export default function BlogPostPage() {
         <section className="max-w-7xl mx-auto px-6 mt-20">
           <div className="bg-gray-900 rounded-[3rem] p-12 text-center text-white">
             <h2 className="text-3xl font-black mb-4">¿Aplicamos esto en tus uñas?</h2>
-            <p className="text-gray-400 mb-8 max-w-xl mx-auto">Reserva tu cita en NAILOX y deja que nuestras profesionales te asesoren.</p>
+            <p className="text-gray-400 mb-8 max-w-xl mx-auto">Reserva tu cita en CALUATNAILS y deja que nuestras profesionales te asesoren.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button onClick={() => navigate("/reservar")} className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full font-bold text-base transition-all">
                 Reservar Cita
