@@ -1,15 +1,9 @@
 import type { RouteObject } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/home/page";
-import ModulePage from "../pages/module/page";
 import AdminDashboard from "../pages/admin/page";
-import AdminModules from "../pages/admin/modules/page";
-import AdminLessons from "../pages/admin/lessons/page";
-import AdminStudents from "../pages/admin/students/page";
 import AdminClientesPage from "../pages/admin/clientes/page";
 import AdminSettings from "../pages/admin/settings/page";
-import AdminForum from "../pages/admin/forum/page";
-import AdminTags from "../pages/admin/tags/page";
 import AdminServiciosPage from "../pages/admin/servicios/page";
 import AdminAgendaPage from "../pages/admin/agenda/page";
 import AdminWhatsAppPage from "../pages/admin/whatsapp/page";
@@ -57,14 +51,6 @@ const routes: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/modulo/:id",
-    element: (
-      <ProtectedRoute>
-        <ModulePage />
-      </ProtectedRoute>
-    ),
-  },
-  {
     path: "/admin",
     element: (
       <AdminRoute>
@@ -73,50 +59,10 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: "/admin/modulos",
-    element: (
-      <AdminRoute>
-        <AdminModules />
-      </AdminRoute>
-    ),
-  },
-  {
-    path: "/admin/lecciones",
-    element: (
-      <AdminRoute>
-        <AdminLessons />
-      </AdminRoute>
-    ),
-  },
-  {
-    path: "/admin/estudiantes",
-    element: (
-      <AdminRoute>
-        <AdminStudents />
-      </AdminRoute>
-    ),
-  },
-  {
     path: "/admin/clientes",
     element: (
       <AdminRoute>
         <AdminClientesPage />
-      </AdminRoute>
-    ),
-  },
-  {
-    path: "/admin/foro",
-    element: (
-      <AdminRoute>
-        <AdminForum />
-      </AdminRoute>
-    ),
-  },
-  {
-    path: "/admin/etiquetas",
-    element: (
-      <AdminRoute>
-        <AdminTags />
       </AdminRoute>
     ),
   },

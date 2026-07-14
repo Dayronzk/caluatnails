@@ -46,13 +46,8 @@ import { CSS } from "@dnd-kit/utilities";
 
 const INITIAL_NAV_ITEMS = [
   { id: "dashboard", path: "/admin", icon: LayoutDashboard, label: "Dashboard" },
-  { id: "modulos", path: "/admin/modulos", icon: BookOpen, label: "Módulos" },
-  { id: "lecciones", path: "/admin/lecciones", icon: GraduationCap, label: "Lecciones" },
-  { id: "etiquetas", path: "/admin/etiquetas", icon: Tag, label: "Etiquetas" },
-  { id: "estudiantes", path: "/admin/estudiantes", icon: Users, label: "Estudiantes" },
   { id: "clientes", path: "/admin/clientes", icon: ShoppingBag, label: "Clientes" },
   { id: "cupones", path: "/admin/cupones", icon: Ticket, label: "Cupones" },
-  { id: "foro", path: "/admin/foro", icon: MessageCircle, label: "Foro" },
   { id: "servicios", path: "/admin/servicios", icon: Scissors, label: "Servicios" },
   { id: "agenda", path: "/admin/agenda", icon: CalendarDays, label: "Agenda" },
   { id: "whatsapp", path: "/admin/whatsapp", icon: Bot, label: "WhatsApp Bot" },
