@@ -584,7 +584,7 @@ export default function AccountPage() {
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <span className="font-playfair text-xl font-bold tracking-widest text-gray-900">
-              NAIL<span className={`text-${primaryRole === "professional" ? "teal" : primaryRole === "student" ? "rose" : "amber"}-500`}>OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </Link>
           <div className="flex items-center gap-3">

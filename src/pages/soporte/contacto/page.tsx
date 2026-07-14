@@ -72,7 +72,7 @@ export default function ContactoPage() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <a href="/" className="inline-block mb-8">
             <span className="font-playfair text-2xl font-bold tracking-widest text-white">
-              NAIL<span className="text-rose-400">OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </a>
           <button

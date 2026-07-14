@@ -129,7 +129,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <a href="/" className="inline-block">
             <span className="font-playfair text-3xl font-bold tracking-widest text-[#1A1A1A]">
-              NAIL<span className="text-rose-400">OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </a>
           <h1 className="text-2xl font-bold text-gray-900 mt-4">Bienvenida de vuelta</h1>

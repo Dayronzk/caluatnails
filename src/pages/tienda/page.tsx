@@ -159,7 +159,7 @@ export default function TiendaPage() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <span className="font-playfair text-xl font-bold tracking-widest text-gray-900">
-              NAIL<span className="text-rose-500">OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600">

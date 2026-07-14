@@ -76,7 +76,7 @@ export default function BlogListPage() {
             <span className="text-sm font-medium">Inicio</span>
           </button>
           <span className="font-playfair text-xl font-bold tracking-widest text-gray-900">
-            NAIL<span className="text-rose-400">OX</span>
+            <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
           </span>
           <button onClick={() => navigate("/reservar")} className="bg-rose-500 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-rose-600 transition-all shadow-lg shadow-rose-200">
             RESERVAR

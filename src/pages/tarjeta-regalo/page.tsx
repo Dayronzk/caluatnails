@@ -877,7 +877,7 @@ export default function TarjetaRegaloPage() {
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="font-playfair text-lg font-bold tracking-widest">
-                        NAIL<span className={occasion.accent}>OX</span>
+                        <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
                       </span>
                       <span className="text-2xl">{occasion.emoji}</span>
                     </div>

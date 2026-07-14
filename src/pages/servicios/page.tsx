@@ -98,7 +98,7 @@ export default function AllServicesPage() {
             <span className="text-sm font-medium">Volver</span>
           </button>
           <span className="font-playfair text-xl font-bold tracking-widest text-gray-900">
-            NAIL<span className="text-rose-400">OX</span>
+            <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
           </span>
           <button
             onClick={() => navigate("/reservar")}

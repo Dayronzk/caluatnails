@@ -73,7 +73,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="/" className="flex items-center shrink-0 cursor-pointer">
             <span className={`font-playfair text-xl md:text-2xl font-bold tracking-widest transition-colors ${scrolled ? "text-gray-900" : "text-white"}`}>
-              NAIL<span className="text-rose-400">OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </a>
 

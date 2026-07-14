@@ -7,7 +7,7 @@ replacements = [
 ]
 
 directories = ["src", "public", "supabase"]
-files_to_check = ["index.html", "package.json", "vite.config.ts"]
+files_to_check = ["index.html", "package.json", "vite.config.ts", "middleware.ts", "vercel.json"]
 
 def process_file(filepath):
     try:
@@ -23,16 +23,9 @@ def process_file(filepath):
                 f.write(new_content)
             print(f"Updated {filepath}")
     except Exception as e:
-        # Ignore binary files or read errors
         pass
-
-for d in directories:
-    for root, _, files in os.walk(d):
-        for file in files:
-            process_file(os.path.join(root, file))
 
 for f in files_to_check:
     if os.path.exists(f):
         process_file(f)
-        
-print("Replacement completed.")
+print("Replacement done.")

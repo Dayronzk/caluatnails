@@ -790,7 +790,7 @@ export default function ServiceLandingPage() {
           </button>
           <a href="/" className="flex items-center shrink-0 cursor-pointer">
             <span className="font-playfair text-xl md:text-2xl font-bold tracking-widest text-gray-900">
-              NAIL<span className="text-rose-400">OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </a>
           <button onClick={() => navigate("/reservar")} className="bg-rose-500 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-rose-600 transition-all shadow-lg shadow-rose-200">
@@ -1365,7 +1365,7 @@ export default function ServiceLandingPage() {
 
       <footer className="py-10 border-t border-gray-100 text-center">
         <div className="font-playfair text-xl font-bold tracking-widest text-gray-900 mb-2">
-          NAIL<span className="text-rose-400">OX</span>
+          <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
         </div>
         <p className="text-xs text-gray-400">© {new Date().getFullYear()} CALUATNAILS Barcelona. Todos los derechos reservados.</p>
       </footer>

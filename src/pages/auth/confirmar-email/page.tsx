@@ -101,7 +101,7 @@ export default function ConfirmarEmailPage() {
         <div className="mb-10">
           <a href="/">
             <span className="font-playfair text-3xl font-bold tracking-widest text-[#1A1A1A]">
-              NAIL<span className="text-rose-400">OX</span>
+              <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
             </span>
           </a>
         </div>

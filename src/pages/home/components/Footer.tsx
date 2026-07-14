@@ -142,7 +142,7 @@ export default function Footer() {
             {/* CALUATNAILS Logo */}
             <div className="mb-4">
               <span className="font-playfair text-3xl font-bold tracking-widest text-white">
-                NAIL<span className="text-rose-400">OX</span>
+                <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
               </span>
             </div>
             <p className="text-white/40 text-xs leading-relaxed mb-5">

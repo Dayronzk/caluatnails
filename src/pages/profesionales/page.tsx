@@ -181,7 +181,7 @@ export default function ProfesionalesPage() {
       <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
-            <span className="font-bold text-xl text-gray-900">NAIL<span className="text-rose-500">OX</span></span>
+            <span className="font-bold text-xl text-gray-900"><img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" /></span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/tarjeta-regalo" className="hidden sm:inline-flex text-sm font-semibold px-4 py-2 border border-amber-400 text-amber-600 hover:bg-amber-50 rounded-full transition-colors cursor-pointer">

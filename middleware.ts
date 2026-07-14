@@ -21,12 +21,12 @@ const BOT_USER_AGENTS = [
 
 // Available salon images (in /public/assets/)
 const IMG = {
-  premium: 'https://www.nailox.com/assets/manicure-premium.png',
-  pastel: 'https://www.nailox.com/assets/manicure-pastel.jpg',
-  exotic: 'https://www.nailox.com/assets/manicure-exotic.jpg',
-  pedicure: 'https://www.nailox.com/assets/pedicure-luxury.jpg',
-  extensions: 'https://www.nailox.com/assets/extensions-premium.png',
-  fallback: 'https://www.nailox.com/assets/service-fallback.png',
+  premium: 'https://www.caluatnails.com/assets/manicure-premium.png',
+  pastel: 'https://www.caluatnails.com/assets/manicure-pastel.jpg',
+  exotic: 'https://www.caluatnails.com/assets/manicure-exotic.jpg',
+  pedicure: 'https://www.caluatnails.com/assets/pedicure-luxury.jpg',
+  extensions: 'https://www.caluatnails.com/assets/extensions-premium.png',
+  fallback: 'https://www.caluatnails.com/assets/service-fallback.png',
 };
 
 export const config = {
@@ -93,7 +93,7 @@ const GONE_QUERY_KEYS = ['rivax-template', 'replytocom', 'attachment_id'];
 
 function goneResponse(): Response {
   return new Response(
-    '<!doctype html><html lang="es"><head><meta charset="utf-8"><title>410 — Contenido eliminado</title><meta name="robots" content="noindex,nofollow"></head><body><h1>410 Gone</h1><p>Este contenido se ha retirado de forma permanente.</p><p><a href="https://www.nailox.com/">Volver al inicio</a></p></body></html>',
+    '<!doctype html><html lang="es"><head><meta charset="utf-8"><title>410 — Contenido eliminado</title><meta name="robots" content="noindex,nofollow"></head><body><h1>410 Gone</h1><p>Este contenido se ha retirado de forma permanente.</p><p><a href="https://www.caluatnails.com/">Volver al inicio</a></p></body></html>',
     {
       status: 410,
       headers: {
@@ -224,7 +224,7 @@ const BLOG_POSTS: Record<string, { title: string; description: string; image: st
   },
   'uñas-nude-la-elegancia-del-minimalismo': {
     title: 'Uñas nude: la elegancia del minimalismo',
-    description: 'Las uñas nude son las más solicitadas en NAILOX. Discretas, elegantes, profesionales. Te enseñamos a elegir el nude exacto que favorece tus manos.',
+    description: 'Las uñas nude son las más solicitadas en CALUATNAILS. Discretas, elegantes, profesionales. Te enseñamos a elegir el nude exacto que favorece tus manos.',
     image: '/assets/blog/nude-nails.jpg',
   },
   'uñas-con-glitter-cuando-y-como-usarlo-con-estilo': {
@@ -502,7 +502,7 @@ export default function middleware(request: Request) {
 
   if (!isBot) return undefined;
 
-  let title = 'NAILOX';
+  let title = 'CALUATNAILS';
   let image = IMG.premium;
   let description = 'Salón de manicura y pedicura premium en el Eixample, Barcelona. Reserva online tu cita.';
 
@@ -535,7 +535,7 @@ export default function middleware(request: Request) {
       .replace(/Acrilico/g, 'Acrílico');
 
     title = `${formattedName} en Barcelona`;
-    description = `${formattedName} profesional en NAILOX, Eixample Barcelona. Técnica avanzada, productos premium y resultados de larga duración. Reserva online tu cita.`;
+    description = `${formattedName} profesional en CALUATNAILS, Eixample Barcelona. Técnica avanzada, productos premium y resultados de larga duración. Reserva online tu cita.`;
   }
   else if (path === '/servicios') {
     title = 'Servicios de Manicura y Pedicura en Barcelona';
@@ -545,47 +545,47 @@ export default function middleware(request: Request) {
   else if (path === '/profesionales') {
     title = 'Nuestras Profesionales Certificadas en Barcelona';
     image = IMG.premium;
-    description = 'Conoce al equipo de manicuristas profesionales certificadas de NAILOX Barcelona. Especialistas en manicura rusa, uñas en gel y pedicura spa. Reserva con tu favorita.';
+    description = 'Conoce al equipo de manicuristas profesionales certificadas de CALUATNAILS Barcelona. Especialistas en manicura rusa, uñas en gel y pedicura spa. Reserva con tu favorita.';
   }
   else if (path === '/reservar') {
     title = 'Reserva tu Cita de Manicura y Pedicura en Barcelona';
     image = IMG.premium;
-    description = 'Reserva online tu cita en NAILOX, Eixample Barcelona. Manicura, pedicura, uñas en gel y esmaltado semipermanente. Elige servicio, profesional y horario en 30 segundos.';
+    description = 'Reserva online tu cita en CALUATNAILS, Eixample Barcelona. Manicura, pedicura, uñas en gel y esmaltado semipermanente. Elige servicio, profesional y horario en 30 segundos.';
   }
   else if (path.startsWith('/tienda')) {
     title = 'Tienda de Productos Profesionales para Uñas';
     image = IMG.extensions;
-    description = 'Descubre la tienda NAILOX: esmaltes profesionales, geles, kits de manicura, herramientas y productos premium para el cuidado de tus uñas. Envíos a toda España.';
+    description = 'Descubre la tienda CALUATNAILS: esmaltes profesionales, geles, kits de manicura, herramientas y productos premium para el cuidado de tus uñas. Envíos a toda España.';
   }
   else if (path.startsWith('/certificado')) {
     title = 'Verificación de Certificado Profesional';
     image = IMG.premium;
-    description = 'Verifica la autenticidad de los certificados profesionales emitidos por NAILOX Academia. Más de 3.200 alumnas certificadas en manicura y pedicura.';
+    description = 'Verifica la autenticidad de los certificados profesionales emitidos por CALUATNAILS Academia. Más de 3.200 alumnas certificadas en manicura y pedicura.';
   }
   else if (path === '/login') {
     title = 'Iniciar Sesión';
     image = IMG.pastel;
-    description = 'Accede a tu cuenta de NAILOX para gestionar tus citas, ver tu historial, consultar tu progreso en el curso o realizar nuevas reservas.';
+    description = 'Accede a tu cuenta de CALUATNAILS para gestionar tus citas, ver tu historial, consultar tu progreso en el curso o realizar nuevas reservas.';
   }
   else if (path === '/registro') {
     title = 'Crea tu Cuenta';
     image = IMG.pastel;
-    description = 'Regístrate gratis en NAILOX y reserva tu primera cita de manicura o pedicura en Barcelona. Acceso a ofertas exclusivas, puntos y referidos.';
+    description = 'Regístrate gratis en CALUATNAILS y reserva tu primera cita de manicura o pedicura en Barcelona. Acceso a ofertas exclusivas, puntos y referidos.';
   }
   else if (path === '/faq') {
     title = 'Preguntas Frecuentes';
     image = IMG.pastel;
-    description = 'Resuelve tus dudas sobre servicios, reservas, precios, ubicación y formas de pago en NAILOX, salón de manicura y pedicura en el Eixample, Barcelona.';
+    description = 'Resuelve tus dudas sobre servicios, reservas, precios, ubicación y formas de pago en CALUATNAILS, salón de manicura y pedicura en el Eixample, Barcelona.';
   }
   else if (path === '/contacto') {
     title = 'Contacto · Carrer del Rosselló 497, Barcelona';
     image = IMG.pastel;
-    description = 'Contacta con NAILOX en Barcelona: Carrer del Rosselló 497 (Eixample). Teléfono +34 636 68 91 01. Horario L-V 9:00-19:00. WhatsApp disponible.';
+    description = 'Contacta con CALUATNAILS en Barcelona: Carrer del Rosselló 497 (Eixample). Teléfono +34 636 68 91 01. Horario L-V 9:00-19:00. WhatsApp disponible.';
   }
   else if (path === '/blog') {
-    title = 'Blog NAILOX — Consejos de Manicura y Pedicura en Barcelona';
+    title = 'Blog CALUATNAILS — Consejos de Manicura y Pedicura en Barcelona';
     image = IMG.premium;
-    description = 'Guías, tendencias y consejos profesionales sobre manicura, pedicura, uñas en gel, cuidado de cutículas y más. Por el equipo de NAILOX en Barcelona.';
+    description = 'Guías, tendencias y consejos profesionales sobre manicura, pedicura, uñas en gel, cuidado de cutículas y más. Por el equipo de CALUATNAILS en Barcelona.';
   }
   else if (path.startsWith('/blog/')) {
     const slug = path.split('/').pop() || '';
@@ -593,10 +593,10 @@ export default function middleware(request: Request) {
     if (post) {
       title = post.title;
       description = post.description;
-      image = `https://www.nailox.com${post.image}`;
+      image = `https://www.caluatnails.com${post.image}`;
     } else {
-      title = 'Artículo del Blog NAILOX';
-      description = 'Lee nuestros consejos profesionales sobre manicura y pedicura en NAILOX, Barcelona.';
+      title = 'Artículo del Blog CALUATNAILS';
+      description = 'Lee nuestros consejos profesionales sobre manicura y pedicura en CALUATNAILS, Barcelona.';
     }
   }
   else if (path === '/') {
@@ -607,56 +607,56 @@ export default function middleware(request: Request) {
   else if (path === '/tarjeta-regalo' || path.startsWith('/tarjeta-regalo/exito') || path.startsWith('/tarjeta-regalo/cancelado')) {
     title = 'Tarjeta Regalo — Regala Manicura y Pedicura en Barcelona';
     image = IMG.premium;
-    description = 'Regala una experiencia NAILOX desde 10€ hasta 500€. Tarjetas regalo válidas 12 meses para cualquier servicio. Entrega por email, SMS, WhatsApp o correo postal. Ideal para cumpleaños, aniversarios o detalles.';
+    description = 'Regala una experiencia CALUATNAILS desde 10€ hasta 500€. Tarjetas regalo válidas 12 meses para cualquier servicio. Entrega por email, SMS, WhatsApp o correo postal. Ideal para cumpleaños, aniversarios o detalles.';
   }
   else if (path.startsWith('/tarjeta-regalo/aportacion/')) {
-    title = 'Aporta a una Tarjeta Regalo Grupal NAILOX';
+    title = 'Aporta a una Tarjeta Regalo Grupal CALUATNAILS';
     image = IMG.premium;
     description = 'Contribuye a una tarjeta regalo grupal. Suma tu aporte para regalar una experiencia de manicura o pedicura profesional en Barcelona. Pago seguro y sin registro.';
   }
   else if (path === '/promociones') {
-    title = 'Promociones y Descuentos en NAILOX Barcelona';
+    title = 'Promociones y Descuentos en CALUATNAILS Barcelona';
     image = IMG.premium;
-    description = 'Descubre todas las promociones de NAILOX: 5% descuento al pagar con tarjeta, hasta 500 puntos gratis de bienvenida, programa de referidos, tarjetas regalo con doble bonus y mucho más.';
+    description = 'Descubre todas las promociones de CALUATNAILS: 5% descuento al pagar con tarjeta, hasta 500 puntos gratis de bienvenida, programa de referidos, tarjetas regalo con doble bonus y mucho más.';
   }
   else if (path === '/sede-eixample') {
-    title = 'Bienvenida a NAILOX · Eixample Barcelona';
+    title = 'Bienvenida a CALUATNAILS · Eixample Barcelona';
     image = IMG.premium;
-    description = 'WiFi gratis, reseña en Google y reservas en segundos. Todo desde tu móvil, durante tu cita en NAILOX Eixample.';
+    description = 'WiFi gratis, reseña en Google y reservas en segundos. Todo desde tu móvil, durante tu cita en CALUATNAILS Eixample.';
   }
   else if (path === '/mi-cuenta' || path === '/mis-citas') {
-    title = 'Mi Cuenta · Gestiona tus citas y puntos NAILOX';
+    title = 'Mi Cuenta · Gestiona tus citas y puntos CALUATNAILS';
     image = IMG.pastel;
-    description = 'Gestiona tu cuenta NAILOX: revisa tus citas, puntos acumulados, tarjetas regalo, código de referido y configuración de notificaciones.';
+    description = 'Gestiona tu cuenta CALUATNAILS: revisa tus citas, puntos acumulados, tarjetas regalo, código de referido y configuración de notificaciones.';
   }
   else if (path === '/privacidad') {
     title = 'Política de Privacidad';
     image = IMG.pastel;
-    description = 'Política de privacidad de NAILOX. Conoce cómo tratamos tus datos personales, uso de cookies y tus derechos según el RGPD.';
+    description = 'Política de privacidad de CALUATNAILS. Conoce cómo tratamos tus datos personales, uso de cookies y tus derechos según el RGPD.';
   }
   else if (path === '/terminos') {
     title = 'Términos y Condiciones';
     image = IMG.pastel;
-    description = 'Términos y condiciones de uso de los servicios de NAILOX Barcelona: reservas, cancelaciones, pagos, puntos y tarjetas regalo.';
+    description = 'Términos y condiciones de uso de los servicios de CALUATNAILS Barcelona: reservas, cancelaciones, pagos, puntos y tarjetas regalo.';
   }
   else if (path === '/recuperar') {
     title = 'Recuperar Contraseña';
     image = IMG.pastel;
-    description = 'Restablece tu contraseña de NAILOX. Te enviaremos un enlace seguro a tu correo electrónico.';
+    description = 'Restablece tu contraseña de CALUATNAILS. Te enviaremos un enlace seguro a tu correo electrónico.';
   }
   else if (path === '/nueva-contrasena') {
     title = 'Establecer Nueva Contraseña';
     image = IMG.pastel;
-    description = 'Establece una nueva contraseña para tu cuenta NAILOX.';
+    description = 'Establece una nueva contraseña para tu cuenta CALUATNAILS.';
   }
   else if (path === '/confirmar-email') {
     title = 'Confirma tu Email';
     image = IMG.pastel;
-    description = 'Confirma tu dirección de correo electrónico para activar tu cuenta NAILOX y ganar 100 puntos de bienvenida.';
+    description = 'Confirma tu dirección de correo electrónico para activar tu cuenta CALUATNAILS y ganar 100 puntos de bienvenida.';
   }
 
-  const canonical = `https://www.nailox.com${path}`;
-  const fullTitle = `${title} — NAILOX`;
+  const canonical = `https://www.caluatnails.com${path}`;
+  const fullTitle = `${title} — CALUATNAILS`;
 
   // Pages we never want indexed (account/auth/transactional)
   const NOINDEX_PATHS = new Set<string>([
@@ -691,9 +691,9 @@ export default function middleware(request: Request) {
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="${title}">
   <meta property="og:locale" content="es_ES">
-  <meta property="og:site_name" content="NAILOX">
+  <meta property="og:site_name" content="CALUATNAILS">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@nailox_academy">
+  <meta name="twitter:site" content="@caluatnails_academy">
   <meta name="twitter:title" content="${fullTitle}">
   <meta name="twitter:description" content="${description}">
   <meta name="twitter:image" content="${image}">
@@ -702,8 +702,8 @@ export default function middleware(request: Request) {
 <body>
   <h1>${title}</h1>
   <p>${description}</p>
-  <p><strong>NAILOX</strong> — Carrer del Rosselló 497, Eixample, Barcelona · +34 636 68 91 01</p>
-  <p><a href="${canonical}">Visitar NAILOX</a></p>
+  <p><strong>CALUATNAILS</strong> — Carrer del Rosselló 497, Eixample, Barcelona · +34 636 68 91 01</p>
+  <p><a href="${canonical}">Visitar CALUATNAILS</a></p>
 </body>
 </html>`;
 

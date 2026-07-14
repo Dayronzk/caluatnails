@@ -296,7 +296,7 @@ export default function AportacionPage() {
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="font-playfair text-lg font-bold tracking-widest">
-                        NAIL<span className="text-violet-200">OX</span>
+                        <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
                       </span>
                       <span className="text-2xl">👩</span>
                     </div>

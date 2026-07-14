@@ -639,7 +639,7 @@ export default function AllSubscriptionsPage() {
             <span className="text-xs font-bold uppercase tracking-wider">Volver</span>
           </button>
           <span className="font-playfair text-xl font-bold tracking-widest text-slate-900">
-            NAIL<span className="text-rose-500">OX</span>
+            <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
           </span>
           <div className="w-20" />
         </div>
