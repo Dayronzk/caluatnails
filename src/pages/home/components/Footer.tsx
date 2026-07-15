@@ -36,13 +36,11 @@ export default function Footer() {
     }
   };
 
-  const courseLinks = [
-    { label: "Introducción", href: "#introduccion" },
-    { label: "Técnicas Avanzadas", href: "#tienda" },
-    { label: "Práctica Interactiva", href: "#practica" },
-    { label: "Recursos Descargables", href: "#recursos" },
-    { label: "Evaluaciones", href: "#evaluaciones" },
-    { label: "Foro de Discusión", href: "#foro" },
+  const serviceLinks = [
+    { label: "Manicura con Nivelación", path: "/servicios/manicura-con-nivelacion" },
+    { label: "Uñas en Gel", path: "/servicios/unas-en-gel" },
+    { label: "Pedicura Semipermanente", path: "/servicios/pedicura-semipermanente" },
+    { label: "Suscripciones Mensuales", path: "/suscripciones" },
   ];
 
   const accountLinks = [
@@ -73,15 +71,15 @@ export default function Footer() {
             {/* Left */}
             <div>
               <span className="text-rose-400 text-xs font-semibold tracking-widest uppercase mb-3 block">
-                Únete al Curso
+                Únete a la Newsletter
               </span>
               <h2 className="font-playfair text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">
-                Comienza Tu Transformación
+                Descubre Promociones y
                 <br />
-                <span className="text-rose-400">Profesional Hoy</span>
+                <span className="text-rose-400">Tips de Belleza</span>
               </h2>
               <p className="text-white/60 text-sm leading-relaxed max-w-md">
-                Suscríbete para recibir actualizaciones del curso, tips de nail art, nuevos recursos y acceso anticipado a módulos especiales.
+                Suscríbete para recibir consejos de cuidado de uñas, promociones especiales del salón y novedades en nuestro catálogo de servicios.
               </p>
             </div>
 
@@ -121,7 +119,7 @@ export default function Footer() {
                       {submitting ? (
                         <><i className="ri-loader-4-line animate-spin mr-1.5"></i>Enviando</>
                       ) : (
-                        "Inscribirme Ahora"
+                        "Suscribirme"
                       )}
                     </button>
                   </div>
@@ -146,7 +144,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-white/40 text-xs leading-relaxed mb-5">
-              Plataforma educativa de manicura y pedicura profesional con certificación incluida y acceso de por vida.
+              Salón premium de manicura y pedicura en el Eixample, Barcelona. Cuidado de lujo y precisión para tus uñas.
             </p>
             <div className="flex items-center gap-3">
               {[
@@ -167,14 +165,14 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Curso */}
+          {/* Servicios */}
           <div>
-            <h4 className="text-white font-semibold text-sm mb-5">Curso</h4>
+            <h4 className="text-white font-semibold text-sm mb-5">Servicios</h4>
             <ul className="flex flex-col gap-3">
-              {courseLinks.map((link) => (
+              {serviceLinks.map((link) => (
                 <li key={link.label}>
                   <button
-                    onClick={() => handleScroll(link.href)}
+                    onClick={() => navigate(link.path)}
                     className="text-white/40 hover:text-white/80 text-xs transition-colors cursor-pointer text-left"
                   >
                     {link.label}
@@ -222,7 +220,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/30 text-xs">
-            &copy; {new Date().getFullYear()} CALUATNAILS — Curso Profesional de Manicura y Pedicura. Todos los derechos reservados.
+            &copy; {new Date().getFullYear()} CALUATNAILS — Salón Premium de Manicura y Pedicura. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-4">
             <button
@@ -241,7 +239,7 @@ export default function Footer() {
             <span className="text-white/20 text-xs">·</span>
             <div className="flex items-center gap-2">
               <i className="ri-shield-check-line text-rose-500 text-sm"></i>
-              <span className="text-white/30 text-xs">Plataforma certificada</span>
+              <span className="text-white/30 text-xs">Reserva 100% Segura</span>
             </div>
           </div>
         </div>

@@ -5,44 +5,15 @@ import { useSEO } from "@/hooks/useSEO";
 
 const faqs = [
   {
-    category: "Sobre el Curso",
+    category: "Sobre el Salón",
     items: [
       {
-        q: "¿Qué incluye el curso de CALUATNAILS?",
-        a: "El curso incluye módulos de teoría y práctica, recursos descargables (fichas técnicas, guías de colores, plantillas), evaluaciones automáticas, acceso al foro de discusión y un certificado digital al completar el programa. Todo con acceso de por vida.",
+        q: "¿Dónde está ubicado el salón?",
+        a: "Estamos ubicados en el Eixample, Barcelona. Al reservar tu cita, recibirás la dirección exacta y las indicaciones para llegar.",
       },
       {
-        q: "¿Necesito experiencia previa en manicura?",
-        a: "No. El curso está diseñado para todos los niveles, desde principiantes absolutos hasta profesionales que quieren perfeccionar técnicas avanzadas como acrílico, gel y nail art.",
-      },
-      {
-        q: "¿Cuánto tiempo tengo para completar el curso?",
-        a: "Tienes acceso de por vida. Puedes avanzar a tu propio ritmo, sin fechas límite ni presión. El contenido siempre estará disponible para ti.",
-      },
-      {
-        q: "¿El certificado tiene validez oficial?",
-        a: "El certificado de CALUATNAILS es un certificado de finalización digital que acredita tu formación. Es ampliamente reconocido en el sector de la belleza y puede ser compartido en redes profesionales como LinkedIn.",
-      },
-    ],
-  },
-  {
-    category: "Pagos y Acceso",
-    items: [
-      {
-        q: "¿Qué métodos de pago aceptan?",
-        a: "Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express) a través de Stripe, una plataforma de pagos segura y encriptada.",
-      },
-      {
-        q: "¿Puedo pagar en cuotas?",
-        a: "Actualmente ofrecemos el pago en un solo cobro. Si necesitas una opción de financiamiento, contáctanos y evaluaremos tu caso.",
-      },
-      {
-        q: "¿Qué pasa si no quedo satisfecha con el curso?",
-        a: "Ofrecemos garantía de satisfacción. Si en los primeros 7 días sientes que el curso no es para ti, contáctanos y gestionamos el reembolso sin preguntas.",
-      },
-      {
-        q: "¿Puedo acceder desde varios dispositivos?",
-        a: "Sí. Tu cuenta CALUATNAILS funciona en computadora, tablet y móvil. Solo necesitas iniciar sesión con tu correo y contraseña.",
+        q: "¿Qué marcas y productos utilizan?",
+        a: "En CALUATNAILS trabajamos exclusivamente con materiales y marcas premium, hipoalergénicos y de larga duración, garantizando la salud de tus uñas naturales.",
       },
     ],
   },
@@ -50,33 +21,29 @@ const faqs = [
     category: "Reservas y Citas",
     items: [
       {
-        q: "¿Cómo funciona el sistema de reservas?",
-        a: "Puedes reservar una cita de consultoría o práctica guiada directamente desde la sección 'Reservar cita'. Elige el servicio, selecciona fecha y hora disponible, y completa el pago del depósito.",
+        q: "¿Cómo puedo reservar una cita?",
+        a: "Puedes reservar de forma rápida y segura directamente desde nuestra web en la sección 'Reservar cita'. Solo tienes que elegir el servicio, el profesional y la hora que mejor te convenga.",
       },
       {
-        q: "¿Puedo cancelar o reprogramar mi cita?",
-        a: "Sí. Puedes cancelar o reprogramar con al menos 24 horas de anticipación sin costo adicional. Para cambios con menos tiempo, contáctanos directamente.",
+        q: "¿Con cuánto tiempo de antelación debo cancelar o reprogramar?",
+        a: "Aceptamos cancelaciones o modificaciones sin coste hasta 24 horas antes de tu cita. Si cancelas fuera de este plazo, el depósito de reserva no será reembolsable.",
       },
       {
-        q: "¿Las citas son presenciales o virtuales?",
-        a: "Ofrecemos ambas modalidades. Al reservar puedes elegir si prefieres una sesión virtual por videollamada o presencial (según disponibilidad de ubicación).",
+        q: "¿Qué pasa si llego tarde a mi cita?",
+        a: "Ofrecemos un margen de cortesía de 10 minutos. Si la demora es mayor, es posible que debamos acortar tu servicio o reprogramarlo para no retrasar a la siguiente clienta.",
       },
     ],
   },
   {
-    category: "Soporte Técnico",
+    category: "Precios y Pagos",
     items: [
       {
-        q: "No puedo acceder a mi cuenta, ¿qué hago?",
-        a: "Ve a la página de inicio de sesión y usa la opción 'Olvidé mi contraseña'. Recibirás un correo con instrucciones para restablecerla. Si el problema persiste, escríbenos a soporte.",
+        q: "¿Qué métodos de pago aceptan?",
+        a: "Aceptamos pagos con tarjeta (Visa, Mastercard, AMEX) a través de nuestra pasarela segura Stripe, así como Bizum o efectivo en el salón.",
       },
       {
-        q: "Los videos no cargan correctamente",
-        a: "Verifica tu conexión a internet. Si el problema continúa, intenta limpiar el caché del navegador o usa otro navegador (Chrome o Firefox recomendados). También puedes contactarnos con el nombre de la lección afectada.",
-      },
-      {
-        q: "¿Cómo descargo los recursos del curso?",
-        a: "En la sección 'Recursos Descargables' de la página principal encontrarás los materiales gratuitos. Los recursos completos están disponibles dentro de cada módulo del curso una vez que hayas adquirido el acceso.",
+        q: "¿Cómo funcionan las suscripciones mensuales?",
+        a: "Nuestras suscripciones te permiten disfrutar de servicios recurrentes de manicura y pedicura al mes con un precio preferente. Se facturan de forma automática cada mes y puedes cancelarlas cuando quieras.",
       },
     ],
   },
@@ -153,7 +120,7 @@ export default function FaqPage() {
             Preguntas Frecuentes
           </h1>
           <p className="text-white/50 text-sm leading-relaxed">
-            Encuentra respuestas rápidas a las dudas más comunes sobre CALUATNAILS, el curso, pagos y soporte técnico.
+            Encuentra respuestas rápidas a las dudas más comunes sobre CALUATNAILS, reservas, pagos y soporte.
           </p>
         </div>
       </div>

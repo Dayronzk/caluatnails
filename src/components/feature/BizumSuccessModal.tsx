@@ -12,7 +12,7 @@ interface BookingData {
 }
 
 interface Props {
-  type: "curso" | "tienda" | "reserva" | "efectivo";
+  type: "tienda" | "reserva" | "efectivo";
   total: string;
   onClose: () => void;
   bookingData?: BookingData;
@@ -76,13 +76,6 @@ export default function BizumSuccessModal({ type, total, onClose, bookingData }:
   }, [onClose, type]);
 
   const config = {
-    curso: {
-      icon: "ri-book-open-line",
-      title: "¡Solicitud de compra enviada!",
-      desc: "Hemos recibido tu solicitud de pago por Bizum para el curso.",
-      detail: "Un administrador validará tu pago manualmente y activará tu acceso al curso en breve.",
-      color: "rose",
-    },
     tienda: {
       icon: "ri-shopping-bag-line",
       title: "¡Pedido registrado!",

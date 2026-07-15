@@ -9,10 +9,9 @@ const sections = [
 • Nombre completo y dirección de correo electrónico
 • Contraseña (almacenada de forma encriptada, nunca en texto plano)
 • Información de pago procesada de forma segura por Stripe (no almacenamos datos de tarjetas)
-• Progreso dentro del curso y actividad en el foro
 • Datos de reservas de citas (nombre, correo, servicio seleccionado, fecha y hora)
 
-Esta información es necesaria para brindarte acceso al curso, gestionar tu cuenta y mejorar tu experiencia en la plataforma.`,
+Esta información es necesaria para gestionar tu cuenta, procesar tus reservas y mejorar tu experiencia en el sitio.`,
   },
   {
     title: "2. Cómo usamos tu información",
@@ -20,7 +19,7 @@ Esta información es necesaria para brindarte acceso al curso, gestionar tu cuen
 
 • Crear y gestionar tu cuenta de usuario
 • Procesar pagos y emitir confirmaciones de compra
-• Enviarte actualizaciones del curso y comunicaciones relevantes (solo si te suscribiste)
+• Recordatorios de citas y comunicaciones relevantes sobre tus servicios (solo si te suscribiste)
 • Gestionar reservas de citas y enviarte recordatorios
 • Mejorar el contenido y la experiencia de la plataforma
 • Cumplir con obligaciones legales y fiscales
@@ -68,7 +67,7 @@ Para ejercer cualquiera de estos derechos, contáctanos en hola@caluatnails.com.
     content: `Si tienes preguntas sobre esta política o sobre cómo manejamos tus datos, puedes contactarnos en:
 
 Correo: hola@caluatnails.com
-Plataforma: CALUATNAILS — Curso Profesional de Manicura y Pedicura`,
+Plataforma: CALUATNAILS — Salón Premium de Manicura y Pedicura`,
   },
 ];
 
