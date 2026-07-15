@@ -1,38 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Introduccion from "./components/Introduccion";
-import TecnicasAvanzadas from "./components/TecnicasAvanzadas";
-import PracticaInteractiva from "./components/PracticaInteractiva";
-import RecursosDescargables from "./components/RecursosDescargables";
-import EvaluacionesAutomaticas from "./components/EvaluacionesAutomaticas";
-import ForoDiscusion from "./components/ForoDiscusion";
 import Footer from "./components/Footer";
-import MetodoCaluatnails from "./components/MetodoCaluatnails";
 import ServiciosHome from "./components/ServiciosHome";
 import FloatingCart from "./components/FloatingCart";
-import KitPopup from "./components/KitPopup";
 import { useCart } from "@/hooks/useCart";
-import type { CartItem } from "@/hooks/useCart";
 import { supabase } from "@/lib/supabase";
 
-const MAIN_PRODUCT_ID = "prod_UG5ehG9IrGh4hl";
-const SUPABASE_URL = import.meta.env.VITE_PUBLIC_SUPABASE_URL as string;
-const LIST_FN = `${SUPABASE_URL}/functions/v1/stripe-list-products`;
 
-interface StripeProduct {
-  id: string;
-  name: string;
-  images: string[];
-  metadata: Record<string, string>;
-  price_id: string | null;
-  unit_amount: number | null;
-  currency: string;
-}
-
-const HERO_FALLBACK_IMAGE = "https://readdy.ai/api/search-image?query=professional%20nail%20technician%20elegant%20manicure%20pedicure%20beauty%20salon%20warm%20rose%20gold%20lighting%20hands%20close%20up%20luxury%20spa%20pastel%20tones%20soft%20bokeh%20background&width=600&height=460&seq=hero1&orientation=landscape";
 
 export default function Home() {
   useSEO({
@@ -60,55 +37,6 @@ export default function Home() {
   }, [location]);
 
   const [paymentStatus, setPaymentStatus] = useState<"success" | "cancelled" | null>(null);
-  const [showKitPopup, setShowKitPopup] = useState(false);
-  const [heroProduct, setHeroProduct] = useState<CartItem | null>(null);
-  const [heroPrice, setHeroPrice] = useState<number | null>(null);
-
-  // Track if the cart was opened via the Hero "Comprar" button
-  const heroCartOpened = useRef(false);
-  const prevCartOpen = useRef(false);
-
-  // Load main product price from Stripe
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await fetch(LIST_FN, {
-        headers: {
-          "apikey": import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY}`
-        }
-      });
-        const data = await res.json() as { products?: StripeProduct[] };
-        const main = (data.products ?? []).find(p => p.id === MAIN_PRODUCT_ID);
-        if (main && main.unit_amount) {
-          const priceEuros = main.unit_amount / 100;
-          setHeroPrice(priceEuros);
-          setHeroProduct({
-            id: main.id,
-            title: main.name,
-            price: priceEuros,
-            image: main.images?.[0] ?? HERO_FALLBACK_IMAGE,
-            level: main.metadata.level ?? "Todos los niveles",
-            lessonCount: parseInt(main.metadata.lesson_count ?? "80", 10),
-            stripe_price_id: main.price_id,
-          });
-        }
-      } catch {
-        // fallback silently — TecnicasAvanzadas also loads products
-      }
-    };
-    load();
-  }, []);
-
-  // Detect when cart closes after being opened by hero button
-  useEffect(() => {
-    if (prevCartOpen.current && !cart.isOpen && heroCartOpened.current) {
-      heroCartOpened.current = false;
-      setShowKitPopup(true);
-    }
-    prevCartOpen.current = cart.isOpen;
-  }, [cart.isOpen]);
-
   // Capture referral code from URL and store in sessionStorage
   useEffect(() => {
     const urlRef = searchParams.get("ref");
@@ -192,14 +120,6 @@ export default function Home() {
   }, []);
 
   const dismissStatus = () => setPaymentStatus(null);
-
-  const handleHeroComprar = () => {
-    if (heroProduct) {
-      cart.addItem(heroProduct);
-    }
-    heroCartOpened.current = true;
-  };
-
   return (
     <main className="min-h-screen w-full">
       <Navbar />
@@ -211,7 +131,7 @@ export default function Home() {
             <i className="ri-check-double-line text-2xl"></i>
             <div>
               <p className="font-semibold">¡Pago completado con éxito!</p>
-              <p className="text-sm text-white/80">Recibirás un correo de confirmación con acceso a tus módulos.</p>
+              <p className="text-sm text-white/80">Recibirás un correo de confirmación con los detalles de tu reserva.</p>
             </div>
           </div>
           <button onClick={dismissStatus} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/20 cursor-pointer">
@@ -231,21 +151,10 @@ export default function Home() {
         </div>
       )}
 
-      <Hero onComprar={handleHeroComprar} price={heroPrice ?? undefined} />
+      <Hero />
       
       {/* Primary Focus: Services */}
       <ServiciosHome />
-
-      {/* Secondary Focus: Academy */}
-      <div id="academia" className="scroll-mt-20">
-        <MetodoCaluatnails />
-        <Introduccion />
-        <TecnicasAvanzadas addItem={cart.addItem} isInCart={cart.isInCart} />
-        <PracticaInteractiva />
-        <RecursosDescargables />
-        <EvaluacionesAutomaticas />
-        <ForoDiscusion />
-      </div>
 
       <Footer />
 
@@ -263,10 +172,6 @@ export default function Home() {
         clearCourseCart={cart.clearCourseCart}
         clearShopCart={cart.clearShopCart}
       />
-
-      {showKitPopup && (
-        <KitPopup onClose={() => setShowKitPopup(false)} />
-      )}
     </main>
   );
 }
