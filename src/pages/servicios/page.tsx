@@ -1,240 +1,272 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/lib/supabase";
-import { DBService } from "@/lib/types";
-import { ArrowRight, Clock, ChevronLeft } from "lucide-react";
+import { ArrowRight, Clock, CheckCircle2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import Navbar from "@/pages/home/components/Navbar";
+import Footer from "@/pages/home/components/Footer";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { TREATWELL_SERVICES, ServiceItem } from "@/data/servicesCatalog";
+import { supabase } from "@/lib/supabase";
 
-function toSlug(name: string) {
-  return name.toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+interface CategoryGroup {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  serviceType: string;
 }
 
+const CATEGORY_GROUPS: CategoryGroup[] = [
+  {
+    id: "manicura",
+    title: "Manicura",
+    icon: "ri-hand-sanitizer-line",
+    description: "Tratamientos completos de higiene, limado, cutículas, hidratación y esmaltado de manos.",
+    serviceType: "Manicura",
+  },
+  {
+    id: "pedicura",
+    title: "Pedicura",
+    icon: "ri-footprint-line",
+    description: "Cuidado integral de pies, tratamiento de cutículas, durezas y esmaltado duradero.",
+    serviceType: "Pedicura",
+  },
+  {
+    id: "manos-pies",
+    title: "Manos y pies",
+    icon: "ri-sparkles-line",
+    description: "Tratamientos combinados de manicura y pedicura en una sola sesión.",
+    serviceType: "Manos y pies",
+  },
+  {
+    id: "gel-acrilico",
+    title: "Uñas de gel y acrílico",
+    icon: "ri-vip-diamond-line",
+    description: "Aplicación, relleno y retirada profesional de uñas de gel y acrílico.",
+    serviceType: "Uñas de gel y acrílico",
+  },
+  {
+    id: "nail-art",
+    title: "Nail art",
+    icon: "ri-brush-line",
+    description: "Suplemento de fibra niveladora, francesa, baby boomer, glazed y decoraciones.",
+    serviceType: "Nail art",
+  },
+  {
+    id: "depilacion-hilo",
+    title: "Depilación con hilo",
+    icon: "ri-scissors-cut-line",
+    description: "Depilación facial limpia, ecológica e hipoalergénica con hilo de algodón orgánico.",
+    serviceType: "Depilación con hilo",
+  },
+  {
+    id: "pestanas-cejas",
+    title: "Pestañas y cejas",
+    icon: "ri-eye-line",
+    description: "Lifting y laminación de pestañas con nutrición de queratina y tinte.",
+    serviceType: "Pestañas y cejas",
+  },
+];
+
 export default function AllServicesPage() {
-  const [services, setServices] = useState<DBService[]>([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [services, setServices] = useState<ServiceItem[]>(TREATWELL_SERVICES);
+  const [selectedCatId, setSelectedCatId] = useState<string | null>(null);
 
   useEffect(() => {
-    async function load() {
-      const { data } = await supabase
-        .from("services")
-        .select("*")
-        .eq("active", true)
-        .order("service_type")
-        .order("name");
-      setServices(data ?? []);
-      setLoading(false);
-    }
-    load();
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from("services")
+          .select("*")
+          .eq("active", true)
+          .order("order_index", { ascending: true });
+
+        if (!error && data && data.length > 0) {
+          setServices(data as ServiceItem[]);
+        }
+      } catch (err) {
+        console.error("Error al cargar servicios desde Supabase:", err);
+      }
+    })();
   }, []);
 
-  const categories = [...new Set(services.map(s => s.service_type))];
+  const visibleGroups = selectedCatId
+    ? CATEGORY_GROUPS.filter(g => g.id === selectedCatId)
+    : CATEGORY_GROUPS;
 
   return (
-    <div className="min-h-screen bg-white font-inter">
+    <div className="min-h-screen bg-gradient-to-b from-organic-cream via-white to-organic-blush/30 font-sans">
       <Helmet>
-        <title>Servicios de Manicura y Pedicura en Barcelona | CALUATNAILS Eixample</title>
-        <meta name="description" content="Catálogo completo de servicios de manicura y pedicura en Barcelona: manicura rusa con nivelación, esmaltado semipermanente, uñas en gel, pedicura spa y más. Reserva online en el Eixample." />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+        <title>Catálogo de Servicios | Caluatnails Barcelona Eixample</title>
+        <meta name="description" content="Consulta las tarifas y tratamientos oficiales de manicura, pedicura, manos y pies, uñas de gel y acrílico, nail art, depilación con hilo y pestañas." />
         <link rel="canonical" href="https://www.caluatnails.com/servicios" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.caluatnails.com/servicios" />
-        <meta property="og:title" content="Servicios de Manicura y Pedicura en Barcelona | CALUATNAILS Eixample" />
-        <meta property="og:description" content="Manicura rusa, semipermanente, uñas en gel, pedicura spa y más. Reserva online tu cita en el Eixample, Barcelona." />
-        <meta property="og:image" content="https://www.caluatnails.com/og-home.jpg" />
-        <meta property="og:locale" content="es_ES" />
-        <meta property="og:site_name" content="CALUATNAILS" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Servicios de Manicura y Pedicura en Barcelona | CALUATNAILS" />
-        <meta name="twitter:description" content="Catálogo completo de manicura y pedicura en el Eixample, Barcelona." />
-        <meta name="twitter:image" content="https://www.caluatnails.com/og-home.jpg" />
-
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.caluatnails.com/" },
-                  { "@type": "ListItem", "position": 2, "name": "Servicios", "item": "https://www.caluatnails.com/servicios" }
-                ]
-              },
-              {
-                "@type": "CollectionPage",
-                "name": "Servicios de manicura y pedicura en Barcelona",
-                "description": "Catálogo completo de servicios de uñas en el salón CALUATNAILS, Eixample, Barcelona.",
-                "url": "https://www.caluatnails.com/servicios",
-                "inLanguage": "es",
-                "isPartOf": { "@id": "https://www.caluatnails.com/#website" },
-                "mainEntity": {
-                  "@type": "ItemList",
-                  "numberOfItems": services.length,
-                  "itemListElement": services.map((s, i) => ({
-                    "@type": "ListItem",
-                    "position": i + 1,
-                    "url": `https://www.caluatnails.com/servicios/${toSlug(s.name)}`,
-                    "name": s.name
-                  }))
-                }
-              }
-            ]
-          })}
-        </script>
       </Helmet>
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <button
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            <span className="text-sm font-medium">Volver</span>
-          </button>
-          <span className="font-playfair text-xl font-bold tracking-widest text-gray-900">
-            <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
-          </span>
-          <button
-            onClick={() => navigate("/reservar")}
-            className="bg-rose-500 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-rose-600 transition-all shadow-lg shadow-rose-200"
-          >
-            RESERVAR
-          </button>
+      <Navbar />
+
+      {/* Header Banner */}
+      <section className="relative pt-32 pb-16 bg-gradient-to-br from-gray-950 via-rose-950 to-gray-900 text-white overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <img
+            src="/assets/salon-interior.jpg"
+            alt="Interior Caluatnails Barcelona"
+            className="w-full h-full object-cover"
+          />
         </div>
-      </nav>
-
-      <main className="pt-24 pb-20">
-        <header className="max-w-7xl mx-auto px-6 mb-12 text-center">
-          <span className="inline-block px-3 py-1 bg-rose-50 text-rose-600 rounded-full text-[10px] font-bold mb-4 uppercase tracking-widest">
-            Salón de Uñas · Eixample Barcelona
-          </span>
-          <h1 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 uppercase tracking-tight">
-            Servicios de Manicura y Pedicura en Barcelona
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 text-center space-y-4">
+          <Badge variant="rose" icon="ri-sparkles-line">
+            Catálogo Registrado · 7 Categorías
+          </Badge>
+          <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
+            Servicios & Categorías <br />
+            <span className="bg-gradient-to-r from-rose-300 via-pink-200 to-rose-400 bg-clip-text text-transparent">
+              Caluatnails Barcelona
+            </span>
           </h1>
-          <p className="text-gray-500 max-w-3xl mx-auto text-base lg:text-lg leading-relaxed">
-            Catálogo completo de servicios profesionales de uñas: <strong>manicura rusa con nivelación</strong>, <strong>esmaltado semipermanente</strong>, <strong>uñas en gel</strong>, <strong>pedicura spa</strong>, packs combinados y más. En pleno corazón del Eixample.
+          <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto font-medium">
+            Precios y tiempos de tratamiento oficiales. Reserva online en menos de 1 minuto seleccionando a tu estilista preferida.
           </p>
-        </header>
-
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500"></div>
-          </div>
-        ) : (
-          <div className="max-w-7xl mx-auto px-6 space-y-8">
-            {categories.map(category => (
-              <section key={category}>
-                <div className="flex items-center gap-3 mb-4">
-                  <h2 className="text-base font-black text-gray-900 uppercase tracking-tighter">{category}</h2>
-                  <div className="h-px flex-1 bg-gray-100"></div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                  {services
-                    .filter(s => s.service_type === category)
-                    .map(service => (
-                      <button
-                        key={service.id}
-                        onClick={() => navigate(`/servicios/${toSlug(service.name)}`)}
-                        className="group bg-white rounded-2xl p-4 border border-gray-100 hover:border-rose-200 hover:shadow-md hover:shadow-rose-100/30 transition-all duration-200 text-left flex flex-col"
-                      >
-                        <div className="flex justify-between items-start gap-3 mb-2">
-                          <h3 className="text-sm font-bold text-gray-900 leading-tight line-clamp-2 flex-1">{service.name}</h3>
-                          <span className="text-lg font-black text-rose-500 shrink-0">{service.price}€</span>
-                        </div>
-                        <p className="text-gray-500 text-xs leading-snug mb-3 line-clamp-2">
-                          {service.description || "Servicio profesional para resaltar tu belleza natural."}
-                        </p>
-                        <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-50">
-                          <div className="flex items-center gap-1 text-[11px] text-gray-400 font-medium">
-                            <Clock className="w-3 h-3" />
-                            {service.duration_minutes} min
-                          </div>
-                          <span className="flex items-center gap-1 text-[11px] font-bold text-rose-500 group-hover:gap-2 transition-all">
-                            VER MÁS <ArrowRight className="w-3 h-3" />
-                          </span>
-                        </div>
-                      </button>
-                    ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        )}
-
-        {/* SEO Content: about the salon and services */}
-        <section className="max-w-4xl mx-auto px-6 mt-20 prose prose-rose">
-          <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">El mejor salón de uñas en Barcelona</h2>
-          <p className="text-lg text-gray-600 mb-6">
-            En <strong>CALUATNAILS</strong> llevamos años perfeccionando cada técnica de manicura y pedicura para ofrecerte un servicio profesional, seguro y de larga duración. Nuestro salón está en <strong>Carrer del Rosselló 497</strong>, en pleno <strong>Eixample de Barcelona</strong>, a apenas 5 minutos andando de la Sagrada Familia y muy cerca de Gràcia, El Born, Sant Andreu y Sant Martí.
-          </p>
-          <p className="text-lg text-gray-600 mb-10">
-            Trabajamos con marcas profesionales, técnicas avanzadas como la <strong>manicura rusa con torno</strong> y <strong>nivelación con gel constructor</strong>, y nuestras profesionales están certificadas por la <strong>Academia CALUATNAILS</strong>, donde se forman cada año más de 3.200 manicuristas en toda España.
-          </p>
-
-          <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">Tipos de manicura y pedicura disponibles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-            <div className="bg-rose-50 rounded-2xl p-5 border border-rose-100">
-              <h3 className="font-bold text-rose-900 mb-2">Manicura tradicional</h3>
-              <p className="text-sm text-rose-800">Manicura clásica con esmalte normal. Ideal para uñas naturales y eventos puntuales.</p>
-            </div>
-            <div className="bg-rose-50 rounded-2xl p-5 border border-rose-100">
-              <h3 className="font-bold text-rose-900 mb-2">Esmaltado semipermanente</h3>
-              <p className="text-sm text-rose-800">Duración de hasta 4 semanas con brillo intacto. La opción más popular en Barcelona.</p>
-            </div>
-            <div className="bg-rose-50 rounded-2xl p-5 border border-rose-100">
-              <h3 className="font-bold text-rose-900 mb-2">Manicura rusa con nivelación</h3>
-              <p className="text-sm text-rose-800">Técnica avanzada con torno y gel constructor. Acabado espejo y duración prolongada.</p>
-            </div>
-            <div className="bg-rose-50 rounded-2xl p-5 border border-rose-100">
-              <h3 className="font-bold text-rose-900 mb-2">Uñas en gel y extensiones</h3>
-              <p className="text-sm text-rose-800">Esculpido profesional para uñas largas, resistentes y con diseño personalizado.</p>
-            </div>
-            <div className="bg-rose-50 rounded-2xl p-5 border border-rose-100">
-              <h3 className="font-bold text-rose-900 mb-2">Pedicura spa y semipermanente</h3>
-              <p className="text-sm text-rose-800">Tratamiento integral de pies con exfoliación, durezas, masaje e hidratación.</p>
-            </div>
-            <div className="bg-rose-50 rounded-2xl p-5 border border-rose-100">
-              <h3 className="font-bold text-rose-900 mb-2">Packs manicura + pedicura</h3>
-              <p className="text-sm text-rose-800">Combinados al mejor precio. Cuidado integral de manos y pies en una sola sesión.</p>
-            </div>
-          </div>
-
-          <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">¿Por qué elegir CALUATNAILS?</h2>
-          <ul className="space-y-3 text-lg text-gray-600 mb-10">
-            <li>✓ <strong>Profesionales certificadas</strong> con formación continua en técnicas internacionales.</li>
-            <li>✓ <strong>Productos de marca premium</strong>: gel hipoalergénico, esmaltes profesionales y materiales de primera.</li>
-            <li>✓ <strong>Reserva online</strong> en menos de 30 segundos, elige tu profesional y tu horario.</li>
-            <li>✓ <strong>Ubicación céntrica</strong> en el Eixample, con metro Sagrada Familia y Verdaguer a 5 minutos.</li>
-            <li>✓ <strong>Horario flexible</strong>: lunes a viernes de 9:00 a 19:00.</li>
-            <li>✓ <strong>Pago seguro online</strong> con confirmación inmediata por email y WhatsApp.</li>
-          </ul>
-
-          <h2 className="text-3xl font-black text-gray-900 mb-6 uppercase tracking-tight">¿En qué barrios atendemos?</h2>
-          <p className="text-lg text-gray-600 mb-10">
-            Aunque estamos físicamente en el <strong>Eixample (Sagrada Familia)</strong>, recibimos clientas de toda Barcelona: <strong>Gràcia</strong>, <strong>El Born</strong>, <strong>El Raval</strong>, <strong>Sants</strong>, <strong>Sant Andreu</strong>, <strong>Sant Martí</strong>, <strong>Poblenou</strong>, <strong>Sarrià</strong>, <strong>Les Corts</strong>, <strong>Pedralbes</strong> y barrios cercanos. También trabajamos con clientas de <strong>L'Hospitalet</strong>, <strong>Badalona</strong> y <strong>Sant Adrià de Besòs</strong>.
-          </p>
-        </section>
-
-        {/* CTA */}
-        <section className="max-w-7xl mx-auto px-6 mt-16">
-          <div className="bg-gray-900 rounded-[3rem] p-12 text-center text-white">
-            <h2 className="text-3xl font-black mb-6">¿Lista para tu momento de belleza?</h2>
-            <p className="text-gray-400 mb-10 max-w-xl mx-auto">Reserva tu cita de manicura o pedicura ahora y asegura tu plaza con nuestras especialistas.</p>
-            <button
+          <div className="pt-4">
+            <Button
+              variant="primary"
+              size="lg"
+              icon="ri-calendar-check-line"
               onClick={() => navigate("/reservar")}
-              className="bg-rose-500 hover:bg-rose-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all shadow-xl shadow-rose-900/20"
+              className="shadow-xl shadow-rose-900/50"
             >
-              Reservar Mi Cita Online
-            </button>
+              Reservar Cita Ahora
+            </Button>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Category Pills Bar */}
+      <section className="py-8 bg-white border-b border-rose-100/60 sticky top-20 z-30 shadow-soft-xs">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 flex flex-wrap gap-2 justify-center">
+          <button
+            onClick={() => setSelectedCatId(null)}
+            className={`px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+              selectedCatId === null
+                ? "bg-rose-500 text-white shadow-md shadow-rose-200 scale-105"
+                : "bg-gray-50 border border-gray-200 text-gray-600 hover:border-rose-300"
+            }`}
+          >
+            Todas las Categorías ({services.length})
+          </button>
+          {CATEGORY_GROUPS.map((group) => {
+            const count = services.filter(s => s.service_type.toLowerCase() === group.serviceType.toLowerCase()).length;
+            const isSelected = selectedCatId === group.id;
+            return (
+              <button
+                key={group.id}
+                onClick={() => setSelectedCatId(isSelected ? null : group.id)}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  isSelected
+                    ? "bg-rose-500 text-white shadow-md shadow-rose-200 scale-105"
+                    : "bg-gray-50 border border-gray-200 text-gray-600 hover:border-rose-300"
+                }`}
+              >
+                {group.title} ({count})
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Services List by Group */}
+      <section className="py-16 max-w-7xl mx-auto px-6 lg:px-10 space-y-16">
+        {visibleGroups.map((group) => {
+          const groupServices = services.filter(s => s.service_type.toLowerCase() === group.serviceType.toLowerCase());
+          if (groupServices.length === 0) return null;
+
+          return (
+            <div key={group.id} className="space-y-6">
+              <div className="flex items-center gap-3 border-b border-rose-100 pb-4">
+                <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600">
+                  <i className={`${group.icon} text-xl`} />
+                </div>
+                <div>
+                  <h2 className="font-playfair text-2xl sm:text-3xl font-extrabold text-gray-900">
+                    {group.title}
+                  </h2>
+                  <p className="text-gray-500 text-xs sm:text-sm font-medium">{group.description}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {groupServices.map((service) => (
+                  <Card
+                    key={service.id}
+                    variant="glass"
+                    padding="md"
+                    className="group hover:border-rose-300 transition-all duration-300 flex flex-col justify-between"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="font-playfair text-lg font-bold text-gray-900 leading-snug group-hover:text-rose-600 transition-colors">
+                          {service.name}
+                        </h3>
+                        <span className="text-rose-600 font-extrabold text-lg shrink-0 bg-rose-50/80 px-3 py-1 rounded-full border border-rose-100">
+                          {service.price % 1 === 0 ? `${service.price}€` : `${service.price.toFixed(2).replace('.', ',')}€`}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-xs text-gray-400 font-semibold">
+                        <Clock className="w-3.5 h-3.5 text-rose-400" />
+                        <span>{service.duration_minutes} min</span>
+                      </div>
+
+                      <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-medium">
+                        {service.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-100 mt-4 flex items-center justify-between">
+                      <button
+                        onClick={() => navigate(`/reservar?servicio=${service.id}`)}
+                        className="text-xs font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <span>Reservar cita</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                      </button>
+
+                      <span className="text-[11px] font-semibold text-gray-400 bg-gray-50 px-2.5 py-1 rounded-full">
+                        {service.service_type}
+                      </span>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
+      {/* Booking CTA Footer Bar */}
+      <section className="py-16 bg-gradient-to-r from-rose-500 to-pink-600 text-white text-center">
+        <div className="max-w-4xl mx-auto px-6 space-y-6">
+          <h2 className="font-playfair text-3xl sm:text-4xl font-extrabold">
+            ¿Lista para lucir unas uñas y mirada espectaculares?
+          </h2>
+          <p className="text-white/90 text-sm sm:text-base max-w-xl mx-auto font-medium">
+            Reserva tu cita en nuestro atelier de Calle Padilla 301 (Barcelona). Elige tu fecha, hora y estilista preferida.
+          </p>
+          <Button
+            variant="secondary"
+            size="lg"
+            icon="ri-calendar-check-line"
+            onClick={() => navigate("/reservar")}
+            className="!bg-white !text-rose-600 hover:!bg-rose-50 shadow-xl"
+          >
+            Reservar Cita Online
+          </Button>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }

@@ -22,7 +22,6 @@ export default function Footer() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: body.toString(),
       });
-      // Send newsletter welcome email via Brevo
       sendBrevoEmail({
         type: "newsletter_welcome",
         to: { email },
@@ -57,50 +56,39 @@ export default function Footer() {
     { label: "Términos de Uso", path: "/terminos" },
   ];
 
-  const handleScroll = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <footer className="bg-[#1A1A1A]">
-      {/* Top CTA */}
-      <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left */}
+    <footer className="bg-gradient-to-b from-gray-900 via-gray-900 to-rose-950 text-white pt-16 pb-12 relative overflow-hidden">
+      {/* Background soft blur blobs */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+        {/* Newsletter Section */}
+        <div className="bg-white/10 backdrop-blur-md rounded-4xl p-8 lg:p-10 border border-white/15 shadow-soft-lg mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <span className="text-rose-400 text-xs font-semibold tracking-widest uppercase mb-3 block">
-                Únete a la Newsletter
+              <span className="text-rose-300 text-xs font-bold tracking-widest uppercase mb-2 block flex items-center gap-1.5">
+                <i className="ri-sparkles-line" /> Newsletter Caluatnails
               </span>
-              <h2 className="font-playfair text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">
-                Descubre Promociones y
-                <br />
-                <span className="text-rose-400">Tips de Belleza</span>
+              <h2 className="font-playfair text-2xl lg:text-3xl font-extrabold text-white leading-tight mb-3">
+                Promociones exclusivas y <span className="text-rose-300">Tips de Belleza</span>
               </h2>
-              <p className="text-white/60 text-sm leading-relaxed max-w-md">
-                Suscríbete para recibir consejos de cuidado de uñas, promociones especiales del salón y novedades en nuestro catálogo de servicios.
+              <p className="text-white/70 text-xs sm:text-sm leading-relaxed max-w-md font-medium">
+                Recibe consejos de cuidado de uñas, ofertas especiales del salón en Barcelona y novedades mensuales.
               </p>
             </div>
 
-            {/* Right - Newsletter */}
             <div>
               {submitted ? (
-                <div className="bg-rose-900/30 border border-rose-700/30 rounded-2xl p-6 text-center">
-                  <div className="w-12 h-12 flex items-center justify-center bg-rose-500/20 rounded-full mx-auto mb-3">
-                    <i className="ri-check-line text-2xl text-rose-400"></i>
+                <div className="bg-rose-950/60 border border-rose-500/40 rounded-3xl p-5 text-center shadow-soft-xs">
+                  <div className="w-10 h-10 flex items-center justify-center bg-rose-500/30 rounded-full mx-auto mb-2 text-rose-300">
+                    <i className="ri-check-line text-xl" />
                   </div>
-                  <p className="text-white font-semibold text-base mb-1">¡Suscripción exitosa!</p>
-                  <p className="text-white/50 text-sm">Te enviaremos novedades y contenido exclusivo a tu correo.</p>
+                  <p className="text-white font-bold text-sm mb-1">¡Te has suscrito con éxito!</p>
+                  <p className="text-white/60 text-xs font-medium">Revisa tu bandeja de entrada para ver el mensaje de bienvenida.</p>
                 </div>
               ) : (
-                <form
-                  id="newsletter-form"
-                  data-readdy-form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col gap-3"
-                >
-                  <label className="text-white/50 text-xs">Tu correo electrónico</label>
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                   <div className="flex flex-col sm:flex-row gap-3">
                     <input
                       name="email"
@@ -108,72 +96,83 @@ export default function Footer() {
                       required
                       value={email}
                       onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                      placeholder="ejemplo@correo.com"
-                      className="flex-1 bg-white/10 border border-white/20 text-white text-sm placeholder:text-white/30 rounded-full px-5 py-3 focus:outline-none focus:border-rose-400 transition-colors"
+                      placeholder="tu@email.com"
+                      className="flex-1 bg-white/15 border border-white/20 text-white text-xs sm:text-sm placeholder:text-white/40 rounded-full px-5 py-3.5 focus:outline-none focus:border-rose-400 focus:ring-4 focus:ring-rose-400/20 transition-all font-medium"
                     />
                     <button
                       type="submit"
                       disabled={submitting}
-                      className="bg-rose-600 hover:bg-rose-700 disabled:bg-rose-800 text-white font-semibold px-6 py-3 rounded-full transition-colors cursor-pointer whitespace-nowrap text-sm"
+                      className="bg-gradient-to-r from-rose-500 to-pink-500 hover:opacity-95 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all cursor-pointer whitespace-nowrap shadow-soft-xs"
                     >
                       {submitting ? (
-                        <><i className="ri-loader-4-line animate-spin mr-1.5"></i>Enviando</>
+                        <span className="flex items-center gap-1.5"><i className="ri-loader-4-line animate-spin" /> Enviando</span>
                       ) : (
                         "Suscribirme"
                       )}
                     </button>
                   </div>
-                  {error && <p className="text-rose-400 text-xs">{error}</p>}
-                  <p className="text-white/30 text-xs">Sin spam. Puedes cancelar en cualquier momento.</p>
+                  {error && <p className="text-rose-300 text-xs font-medium">{error}</p>}
                 </form>
               )}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            {/* CALUATNAILS Logo */}
-            <div className="mb-4">
-              <span className="font-playfair text-3xl font-bold tracking-widest text-white">
-                <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
+        {/* Main Links Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 border-b border-white/10 pb-12">
+          {/* Brand Info */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 flex items-center justify-center text-white shadow-soft-xs">
+                <i className="ri-sparkles-line text-base" />
+              </div>
+              <span className="font-playfair text-2xl font-extrabold tracking-widest text-white">
+                CALUATNAILS
               </span>
             </div>
-            <p className="text-white/40 text-xs leading-relaxed mb-5">
-              Salón premium de manicura y pedicura en el Eixample, Barcelona. Cuidado de lujo y precisión para tus uñas.
+            <p className="text-white/60 text-xs leading-relaxed max-w-sm font-medium">
+              Atelier especializado de manicura, pedicura, uñas en gel, mirada y estética en el Eixample, Barcelona. Cuidado artesanal, higiene rigurosa y acabado impecable.
             </p>
-            <div className="flex items-center gap-3">
+            <div className="space-y-1.5 text-xs text-white/70 font-medium pt-1">
+              <div className="flex items-center gap-2">
+                <i className="ri-map-pin-line text-rose-400" />
+                <span>Calle Padilla 301, 08025 Barcelona (Eixample)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <i className="ri-phone-line text-rose-400" />
+                <a href="https://wa.me/34635797539" target="_blank" rel="noopener noreferrer" className="hover:text-rose-300">
+                  +34 635 797 539
+                </a>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 pt-2">
               {[
-                { icon: "ri-instagram-line", href: "#" },
-                { icon: "ri-facebook-circle-line", href: "#" },
-                { icon: "ri-youtube-line", href: "#" },
-                { icon: "ri-tiktok-line", href: "#" },
+                { icon: "ri-instagram-line", href: "https://instagram.com/caluatnails" },
+                { icon: "ri-whatsapp-line", href: "https://wa.me/34635797539" },
               ].map(({ icon, href }) => (
                 <a
                   key={icon}
                   href={href}
-                  rel="nofollow"
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-rose-600 text-white/50 hover:text-white transition-all cursor-pointer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-rose-500 text-white/70 hover:text-white transition-all cursor-pointer shadow-soft-xs"
                 >
-                  <i className={`${icon} text-sm`}></i>
+                  <i className={`${icon} text-base`} />
                 </a>
               ))}
             </div>
           </div>
 
           {/* Servicios */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5">Servicios</h4>
-            <ul className="flex flex-col gap-3">
+          <div className="space-y-4">
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-playfair">Servicios</h4>
+            <ul className="space-y-2.5 text-xs font-medium">
               {serviceLinks.map((link) => (
                 <li key={link.label}>
                   <button
+                    type="button"
                     onClick={() => navigate(link.path)}
-                    className="text-white/40 hover:text-white/80 text-xs transition-colors cursor-pointer text-left"
+                    className="text-white/60 hover:text-rose-300 transition-colors cursor-pointer text-left"
                   >
                     {link.label}
                   </button>
@@ -183,14 +182,15 @@ export default function Footer() {
           </div>
 
           {/* Mi Cuenta */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5">Mi Cuenta</h4>
-            <ul className="flex flex-col gap-3">
+          <div className="space-y-4">
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-playfair">Mi Cuenta</h4>
+            <ul className="space-y-2.5 text-xs font-medium">
               {accountLinks.map((link) => (
                 <li key={link.label}>
                   <button
+                    type="button"
                     onClick={() => navigate(link.path)}
-                    className="text-white/40 hover:text-white/80 text-xs transition-colors cursor-pointer text-left"
+                    className="text-white/60 hover:text-rose-300 transition-colors cursor-pointer text-left"
                   >
                     {link.label}
                   </button>
@@ -200,14 +200,15 @@ export default function Footer() {
           </div>
 
           {/* Soporte */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5">Soporte</h4>
-            <ul className="flex flex-col gap-3">
+          <div className="space-y-4">
+            <h4 className="text-white font-bold text-xs uppercase tracking-wider font-playfair">Soporte</h4>
+            <ul className="space-y-2.5 text-xs font-medium">
               {supportLinks.map((link) => (
                 <li key={link.label}>
                   <button
+                    type="button"
                     onClick={() => navigate(link.path)}
-                    className="text-white/40 hover:text-white/80 text-xs transition-colors cursor-pointer text-left"
+                    className="text-white/60 hover:text-rose-300 transition-colors cursor-pointer text-left"
                   >
                     {link.label}
                   </button>
@@ -217,30 +218,21 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-white/30 text-xs">
-            &copy; {new Date().getFullYear()} CALUATNAILS — Salón Premium de Manicura y Pedicura. Todos los derechos reservados.
-          </p>
+        {/* Bottom Bar */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 font-medium">
+          <p>&copy; {new Date().getFullYear()} CALUATNAILS — Salón Premium de Manicura y Pedicura.</p>
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate("/privacidad")}
-              className="text-white/30 hover:text-white/60 text-xs transition-colors cursor-pointer"
-            >
+            <button type="button" onClick={() => navigate("/privacidad")} className="hover:text-rose-300 transition-colors">
               Privacidad
             </button>
-            <span className="text-white/20 text-xs">·</span>
-            <button
-              onClick={() => navigate("/terminos")}
-              className="text-white/30 hover:text-white/60 text-xs transition-colors cursor-pointer"
-            >
+            <span>·</span>
+            <button type="button" onClick={() => navigate("/terminos")} className="hover:text-rose-300 transition-colors">
               Términos
             </button>
-            <span className="text-white/20 text-xs">·</span>
-            <div className="flex items-center gap-2">
-              <i className="ri-shield-check-line text-rose-500 text-sm"></i>
-              <span className="text-white/30 text-xs">Reserva 100% Segura</span>
-            </div>
+            <span>·</span>
+            <span className="flex items-center gap-1 text-rose-300">
+              <i className="ri-shield-check-line" /> Reserva Segura
+            </span>
           </div>
         </div>
       </div>

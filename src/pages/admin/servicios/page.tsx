@@ -5,17 +5,33 @@ import { AdminSidebar } from "@/pages/admin/components/AdminSidebar";
 import ServiceModal from "./components/ServiceModal";
 import BulkEditBar from "./components/BulkEditBar";
 import ServiceRow from "./components/ServiceRow";
+import { TREATWELL_SERVICES } from "@/data/servicesCatalog";
 
 const SERVICE_TYPES = [
-  "Manicura", "Pedicura", "Diseño Artístico", "Extensiones",
-  "Mantenimiento", "Pack Completo", "Formación", "General",
+  "Manicura", "Pedicura", "Manos y pies", "Uñas de gel y acrílico",
+  "Nail art", "Depilación con hilo", "Pestañas y cejas",
 ];
 
 export { SERVICE_TYPES };
 
+export const DEFAULT_CALUATNAILS_SERVICES: DBService[] = TREATWELL_SERVICES.map((s, idx) => ({
+  id: s.id,
+  name: s.name,
+  description: s.description,
+  duration_minutes: s.duration_minutes,
+  price: s.price,
+  service_type: s.service_type,
+  active: s.active,
+  reward_points: s.reward_points ?? (s.price > 30 ? 15 : 5),
+  order_index: s.order_index ?? idx + 1,
+  guarantee_window_days: s.guarantee_window_days ?? 7,
+  guarantee_duration_minutes: s.guarantee_duration_minutes ?? 20,
+}));
+
 export default function AdminServiciosPage() {
   const [services, setServices] = useState<DBService[]>([]);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState<DBService | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -34,16 +50,53 @@ export default function AdminServiciosPage() {
 
   const load = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("services")
-      .select("*")
-      .order("order_index")
-      .order("name");
-    setServices(data ?? []);
-    setLoading(false);
+    try {
+      const { data } = await supabase
+        .from("services")
+        .select("*")
+        .order("order_index")
+        .order("name");
+      
+      if (data && data.length > 0) {
+        setServices(data);
+      } else {
+        setServices(DEFAULT_CALUATNAILS_SERVICES);
+      }
+    } catch {
+      setServices(DEFAULT_CALUATNAILS_SERVICES);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  const handleSeedServices = async () => {
+    setSeeding(true);
+    try {
+      for (const s of DEFAULT_CALUATNAILS_SERVICES) {
+        await supabase.from("services").upsert({
+          id: s.id,
+          name: s.name,
+          description: s.description,
+          duration_minutes: s.duration_minutes,
+          price: s.price,
+          service_type: s.service_type,
+          active: s.active,
+          reward_points: s.reward_points,
+          order_index: s.order_index,
+          guarantee_window_days: s.guarantee_window_days,
+          guarantee_duration_minutes: s.guarantee_duration_minutes,
+        }, { onConflict: "id" });
+      }
+      showToast("Catálogo completo de Caluatnails (35 servicios) guardado en BD");
+      await load();
+    } catch (err) {
+      showToast("Error al sincronizar catálogo", "error");
+    } finally {
+      setSeeding(false);
+    }
+  };
 
   const openCreate = () => { setEditing(null); setShowModal(true); };
   const openEdit = (s: DBService) => { setEditing(s); setShowModal(true); };
@@ -122,7 +175,6 @@ export default function AdminServiciosPage() {
     setServices(updated);
     setDragId(null);
     setDragOver(null);
-    // persist
     await Promise.all(
       updated.map(s => supabase.from("services").update({ order_index: s.order_index }).eq("id", s.id))
     );
@@ -146,18 +198,28 @@ export default function AdminServiciosPage() {
         <div className="max-w-6xl mx-auto">
 
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Gestión de Servicios</h1>
-              <p className="text-gray-500 text-sm mt-1">Arrastra para reordenar · Selecciona varios para edición masiva</p>
+              <p className="text-gray-500 text-sm mt-1">Catálogo oficial Caluatnails ({services.length} servicios registrados)</p>
             </div>
-            <button
-              onClick={openCreate}
-              className="bg-rose-500 hover:bg-rose-600 text-white font-semibold px-5 py-2.5 rounded-full flex items-center gap-2 transition-colors cursor-pointer whitespace-nowrap"
-            >
-              <i className="ri-add-line"></i>
-              Nuevo servicio
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleSeedServices}
+                disabled={seeding}
+                className="bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold px-4 py-2.5 rounded-full flex items-center gap-2 border border-rose-200 transition-colors cursor-pointer text-xs"
+              >
+                <i className={`ri-refresh-line ${seeding ? "animate-spin" : ""}`}></i>
+                {seeding ? "Guardando en BD..." : "Sincronizar 35 Servicios"}
+              </button>
+              <button
+                onClick={openCreate}
+                className="bg-rose-500 hover:bg-rose-600 text-white font-semibold px-5 py-2.5 rounded-full flex items-center gap-2 transition-colors cursor-pointer text-sm"
+              >
+                <i className="ri-add-line"></i>
+                Nuevo servicio
+              </button>
+            </div>
           </div>
 
           {/* Stats */}
@@ -165,8 +227,8 @@ export default function AdminServiciosPage() {
             {[
               { label: "Total servicios", value: services.length, icon: "ri-scissors-line", color: "text-rose-500", bg: "bg-rose-50" },
               { label: "Activos", value: services.filter(s => s.active).length, icon: "ri-check-double-line", color: "text-teal-600", bg: "bg-teal-50" },
-              { label: "Tipos", value: types.length, icon: "ri-price-tag-3-line", color: "text-amber-600", bg: "bg-amber-50" },
-              { label: "Precio medio", value: `€${services.length ? (services.reduce((a, s) => a + Number(s.price), 0) / services.length).toFixed(0) : 0}`, icon: "ri-money-euro-circle-line", color: "text-indigo-600", bg: "bg-indigo-50" },
+              { label: "Categorías", value: types.length, icon: "ri-price-tag-3-line", color: "text-amber-600", bg: "bg-amber-50" },
+              { label: "Precio medio", value: `€${services.length ? (services.reduce((a, s) => a + Number(s.price), 0) / services.length).toFixed(1) : 0}`, icon: "ri-money-euro-circle-line", color: "text-indigo-600", bg: "bg-indigo-50" },
             ].map((stat, i) => (
               <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100">
                 <div className="flex items-center gap-2 mb-2">
@@ -198,7 +260,7 @@ export default function AdminServiciosPage() {
               onChange={e => setFilterType(e.target.value)}
               className="border border-gray-200 rounded-full px-4 py-1.5 text-xs bg-white text-gray-600 focus:outline-none focus:border-rose-400 cursor-pointer"
             >
-              <option value="all">Todos los tipos</option>
+              <option value="all">Todas las categorías</option>
               {SERVICE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
             {filtered.length !== services.length && (
@@ -233,7 +295,7 @@ export default function AdminServiciosPage() {
               <p className="text-gray-400 text-sm">No hay servicios con estos filtros</p>
             </div>
           ) : (
-            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -248,7 +310,7 @@ export default function AdminServiciosPage() {
                       </th>
                       <th className="w-8 px-2 py-3"></th>
                       <th className="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Servicio</th>
-                      <th className="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Tipo</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Categoría</th>
                       <th className="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Duración</th>
                       <th className="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Precio</th>
                       <th className="text-left px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Puntos</th>

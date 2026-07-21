@@ -1,21 +1,15 @@
 import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
-  BookOpen,
-  GraduationCap,
   Users,
-  Settings,
   LogOut,
   Menu,
   X,
-  MessageCircle,
-  Tag,
   Scissors,
   CalendarDays,
   Ticket,
   Link2,
   ShoppingBag,
-  Smartphone,
   Bot,
   Send,
   GripVertical,
@@ -24,8 +18,9 @@ import {
   Bell,
   ShieldCheck,
   TrendingUp,
+  Settings,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -47,6 +42,7 @@ import { CSS } from "@dnd-kit/utilities";
 const INITIAL_NAV_ITEMS = [
   { id: "dashboard", path: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { id: "clientes", path: "/admin/clientes", icon: ShoppingBag, label: "Clientes" },
+  { id: "profesionales", path: "/admin/profesionales", icon: Users, label: "Profesionales" },
   { id: "cupones", path: "/admin/cupones", icon: Ticket, label: "Cupones" },
   { id: "servicios", path: "/admin/servicios", icon: Scissors, label: "Servicios" },
   { id: "agenda", path: "/admin/agenda", icon: CalendarDays, label: "Agenda" },
@@ -96,21 +92,21 @@ function SortableNavItem({ item, isActive, onClick }: SortableItemProps) {
       <div 
         {...attributes} 
         {...listeners}
-        className="p-1 cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="p-1 cursor-grab active:cursor-grabbing text-gray-300 hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
       >
-        <GripVertical className="w-4 h-4" />
+        <GripVertical className="w-3.5 h-3.5" />
       </div>
       <NavLink
         to={item.path}
         onClick={onClick}
-        className={`flex-1 flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
+        className={`flex-1 flex items-center gap-3 px-3.5 py-2.5 rounded-2xl transition-all font-semibold text-xs ${
           isActive
-            ? "bg-rose-50 text-rose-600 font-medium"
-            : "text-gray-600 hover:bg-gray-50"
+            ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-xs"
+            : "text-gray-700 hover:bg-rose-50/60 hover:text-rose-600"
         }`}
       >
-        <Icon className="w-5 h-5" />
-        <span className="text-sm">{item.label}</span>
+        <Icon className="w-4 h-4 shrink-0" />
+        <span className="truncate">{item.label}</span>
       </NavLink>
     </div>
   );
@@ -124,12 +120,9 @@ export function AdminSidebar() {
       try {
         const orderIds = JSON.parse(saved);
         const savedItems = orderIds.map((id: string) => INITIAL_NAV_ITEMS.find(i => i.id === id)).filter(Boolean);
-        
-        // Find items that are in INITIAL_NAV_ITEMS but NOT in savedItems
         const newItems = INITIAL_NAV_ITEMS.filter(initial => !savedItems.find(saved => saved.id === initial.id));
-        
         return [...savedItems, ...newItems];
-      } catch (e) {
+      } catch {
         return INITIAL_NAV_ITEMS;
       }
     }
@@ -153,8 +146,6 @@ export function AdminSidebar() {
         const oldIndex = items.findIndex((i) => i.id === active.id);
         const newIndex = items.findIndex((i) => i.id === over.id);
         const newItems = arrayMove(items, oldIndex, newIndex);
-        
-        // Save to localStorage
         localStorage.setItem("admin-sidebar-order", JSON.stringify(newItems.map(i => i.id)));
         return newItems;
       });
@@ -163,10 +154,11 @@ export function AdminSidebar() {
 
   return (
     <>
-      {/* Mobile toggle */}
+      {/* Mobile button */}
       <button
+        type="button"
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center"
+        className="lg:hidden fixed top-4 left-4 z-50 w-11 h-11 bg-white/95 backdrop-blur-md rounded-2xl shadow-soft-md flex items-center justify-center border border-rose-100 text-gray-800"
       >
         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
@@ -174,30 +166,34 @@ export function AdminSidebar() {
       {/* Overlay */}
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          className="lg:hidden fixed inset-0 bg-gray-900/40 backdrop-blur-xs z-40"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar Container */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 h-screen w-64 bg-white border-r border-gray-200 z-50 transition-transform duration-300 ${
+        className={`fixed lg:sticky top-0 left-0 h-screen w-64 bg-white/95 backdrop-blur-md border-r border-rose-100/80 z-50 transition-transform duration-300 flex flex-col justify-between shadow-soft-xs ${
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        {/* Logo */}
-        <div className="h-16 flex items-center px-6 border-b border-gray-100">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-white font-bold text-lg">
-            M
+        {/* Header Logo */}
+        <div className="h-20 flex items-center px-6 border-b border-rose-100/60 shrink-0">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm shadow-soft-xs">
+            <i className="ri-sparkles-line" />
           </div>
-          <div className="ml-3">
-            <h1 className="font-bold text-gray-900">Manicure Pro</h1>
-            <p className="text-xs text-gray-400">Panel de Administración</p>
+          <div className="ml-3 min-w-0">
+            <h1 className="font-playfair font-extrabold text-gray-900 text-base leading-none tracking-wider">
+              CALUATNAILS
+            </h1>
+            <p className="text-[10px] font-bold text-rose-500 uppercase tracking-widest mt-1">
+              Panel de Control
+            </p>
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav className="p-4 overflow-y-auto" style={{ height: "calc(100vh - 128px)" }}>
+        {/* Navigation list */}
+        <nav className="p-4 overflow-y-auto no-scrollbar flex-1">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -221,14 +217,14 @@ export function AdminSidebar() {
           </DndContext>
         </nav>
 
-        {/* Bottom section */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-100 bg-white">
+        {/* Footer Link */}
+        <div className="p-4 border-t border-rose-100/60 bg-rose-50/30 shrink-0">
           <NavLink
             to="/"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all"
+            className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold text-gray-700 hover:bg-white hover:text-rose-600 transition-all border border-transparent hover:border-rose-100"
           >
-            <LogOut className="w-5 h-5" />
-            <span className="text-sm font-medium">Volver al sitio</span>
+            <LogOut className="w-4 h-4 text-rose-500" />
+            <span>Volver al sitio web</span>
           </NavLink>
         </div>
       </aside>

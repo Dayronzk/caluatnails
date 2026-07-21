@@ -1,8 +1,13 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ChevronLeft, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
+import Navbar from "@/pages/home/components/Navbar";
+import Footer from "@/pages/home/components/Footer";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 
 export default function BlogListPage() {
   const navigate = useNavigate();
@@ -20,7 +25,7 @@ export default function BlogListPage() {
   );
 
   return (
-    <div className="min-h-screen bg-white font-inter">
+    <div className="min-h-screen bg-gradient-to-b from-organic-cream via-white to-organic-blush/30">
       <Helmet>
         <title>Blog CALUATNAILS — Consejos de Manicura y Pedicura en Barcelona</title>
         <meta name="description" content="Guías, tendencias y consejos profesionales sobre manicura, pedicura, uñas en gel, cuidado de cutículas y más. Por el equipo de CALUATNAILS en Barcelona." />
@@ -68,43 +73,30 @@ export default function BlogListPage() {
         </script>
       </Helmet>
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <button onClick={() => navigate("/")} className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors">
-            <ChevronLeft className="w-5 h-5" />
-            <span className="text-sm font-medium">Inicio</span>
-          </button>
-          <span className="font-playfair text-xl font-bold tracking-widest text-gray-900">
-            <img src="/assets/caluatnails-logo.png" alt="Caluatnails" className="h-8 md:h-10 w-auto object-contain" />
-          </span>
-          <button onClick={() => navigate("/reservar")} className="bg-rose-500 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-rose-600 transition-all shadow-lg shadow-rose-200">
-            RESERVAR
-          </button>
-        </div>
-      </nav>
+      <Navbar />
 
-      <main className="pt-24 pb-20">
-        <header className="max-w-4xl mx-auto px-6 mb-12 text-center">
-          <span className="inline-block px-3 py-1 bg-rose-50 text-rose-600 rounded-full text-[10px] font-bold mb-4 uppercase tracking-widest">
+      <main className="pt-28 pb-20 max-w-7xl mx-auto px-6 lg:px-10">
+        <header className="text-center max-w-3xl mx-auto mb-12 space-y-4">
+          <Badge variant="rose" icon="ri-book-open-line">
             Blog CALUATNAILS
-          </span>
-          <h1 className="text-4xl lg:text-5xl font-black text-gray-900 mb-6 uppercase tracking-tight">
+          </Badge>
+          <h1 className="font-playfair text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
             Consejos de Manicura y Pedicura
           </h1>
-          <p className="text-gray-500 max-w-2xl mx-auto text-base lg:text-lg leading-relaxed">
-            Guías profesionales, tendencias y trucos para cuidar tus uñas. Por el equipo de <strong>CALUATNAILS</strong>, salón de manicura premium en el Eixample de Barcelona.
+          <p className="text-gray-600 text-base sm:text-lg leading-relaxed font-medium">
+            Guías profesionales, tendencias de diseño y consejos para mantener tus uñas fuertes e impecables. Por las estilistas de <strong className="text-gray-900 font-bold">CALUATNAILS</strong>, Barcelona.
           </p>
         </header>
 
-        {/* Categories pill nav — clickable */}
-        <div className="max-w-7xl mx-auto px-6 mb-10 flex flex-wrap justify-center gap-2">
+        {/* Category Pills */}
+        <div className="mb-12 flex flex-wrap justify-center gap-2.5">
           <button
+            type="button"
             onClick={() => setActiveCategory(null)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+            className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer shadow-soft-xs ${
               activeCategory === null
-                ? "bg-rose-500 text-white border-rose-500 shadow-md shadow-rose-200"
-                : "bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100"
+                ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white scale-105"
+                : "bg-white/90 text-gray-700 border border-rose-100 hover:bg-rose-50/60"
             }`}
           >
             Todos ({sorted.length})
@@ -115,11 +107,12 @@ export default function BlogListPage() {
             return (
               <button
                 key={cat}
+                type="button"
                 onClick={() => setActiveCategory(active ? null : cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+                className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer shadow-soft-xs ${
                   active
-                    ? "bg-rose-500 text-white border-rose-500 shadow-md shadow-rose-200"
-                    : "bg-gray-50 text-gray-600 border-gray-100 hover:bg-gray-100"
+                    ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white scale-105"
+                    : "bg-white/90 text-gray-700 border border-rose-100 hover:bg-rose-50/60"
                 }`}
               >
                 {cat} ({count})
@@ -128,80 +121,119 @@ export default function BlogListPage() {
           })}
         </div>
 
-        {/* Featured (first post) — only when no filter */}
+        {/* Featured Post (first item) */}
         {!activeCategory && filtered[0] && (
-          <section className="max-w-7xl mx-auto px-6 mb-12">
-            <button
+          <div className="mb-12">
+            <Card
+              variant="gradient"
+              padding="lg"
+              className="group cursor-pointer hover:-translate-y-1 transition-all duration-300"
               onClick={() => navigate(`/blog/${filtered[0].slug}`)}
-              className="group w-full text-left grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gradient-to-br from-rose-50 to-white rounded-3xl p-6 lg:p-10 border border-rose-100 hover:shadow-xl hover:shadow-rose-100/50 transition-all"
             >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden">
-                <img src={filtered[0].image} alt={filtered[0].imageAlt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-3 text-xs text-gray-500">
-                  <span className="px-2 py-1 bg-rose-500 text-white rounded-full font-bold">DESTACADO</span>
-                  <span>{filtered[0].category}</span>
-                  <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {filtered[0].readMinutes} min</span>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-soft-xs">
+                  <img
+                    src={filtered[0].image}
+                    alt={filtered[0].imageAlt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <h2 className="text-2xl lg:text-3xl font-black text-gray-900 mb-4 leading-tight">{filtered[0].title}</h2>
-                <p className="text-gray-600 leading-relaxed mb-4">{filtered[0].excerpt}</p>
-                <span className="text-rose-500 font-bold text-sm">Leer artículo →</span>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 text-xs font-bold">
+                    <Badge variant="gold">Destacado</Badge>
+                    <span className="text-rose-600 font-bold uppercase">{filtered[0].category}</span>
+                    <span className="text-gray-400 flex items-center gap-1 font-medium">
+                      <Clock className="w-3.5 h-3.5" /> {filtered[0].readMinutes} min lectura
+                    </span>
+                  </div>
+                  <h2 className="font-playfair text-2xl sm:text-3xl font-extrabold text-gray-900 leading-snug group-hover:text-rose-600 transition-colors">
+                    {filtered[0].title}
+                  </h2>
+                  <p className="text-gray-600 text-sm leading-relaxed font-medium">
+                    {filtered[0].excerpt}
+                  </p>
+                  <div className="pt-2">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 group-hover:translate-x-1 transition-transform">
+                      Leer artículo completo <i className="ri-arrow-right-line" />
+                    </span>
+                  </div>
+                </div>
               </div>
-            </button>
-          </section>
-        )}
-
-        {/* Active filter heading */}
-        {activeCategory && (
-          <div className="max-w-7xl mx-auto px-6 mb-6">
-            <p className="text-sm text-gray-500">
-              Mostrando <strong className="text-gray-900">{filtered.length}</strong> {filtered.length === 1 ? "artículo" : "artículos"} de la categoría <strong className="text-rose-500">{activeCategory}</strong>
-            </p>
+            </Card>
           </div>
         )}
 
         {/* Grid of posts */}
-        <section className="max-w-7xl mx-auto px-6">
+        <section className="space-y-6">
           {filtered.length === 0 ? (
-            <p className="text-center text-gray-500 py-12">No hay artículos en esta categoría aún.</p>
+            <p className="text-center text-gray-500 py-12 font-medium">No hay artículos publicados en esta categoría.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {(activeCategory ? filtered : filtered.slice(1)).map(post => (
-                <button
+                <Card
                   key={post.slug}
+                  variant="glass"
+                  padding="none"
+                  className="group cursor-pointer hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
                   onClick={() => navigate(`/blog/${post.slug}`)}
-                  className="group text-left bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-rose-200 hover:shadow-lg hover:shadow-rose-100/30 transition-all flex flex-col"
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img src={post.image} alt={post.imageAlt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <div className="aspect-[16/10] overflow-hidden relative">
+                    <img
+                      src={post.image}
+                      alt={post.imageAlt}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
                   </div>
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center gap-3 mb-2 text-[11px] text-gray-400 font-medium">
-                      <span className="text-rose-500 font-bold uppercase">{post.category}</span>
-                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {post.readMinutes} min</span>
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-[11px] font-bold">
+                        <span className="text-rose-600 uppercase tracking-wider">{post.category}</span>
+                        <span className="text-gray-400 font-medium flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-rose-400" /> {post.readMinutes} min
+                        </span>
+                      </div>
+                      <h3 className="font-playfair text-lg font-bold text-gray-900 leading-snug line-clamp-2 group-hover:text-rose-600 transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-600 text-xs leading-relaxed line-clamp-3 font-medium">
+                        {post.excerpt}
+                      </p>
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight line-clamp-2 group-hover:text-rose-600 transition-colors">{post.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-3">{post.excerpt}</p>
-                    <span className="mt-auto text-rose-500 font-bold text-xs">Leer más →</span>
+
+                    <div className="pt-2 flex items-center text-xs font-bold text-rose-600 group-hover:translate-x-1 transition-transform">
+                      <span>Leer más</span>
+                      <i className="ri-arrow-right-line ml-1" />
+                    </div>
                   </div>
-                </button>
+                </Card>
               ))}
             </div>
           )}
         </section>
 
-        {/* CTA bottom */}
-        <section className="max-w-7xl mx-auto px-6 mt-20">
-          <div className="bg-gray-900 rounded-[3rem] p-12 text-center text-white">
-            <h2 className="text-3xl font-black mb-6">¿Lista para tu próxima manicura?</h2>
-            <p className="text-gray-400 mb-10 max-w-xl mx-auto">Aplica los consejos de nuestro blog reservando una cita con nuestras profesionales en CALUATNAILS, Barcelona.</p>
-            <button onClick={() => navigate("/reservar")} className="bg-rose-500 hover:bg-rose-600 text-white px-10 py-4 rounded-full font-bold text-lg transition-all shadow-xl shadow-rose-900/20">
-              Reservar Mi Cita
-            </button>
+        {/* CTA Bottom */}
+        <section className="mt-20">
+          <div className="bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 rounded-4xl p-8 sm:p-12 text-center text-white shadow-soft-lg space-y-4">
+            <h2 className="font-playfair text-2xl sm:text-3xl font-extrabold">¿Lista para tu próxima manicura en Barcelona?</h2>
+            <p className="text-white/90 text-sm max-w-xl mx-auto font-medium">
+              Pon en práctica los consejos de nuestro blog reservando tu cita con las estilistas de CALUATNAILS.
+            </p>
+            <div className="pt-2">
+              <Button
+                variant="gold"
+                size="lg"
+                icon="ri-calendar-check-line"
+                onClick={() => navigate("/reservar")}
+              >
+                Reservar Mi Cita
+              </Button>
+            </div>
           </div>
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

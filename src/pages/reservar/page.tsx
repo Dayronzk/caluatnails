@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import { supabase } from "@/lib/supabase";
 import { DBService } from "@/lib/types";
+import { TREATWELL_SERVICES } from "@/data/servicesCatalog";
 import { useAuth } from "@/hooks/useAuth";
 import { usePoints } from "@/hooks/usePoints";
 import { ensureClientAccount } from "@/hooks/useClientAccount";
@@ -105,7 +106,6 @@ export default function ReservarPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  // If returning from WhatsApp Bizum flow on iOS PWA, redirect to account page
   useEffect(() => {
     if (sessionStorage.getItem("bizum_pending") === "1") {
       sessionStorage.removeItem("bizum_pending");
@@ -123,7 +123,6 @@ export default function ReservarPage() {
   const [selectedProfessionalId, setSelectedProfessionalId] = useState("");
   const [selectedProfessionalInfo, setSelectedProfessionalInfo] = useState<{ name: string; address: string | null; instagram: string | null } | null>(null);
 
-  // Double/Multiple booking states
   const [companions, setCompanions] = useState<Companion[]>([]);
   const [bookingMode, setBookingMode] = useState<"simultaneous" | "consecutive">("simultaneous");
   const [activeTab, setActiveTab] = useState<string>("main");
@@ -210,7 +209,6 @@ export default function ReservarPage() {
   const [nameStep, setNameStep] = useState(false);
   const [clientNameInput, setClientNameInput] = useState("");
   const [checkingPhone, setCheckingPhone] = useState(false);
-  // Don't pre-fill email from auth user if they're an admin (admin emails should never end up as client_email).
   const initialEmail = user?.email && role !== "admin" ? user.email : "";
   const [clientData, setClientData] = useState({ name: "", email: initialEmail, phone: "" });
   const [paymentLoading, setPaymentLoading] = useState(false);
@@ -219,10 +217,8 @@ export default function ReservarPage() {
   const [calDropdown, setCalDropdown] = useState(false);
   const [refCode, setRefCode] = useState<string | null>(null);
   const [referralReferrerName, setReferralReferrerName] = useState<string | null>(null);
-  const [referralEligible, setReferralEligible] = useState(false);  // true = phone is new + refCode valid
+  const [referralEligible, setReferralEligible] = useState(false);
 
-  // Pre-fill user data when a non-admin user is logged in
-  // (admins booking on behalf of clients should not have their email auto-attached)
   useEffect(() => {
     if (user && role !== "admin") {
       setClientData(prev => ({
@@ -239,7 +235,6 @@ export default function ReservarPage() {
     }
   }, [clientPhone]);
 
-  // Scroll to top when wizard step changes or phone gate clears (mobile UX)
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
   }, [step, phoneVerified]);
@@ -251,7 +246,6 @@ export default function ReservarPage() {
     setCheckingPhone(true);
 
     try {
-      // 1. Search if the client account already exists
       const { data: viaRpc } = await supabase
         .rpc("find_client_account_by_phone", { p_phone: normalized })
         .maybeSingle();
@@ -259,18 +253,15 @@ export default function ReservarPage() {
       const existing = viaRpc as any;
 
       if (existing && existing.name && existing.name.trim()) {
-        // If returning customer with a name, save and skip to services
         sessionStorage.setItem("caluatnails_client_phone", normalized);
         setClientPhone(normalized);
         setClientData(prev => ({ ...prev, name: existing.name, phone: normalized }));
         setPhoneVerified(true);
       } else {
-        // New client or client without name -> show name input
         setNameStep(true);
       }
     } catch (err) {
       console.error("Error checking phone:", err);
-      // Fallback: just go to name input
       setNameStep(true);
     } finally {
       setCheckingPhone(false);
@@ -284,7 +275,6 @@ export default function ReservarPage() {
     setCheckingPhone(true);
 
     try {
-      // Ensure client account is created/updated with the name
       await ensureClientAccount(normalizedPhone, clientNameInput.trim());
 
       sessionStorage.setItem("caluatnails_client_phone", normalizedPhone);
@@ -300,7 +290,6 @@ export default function ReservarPage() {
     }
   };
 
-  // Detect referral code from URL ?ref= or sessionStorage
   useEffect(() => {
     const urlRef = searchParams.get("ref");
     if (urlRef) {
@@ -312,7 +301,6 @@ export default function ReservarPage() {
     }
   }, [searchParams]);
 
-  // Resolve referrer name from refCode (for banner copy)
   useEffect(() => {
     if (!refCode) { setReferralReferrerName(null); return; }
     let cancelled = false;
@@ -327,7 +315,6 @@ export default function ReservarPage() {
     return () => { cancelled = true; };
   }, [refCode]);
 
-  // Check eligibility: phone has zero prior non-cancelled bookings
   useEffect(() => {
     const phone = (clientData.phone || clientPhone || "").trim();
     if (!refCode || !phone || phone.length < 8) { setReferralEligible(false); return; }
@@ -340,14 +327,11 @@ export default function ReservarPage() {
     return () => { cancelled = true; };
   }, [refCode, clientData.phone, clientPhone]);
 
-  // Discount only applies if the customer picks an "Esmaltado Semipermanente" service.
-  // 18€ → 5€ = 13€ off. We apply per qualifying service (max 1, conservative).
   const referralServiceMatch = selected.find((s) =>
     /esmaltado\s*semipermanente/i.test(s.name) && Number(s.price) >= 13,
   );
   const referralDiscount = referralEligible && referralServiceMatch ? 13 : 0;
 
-  // Check payment success return
   useEffect(() => {
     const paymentStatus = searchParams.get("payment");
     const bookingId = searchParams.get("booking");
@@ -357,7 +341,6 @@ export default function ReservarPage() {
       
       const fetchClientAndBooking = async () => {
         const ids = bookingId.split(",");
-        // 1. Fetch full bookings
         const { data: bookings } = await supabase
           .from("bookings")
           .select("*, booking_services(service_name, price_at_booking)")
@@ -393,7 +376,6 @@ export default function ReservarPage() {
             if (pp?.address) profAddress = pp.address;
           }
 
-          // Combine services list
           const combinedServices: string[] = [];
           bookings.forEach((b: any) => {
             b.booking_services?.forEach((s: any) => {
@@ -401,7 +383,6 @@ export default function ReservarPage() {
             });
           });
 
-          // Sum total price and duration
           const totalCombinedPrice = bookings.reduce((sum: number, b: any) => sum + Number(b.total_price), 0);
           const totalCombinedDuration = bookings.reduce((sum: number, b: any) => sum + Number(b.total_duration_minutes), 0);
 
@@ -415,7 +396,6 @@ export default function ReservarPage() {
             professionalAddress: profAddress,
           });
 
-          // Fetch client account ID
           const { data: client } = await supabase
             .from("client_accounts")
             .select("id")
@@ -431,7 +411,6 @@ export default function ReservarPage() {
     }
   }, [searchParams]);
 
-  // Auto redirect to account page after success (60s)
   const [redirectCountdown, setRedirectCountdown] = useState(60);
   useEffect(() => {
     if (successBooking) {
@@ -450,7 +429,6 @@ export default function ReservarPage() {
     }
   }, [successBooking, navigate]);
 
-  // Google Ads conversion tracking on successful booking
   useEffect(() => {
     if (successBooking && typeof window !== "undefined") {
       const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
@@ -463,18 +441,42 @@ export default function ReservarPage() {
     }
   }, [successBooking]);
 
+const DEFAULT_CALUATNAILS_SERVICES: DBService[] = TREATWELL_SERVICES.map((s, idx) => ({
+  id: s.id,
+  name: s.name,
+  description: s.description,
+  duration_minutes: s.duration_minutes,
+  price: s.price,
+  service_type: s.service_type,
+  active: s.active,
+  reward_points: s.reward_points ?? (s.price > 30 ? 15 : 5),
+  order_index: s.order_index ?? idx + 1,
+  guarantee_window_days: s.guarantee_window_days ?? 7,
+  guarantee_duration_minutes: s.guarantee_duration_minutes ?? 20,
+}));
+
   useEffect(() => {
     const fetch = async () => {
       setLoadingServices(true);
-      const { data } = await supabase
-        .from("services")
-        .select("*")
-        .eq("active", true)
-        .order("booking_count", { ascending: false })
-        .order("service_type")
-        .order("name");
-      setServices(data ?? []);
-      setLoadingServices(false);
+      try {
+        const { data } = await supabase
+          .from("services")
+          .select("*")
+          .eq("active", true)
+          .order("booking_count", { ascending: false })
+          .order("service_type")
+          .order("name");
+        
+        if (data && data.length > 0) {
+          setServices(data);
+        } else {
+          setServices(DEFAULT_CALUATNAILS_SERVICES);
+        }
+      } catch {
+        setServices(DEFAULT_CALUATNAILS_SERVICES);
+      } finally {
+        setLoadingServices(false);
+      }
     };
     fetch();
   }, []);
@@ -512,14 +514,12 @@ export default function ReservarPage() {
 
   const totalMinutes = selected.reduce((acc, s) => acc + s.duration_minutes, 0);
   const totalPrice = selected.reduce((acc, s) => acc + Number(s.price), 0);
-  const deposit = totalPrice * 0.1;
 
   const handleDateTimeSelect = async (date: string, time: string, professionalId: string) => {
     setSelectedDate(date);
     setSelectedTime(time);
     if (professionalId && professionalId !== selectedProfessionalId) {
       setSelectedProfessionalId(professionalId);
-      // Load professional info for summary display
       const { data: pp } = await supabase
         .from("professional_profiles")
         .select("address, instagram")
@@ -540,7 +540,6 @@ export default function ReservarPage() {
     }
   };
 
-  // ── Helper: create booking in DB ──────────────────────────────────────────
   const createBookingRecord = async (discountAmount: number, pointsUsed: number, couponId?: string, paymentMethod = "stripe", subscriptionId?: string) => {
     if (pointsUsed > 0 && user) {
       await redeemPoints(pointsUsed, `Descuento en reserva del ${selectedDate}`);
@@ -550,8 +549,6 @@ export default function ReservarPage() {
     }
 
     const totalDiscount = discountAmount;
-    
-    // Distribute prices
     const mainPrice = selected.reduce((acc, s) => acc + Number(s.price), 0);
     
     let discountLeft = totalDiscount;
@@ -568,7 +565,6 @@ export default function ReservarPage() {
     const isCash = paymentMethod === "efectivo" || paymentMethod === "efectivo_full";
     const depositAmt1 = isCash ? 0 : finalMainPrice * 0.1;
 
-    // Create Booking 1
     const { data: booking, error: bErr } = await supabase
       .from("bookings")
       .insert({
@@ -625,7 +621,6 @@ export default function ReservarPage() {
       }
     }
 
-    // Insert services for Booking 1
     await supabase.from("booking_services").insert(
       selected.map(s => ({
         booking_id: booking.id,
@@ -681,7 +676,6 @@ export default function ReservarPage() {
 
       createdCompanions.push(bComp);
 
-      // Insert services
       await supabase.from("booking_services").insert(
         c.services.map(s => ({
           booking_id: bComp.id,
@@ -763,7 +757,6 @@ export default function ReservarPage() {
     };
   };
 
-  // ── Stripe payment ─────────────────────────────────────────────────────────
   const CARD_DISCOUNT_PCT = 0.05;
   const handlePayment = async (discountAmount: number, pointsUsed: number, couponId?: string, paymentMode: "deposit" | "full" = "deposit") => {
     if (!clientData.phone) return;
@@ -792,18 +785,15 @@ export default function ReservarPage() {
         }
       }
 
-      // Validate env vars
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
         throw new Error("Configuración incompleta: faltan variables de entorno de Supabase");
       }
 
-      // Validate email (Stripe requires it)
       const safeEmail = (clientData.email || "").trim();
       if (!safeEmail || !safeEmail.includes("@")) {
         throw new Error("Debes indicar un email válido para el pago con tarjeta");
       }
 
-      // Validate at least 1 service
       if (selected.length === 0) {
         throw new Error("Debes seleccionar al menos un servicio");
       }
@@ -862,14 +852,12 @@ export default function ReservarPage() {
     }
   };
 
-  // ── Cash payment: create booking but do NOT redirect to Stripe ────────────
   const handleBizumPayment = async (discountAmount: number, pointsUsed: number, couponId?: string, paymentMode: "deposit" | "full" = "deposit") => {
     if (!clientData.phone) return;
     setPaymentLoading(true);
     try {
       const { booking, companionBookings, finalTotal } = await createBookingRecord(discountAmount, pointsUsed, couponId, paymentMode === "full" ? "efectivo_full" : "efectivo");
       
-      // Update local points balance
       fetchPoints();
       sessionStorage.removeItem("caluatnails_ref");
 
@@ -879,7 +867,6 @@ export default function ReservarPage() {
         await supabase.from("bookings").update({ stripe_session_id: groupId }).eq("id", cb.id);
       }
 
-      // Setup success screen data
       let profName = "Profesional";
       let profAddress = "";
       
@@ -900,7 +887,7 @@ export default function ReservarPage() {
       if (profNames.length > 0) profName = profNames.join(" y ");
 
       if (booking.professional_id) {
-        const { data: pp = {} } = await supabase
+        const { data: pp } = await supabase
           .from("professional_profiles")
           .select("address")
           .eq("user_id", booking.professional_id)
@@ -925,7 +912,6 @@ export default function ReservarPage() {
         professionalAddress: profAddress,
       });
 
-      // Get client account ID
       const { data: client } = await supabase
         .from("client_accounts")
         .select("id")
@@ -942,14 +928,12 @@ export default function ReservarPage() {
     }
   };
 
-  // ── Subscription payment: create booking covered by a prepaid voucher ──────
   const handleSubscriptionPayment = async (discountAmount: number, pointsUsed: number, couponId?: string, subscriptionId?: string) => {
     if (!clientData.phone) return;
     setPaymentLoading(true);
     try {
       const { booking, companionBookings } = await createBookingRecord(discountAmount, pointsUsed, couponId, "subscription", subscriptionId);
       
-      // Update local points balance
       fetchPoints();
       sessionStorage.removeItem("caluatnails_ref");
 
@@ -959,7 +943,6 @@ export default function ReservarPage() {
         await supabase.from("bookings").update({ stripe_session_id: groupId }).eq("id", cb.id);
       }
 
-      // Setup success screen data
       let profName = "Profesional";
       let profAddress = "";
       
@@ -980,7 +963,7 @@ export default function ReservarPage() {
       if (profNames.length > 0) profName = profNames.join(" y ");
 
       if (booking.professional_id) {
-        const { data: pp = {} } = await supabase
+        const { data: pp } = await supabase
           .from("professional_profiles")
           .select("address")
           .eq("user_id", booking.professional_id)
@@ -1006,7 +989,6 @@ export default function ReservarPage() {
         professionalAddress: profAddress,
       });
 
-      // Get client account ID
       const { data: client } = await supabase
         .from("client_accounts")
         .select("id")
@@ -1024,49 +1006,51 @@ export default function ReservarPage() {
   };
 
   if (successBooking) {
-    const savedPhone = sessionStorage.getItem("caluatnails_client_phone") ?? clientData.phone;
     return (
-      <div className="min-h-screen bg-rose-50 flex items-center justify-center px-4 py-10">
-        <div className="bg-white rounded-3xl p-10 text-center max-w-md w-full shadow-sm space-y-6">
-          {/* Icon */}
-          <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mx-auto">
-            <i className="ri-calendar-check-line text-4xl text-emerald-500" />
+      <div className="min-h-screen bg-gradient-to-br from-organic-cream via-white to-organic-blush/40 flex items-center justify-center px-4 py-10 relative overflow-hidden">
+        {/* Soft background blobs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-200/30 rounded-full blur-3xl pointer-events-none animate-soft-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-200/30 rounded-full blur-3xl pointer-events-none animate-soft-pulse" style={{ animationDelay: '2s' }} />
+
+        <div className="bg-white/90 backdrop-blur-md rounded-4xl p-8 sm:p-10 text-center max-w-md w-full shadow-soft-lg space-y-6 border border-rose-100/70 relative z-10 animate-fadeIn">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 text-white flex items-center justify-center mx-auto shadow-soft-sm">
+            <i className="ri-calendar-check-line text-4xl" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">¡Reserva confirmada! ✅</h1>
-            <p className="text-gray-500 leading-relaxed text-sm">
-              Tu anticipo ha sido procesado correctamente. Recibirás un mensaje de WhatsApp con todos los detalles de tu cita.
+            <h1 className="text-2xl font-bold text-gray-900 mb-2 font-playfair">¡Reserva confirmada! ✨</h1>
+            <p className="text-gray-600 leading-relaxed text-sm font-medium">
+              Tu reserva ha sido procesada correctamente. Te enviaremos un recordatorio con todos los detalles.
             </p>
           </div>
+
           {bookingDetails && bookingDetails.totalPrice === 0 ? (
-            <p className="text-sm text-emerald-700 bg-emerald-50 rounded-xl px-4 py-3 font-semibold">
-              ✓ Esta cita ha sido cubierta al 100% por tu Bono de Prepago (0€ a pagar).
+            <p className="text-xs sm:text-sm text-emerald-800 bg-emerald-50/80 border border-emerald-200/60 rounded-2xl px-4 py-3.5 font-semibold">
+              ✓ Esta cita está cubierta al 100% por tu Bono de Prepago.
             </p>
           ) : (
-            <p className="text-sm text-amber-700 bg-amber-50 rounded-xl px-4 py-3">
-              Recuerda: el 90% restante se abona en el momento de la cita.
+            <p className="text-xs sm:text-sm text-amber-800 bg-amber-50/80 border border-amber-200/60 rounded-2xl px-4 py-3.5 font-medium">
+              Recuerda: el 90% restante se abonará el día de tu cita en el salón.
             </p>
           )}
 
-          {/* Push notification opt-in */}
           <PushNotificationButton
             clientAccountId={successBooking.client_account_id ?? undefined}
           />
 
-          {/* Add to calendar */}
           {bookingDetails && (
             <div className="relative w-full text-left">
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); setCalDropdown(p => !p); }}
-                className="w-full flex items-center justify-between gap-2 py-3 px-5 rounded-full border border-gray-200 text-gray-700 text-sm font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between gap-2 py-3 px-5 rounded-full border border-rose-200/70 bg-rose-50/30 text-rose-900 text-xs sm:text-sm font-bold hover:bg-rose-100/50 transition-all cursor-pointer shadow-soft-xs"
               >
                 <span className="flex items-center gap-2">
-                  <i className="ri-calendar-check-line text-emerald-500 text-lg"></i>
+                  <i className="ri-calendar-event-line text-rose-500 text-base"></i>
                   Añadir cita a mi calendario
                 </span>
                 {calDropdown
-                  ? <i className="ri-arrow-up-s-line text-gray-400 text-lg"></i>
-                  : <i className="ri-arrow-down-s-line text-gray-400 text-lg"></i>
+                  ? <i className="ri-arrow-up-s-line text-rose-400 text-base"></i>
+                  : <i className="ri-arrow-down-s-line text-rose-400 text-base"></i>
                 }
               </button>
               {calDropdown && (() => {
@@ -1079,7 +1063,7 @@ export default function ReservarPage() {
                   location: bookingDetails.professionalAddress || undefined,
                 });
                 return (
-                  <div className="absolute left-0 right-0 mt-1.5 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden z-[250] text-left animate-[fadeInUp_0.2s_ease]">
+                  <div className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md border border-rose-100 rounded-3xl shadow-soft-lg overflow-hidden z-[250] text-left animate-fadeIn">
                     {[
                       { href: links.googleUrl, target: "_blank", download: undefined, icon: "ri-google-fill", color: "bg-red-50 text-red-500", label: "Google Calendar", desc: "Abrir en Google Calendar" },
                       { href: links.icsUrl, target: undefined, download: `cita-${bookingDetails.date}.ics`, icon: "ri-apple-fill", color: "bg-gray-100 text-gray-800", label: "Apple Calendar / iCal", desc: "Descargar archivo .ics" },
@@ -1092,14 +1076,14 @@ export default function ReservarPage() {
                         download={item.download}
                         rel="noopener noreferrer"
                         onClick={() => setCalDropdown(false)}
-                        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer border-b border-gray-50 last:border-0"
+                        className="flex items-center gap-3 px-4 py-3.5 hover:bg-rose-50/50 transition-colors cursor-pointer border-b border-rose-50 last:border-0"
                       >
                         <div className={`w-8 h-8 flex items-center justify-center rounded-full ${item.color}`}>
                           <i className={`${item.icon} text-base`}></i>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-gray-800">{item.label}</p>
-                          <p className="text-xs text-gray-400 truncate">{item.desc}</p>
+                          <p className="text-xs sm:text-sm font-bold text-gray-800">{item.label}</p>
+                          <p className="text-[11px] text-gray-400 truncate">{item.desc}</p>
                         </div>
                       </a>
                     ))}
@@ -1109,26 +1093,25 @@ export default function ReservarPage() {
             </div>
           )}
 
-          {/* Primary: Go to Mi Cuenta */}
           <button
+            type="button"
             onClick={() => navigate("/mi-cuenta")}
-            className="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold px-8 py-3.5 rounded-full transition-all hover:shadow-lg hover:shadow-rose-200 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:opacity-95 text-white font-bold px-8 py-3.5 rounded-full transition-all shadow-soft-sm hover:scale-[1.02] cursor-pointer flex items-center justify-center gap-2"
           >
             <i className="ri-user-line"></i>
             Ir a Mi Cuenta
             <i className="ri-arrow-right-line"></i>
           </button>
 
-          {/* Countdown info */}
-          <p className="text-xs text-gray-400 flex items-center justify-center gap-1.5">
+          <p className="text-xs text-gray-400 flex items-center justify-center gap-1.5 font-medium">
             <i className="ri-time-line"></i>
-            Te llevaremos automáticamente en <span className="font-bold text-rose-500">{redirectCountdown}s</span>
+            Redirección automática en <span className="font-bold text-rose-500">{redirectCountdown}s</span>
           </p>
 
-          {/* Secondary: Back to home */}
           <button
+            type="button"
             onClick={() => navigate("/")}
-            className="w-full bg-white border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-900 font-medium px-8 py-2.5 rounded-full transition-colors cursor-pointer"
+            className="w-full bg-white border border-rose-100 hover:bg-rose-50/40 text-gray-600 font-semibold px-8 py-2.5 rounded-full transition-all cursor-pointer shadow-soft-xs"
           >
             Volver al inicio
           </button>
@@ -1137,36 +1120,40 @@ export default function ReservarPage() {
     );
   }
 
-  // Phone gate: show phone input before anything else
+  // Phone Gate Screen
   if (!phoneVerified) {
     if (nameStep) {
       return (
-        <div className="min-h-screen bg-gray-50/50 flex items-center justify-center px-4">
-          <div className="w-full max-w-md animate-[fadeInUp_0.3s_ease]">
+        <div className="min-h-screen bg-gradient-to-br from-organic-cream via-white to-organic-blush/40 flex items-center justify-center px-4 py-10 relative overflow-hidden">
+          <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-rose-200/25 rounded-full blur-3xl pointer-events-none animate-soft-pulse" />
+
+          <div className="w-full max-w-md animate-fadeIn relative z-10">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4">
-                <i className="ri-user-add-line text-2xl text-rose-500"></i>
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 text-white flex items-center justify-center mx-auto mb-4 shadow-soft-sm">
+                <i className="ri-user-heart-line text-2xl"></i>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">Dinos tu nombre</h1>
-              <p className="text-gray-500 text-sm">Para personalizar tu reserva y enviarte los detalles</p>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2 font-playfair">Dinos tu nombre</h1>
+              <p className="text-gray-500 text-xs sm:text-sm font-medium">Para personalizar tu experiencia en Nailox</p>
             </div>
-            <form onSubmit={handleNameSubmit} className="bg-white rounded-2xl border border-gray-100 p-6 space-y-4 shadow-sm">
+
+            <form onSubmit={handleNameSubmit} className="bg-white/90 backdrop-blur-md rounded-4xl border border-rose-100/70 p-6 sm:p-7 space-y-5 shadow-soft-md">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Nombre completo</label>
+                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nombre completo *</label>
                 <input
                   type="text"
                   required
                   value={clientNameInput}
                   onChange={e => setClientNameInput(e.target.value)}
                   placeholder="Tu nombre y apellido"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none transition-all text-sm"
+                  className="w-full px-4 py-3.5 rounded-2xl border border-rose-100/80 bg-white text-gray-900 focus:border-rose-400 focus:ring-4 focus:ring-rose-100/60 outline-none transition-all text-sm font-medium shadow-soft-xs"
                   autoFocus
                 />
               </div>
+
               <button
                 type="submit"
                 disabled={!clientNameInput.trim() || checkingPhone}
-                className="w-full py-3.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-semibold text-sm transition-all cursor-pointer disabled:opacity-40 disabled:grayscale-[0.5] shadow-lg shadow-rose-200/50"
+                className="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-500 hover:opacity-95 text-white rounded-2xl font-bold text-sm transition-all duration-300 cursor-pointer disabled:opacity-40 shadow-soft-sm hover:scale-[1.01]"
               >
                 {checkingPhone ? (
                   <span className="flex items-center justify-center gap-2">
@@ -1177,10 +1164,11 @@ export default function ReservarPage() {
                   "Continuar a servicios"
                 )}
               </button>
+
               <button
                 type="button"
                 onClick={() => setNameStep(false)}
-                className="w-full py-2.5 text-xs font-semibold text-gray-400 hover:text-gray-600 transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-2 text-xs font-semibold text-gray-400 hover:text-rose-600 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <i className="ri-arrow-left-line"></i>
                 Atrás
@@ -1192,18 +1180,21 @@ export default function ReservarPage() {
     }
 
     return (
-      <div className="min-h-screen bg-gray-50/50 flex items-center justify-center px-4">
-        <div className="w-full max-w-md">
+      <div className="min-h-screen bg-gradient-to-br from-organic-cream via-white to-organic-blush/40 flex items-center justify-center px-4 py-10 relative overflow-hidden">
+        <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-rose-200/25 rounded-full blur-3xl pointer-events-none animate-soft-pulse" />
+
+        <div className="w-full max-w-md animate-fadeIn relative z-10">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-4">
-              <i className="ri-phone-line text-2xl text-rose-500"></i>
+            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 text-white flex items-center justify-center mx-auto mb-4 shadow-soft-sm">
+              <i className="ri-phone-line text-2xl"></i>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Reservar cita</h1>
-            <p className="text-gray-500 text-sm">Introduce tu número de teléfono para comenzar</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2 font-playfair">Reservar cita</h1>
+            <p className="text-gray-500 text-xs sm:text-sm font-medium">Introduce tu número de móvil para acceder</p>
           </div>
-          <form onSubmit={handlePhoneSubmit} className="bg-white rounded-2xl border border-gray-100 p-6 space-y-4 shadow-sm">
-            <div className="phone-input-container">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono móvil</label>
+
+          <form onSubmit={handlePhoneSubmit} className="bg-white/90 backdrop-blur-md rounded-4xl border border-rose-100/70 p-6 sm:p-7 space-y-5 shadow-soft-md">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Teléfono móvil *</label>
               <PhoneInput
                 international
                 defaultCountry="ES"
@@ -1213,14 +1204,15 @@ export default function ReservarPage() {
                 className="w-full"
                 autoFocus
               />
-              <p className="mt-2 text-[10px] text-gray-400 italic">
-                Usaremos este número para enviarte los detalles de tu cita por WhatsApp.
+              <p className="mt-2.5 text-[11px] text-gray-400 italic font-medium">
+                Te enviaremos los detalles de confirmación y recordatorios por WhatsApp.
               </p>
             </div>
+
             <button
               type="submit"
               disabled={!phoneInput || !isValidPhoneNumber(phoneInput) || checkingPhone}
-              className="w-full py-3.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-semibold text-sm transition-all cursor-pointer disabled:opacity-40 disabled:grayscale-[0.5] shadow-lg shadow-rose-200/50"
+              className="w-full py-4 bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 hover:opacity-95 text-white rounded-2xl font-bold text-sm transition-all duration-300 cursor-pointer disabled:opacity-40 shadow-soft-sm hover:scale-[1.01]"
             >
               {checkingPhone ? (
                 <span className="flex items-center justify-center gap-2">
@@ -1228,20 +1220,22 @@ export default function ReservarPage() {
                   Verificando...
                 </span>
               ) : (
-                "Continuar reserva"
+                "Continuar a servicios"
               )}
             </button>
-            <div className="flex items-center gap-4 py-2">
-              <div className="h-px flex-1 bg-gray-100"></div>
-              <span className="text-[10px] text-gray-300 font-bold uppercase tracking-widest">O</span>
-              <div className="h-px flex-1 bg-gray-100"></div>
+
+            <div className="flex items-center gap-4 py-1">
+              <div className="h-px flex-1 bg-rose-100/60"></div>
+              <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">O</span>
+              <div className="h-px flex-1 bg-rose-100/60"></div>
             </div>
+
             <button
               type="button"
               onClick={() => navigate("/mis-citas")}
-              className="w-full py-2.5 text-xs font-semibold text-gray-500 hover:text-rose-500 transition-colors cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-2.5 text-xs font-bold text-gray-600 hover:text-rose-600 transition-colors cursor-pointer flex items-center justify-center gap-2 rounded-full border border-rose-100/60 hover:bg-rose-50/40"
             >
-              <i className="ri-history-line"></i>
+              <i className="ri-history-line text-rose-500"></i>
               Consultar mis citas anteriores
             </button>
           </form>
@@ -1251,79 +1245,88 @@ export default function ReservarPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div className="min-h-screen bg-gradient-to-br from-organic-cream via-white to-organic-blush/30 relative">
+      {/* Soft background decorative blobs */}
+      <div className="fixed top-20 left-10 w-96 h-96 bg-rose-200/20 rounded-full blur-3xl pointer-events-none animate-soft-pulse" />
+      <div className="fixed bottom-20 right-10 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl pointer-events-none animate-soft-pulse" style={{ animationDelay: '3s' }} />
+
       {/* Header */}
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-30">
-        <div className="max-w-5xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-4">
+      <div className="bg-white/80 backdrop-blur-md border-b border-rose-100/60 sticky top-0 z-30 shadow-soft-xs">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3.5">
+          <div className="flex items-center justify-between mb-3">
             <button
+              type="button"
               onClick={() => navigate("/")}
-              className="flex items-center gap-2 text-sm text-gray-500 hover:text-rose-500 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-bold text-gray-600 hover:text-rose-600 transition-colors cursor-pointer px-3 py-1.5 rounded-full hover:bg-rose-50/60"
             >
-              <i className="ri-arrow-left-line"></i>
+              <i className="ri-arrow-left-line text-sm"></i>
               <span className="hidden sm:inline">Volver</span>
             </button>
-            <h1 className="text-lg font-bold text-gray-900">Reservar cita</h1>
+            <h1 className="text-base sm:text-lg font-bold text-gray-900 font-playfair tracking-tight">
+              Reservas Nailox
+            </h1>
             <div className="w-16"></div>
           </div>
-          <BookingStepIndicator currentStep={step} steps={STEPS} />
+          <BookingStepIndicator currentStep={step} steps={STEPS} onStepClick={(s) => setStep(s)} />
         </div>
       </div>
 
-      <div className={`max-w-5xl mx-auto px-6 py-8 ${step === 0 ? "pb-32" : "pb-10"}`}>
-        {/* Step 0: Service selection */}
+      <div className={`max-w-5xl mx-auto px-4 sm:px-6 py-8 relative z-10 ${step === 0 ? "pb-36" : "pb-16"}`}>
+        {/* Step 0: Service Selection */}
         {step === 0 && (
-          <div>
+          <div className="space-y-6">
             {refCode && referralReferrerName && (
-              <div className={`mb-6 rounded-2xl p-4 border ${
+              <div className={`rounded-3xl p-5 border shadow-soft-xs transition-all ${
                 referralEligible
-                  ? "bg-gradient-to-r from-amber-50 via-orange-50 to-rose-50 border-amber-200"
+                  ? "bg-gradient-to-r from-amber-50/90 via-orange-50/70 to-rose-50/90 border-amber-200/80"
                   : "bg-rose-50/40 border-rose-100"
               }`}>
-                <div className="flex items-start gap-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                <div className="flex items-start gap-3.5">
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-soft-xs ${
                     referralEligible ? "bg-amber-400 text-white" : "bg-rose-100 text-rose-600"
                   }`}>
                     <i className="ri-gift-2-fill text-xl"></i>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-bold text-gray-900 text-sm">
+                    <p className="font-bold text-gray-900 text-sm sm:text-base">
                       Invitación de <span className="text-rose-600">{referralReferrerName}</span> {referralEligible && "✨ activada"}
                     </p>
                     {referralEligible ? (
-                      <p className="text-xs text-gray-700 mt-0.5 leading-relaxed">
-                        Eres clienta nueva — añade un <strong>Esmaltado Semipermanente</strong> y te llega por <strong>5€ en lugar de 18€</strong> (descuento de 13€ aplicado al total).
+                      <p className="text-xs text-gray-700 mt-1 leading-relaxed font-medium">
+                        Como clienta nueva, añade un <strong>Esmaltado Semipermanente</strong> y obtén un <strong>descuento especial de 13€</strong> en tu cita.
                       </p>
                     ) : (
-                      <p className="text-xs text-gray-500 mt-0.5">
-                        La oferta de bienvenida (5€ esmaltado) solo aplica para clientas nuevas en su primera cita.
+                      <p className="text-xs text-gray-500 mt-1">
+                        La oferta de bienvenida solo aplica en tu primera cita como nueva clienta.
                       </p>
                     )}
                     {referralEligible && referralServiceMatch && (
-                      <p className="text-[11px] text-emerald-700 font-semibold mt-1.5">
-                        ✓ Descuento -13€ aplicado a "{referralServiceMatch.name}"
+                      <p className="text-xs text-emerald-700 font-bold mt-2 flex items-center gap-1">
+                        <i className="ri-checkbox-circle-fill"></i> Descuento de 13€ aplicado a "{referralServiceMatch.name}"
                       </p>
                     )}
                   </div>
                 </div>
               </div>
             )}
-            <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white/90 backdrop-blur-sm p-6 rounded-4xl border border-rose-100/70 shadow-soft-sm">
               <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-1">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1 font-playfair">
                   {companions.length > 0 && activeTab !== "main" 
-                    ? `Selecciona los servicios de ${companions.find(c => c.id === activeTab)?.name || "tu acompañante"}` 
-                    : "Selecciona tus servicios"}
+                    ? `Servicios para ${companions.find(c => c.id === activeTab)?.name || "tu acompañante"}` 
+                    : "Elige tus servicios"}
                 </h2>
-                <p className="text-gray-500 text-sm">Puedes seleccionar uno o varios servicios</p>
+                <p className="text-gray-500 text-xs sm:text-sm font-medium">Selecciona uno o más tratamientos para continuar</p>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 bg-gray-100 p-1 rounded-xl shrink-0">
+              {/* Group tab selector */}
+              <div className="flex flex-wrap items-center gap-2 bg-rose-50/50 p-1.5 rounded-full border border-rose-100/60 shrink-0">
                 <button
                   type="button"
                   onClick={() => setActiveTab("main")}
-                  className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeTab === "main" ? "bg-white text-rose-600 shadow-sm" : "text-gray-500 hover:text-gray-900"
+                  className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 cursor-pointer ${
+                    activeTab === "main" ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-xs" : "text-gray-600 hover:text-rose-600"
                   }`}
                 >
                   Tú ({selected.reduce((acc, s) => acc + Number(s.price), 0)}€)
@@ -1334,8 +1337,8 @@ export default function ReservarPage() {
                     <button
                       type="button"
                       onClick={() => setActiveTab(c.id)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                        activeTab === c.id ? "bg-white text-rose-600 shadow-sm" : "text-gray-500 hover:text-gray-900"
+                      className={`px-4 py-2 text-xs font-bold rounded-full transition-all duration-300 cursor-pointer ${
+                        activeTab === c.id ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-xs" : "text-gray-600 hover:text-rose-600"
                       }`}
                     >
                       {c.name.trim() || `Acomp. ${idx + 1}`} ({c.services.reduce((acc, s) => acc + Number(s.price), 0)}€)
@@ -1343,7 +1346,7 @@ export default function ReservarPage() {
                     <button
                       type="button"
                       onClick={() => handleRemoveCompanion(c.id)}
-                      className="p-1 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                      className="p-1.5 text-gray-400 hover:text-red-500 transition-colors cursor-pointer rounded-full"
                       title="Eliminar acompañante"
                     >
                       <i className="ri-close-line"></i>
@@ -1354,23 +1357,25 @@ export default function ReservarPage() {
                 <button
                   type="button"
                   onClick={handleAddCompanion}
-                  className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs rounded-lg flex items-center gap-1 transition-all cursor-pointer border border-rose-100/50 shrink-0"
+                  className="px-4 py-2 bg-white hover:bg-rose-100/60 text-rose-600 font-bold text-xs rounded-full flex items-center gap-1.5 transition-all cursor-pointer shadow-soft-xs border border-rose-100 shrink-0"
                 >
                   <i className="ri-user-add-line"></i>
-                  Añadir acompañante
+                  Acompañante
                 </button>
               </div>
             </div>
 
             {companions.length > 0 && activeTab !== "main" && (
-              <div className="mb-6 bg-white rounded-3xl border border-gray-100 p-6 space-y-4 animate-[fadeInUp_0.3s_ease] shadow-sm">
-                <h3 className="font-bold text-gray-900 text-sm flex items-center gap-1.5">
-                  <i className="ri-user-add-line text-rose-500"></i>
-                  Datos de tu acompañante
+              <div className="bg-white/90 backdrop-blur-sm rounded-4xl border border-rose-100/70 p-6 shadow-soft-sm space-y-4 animate-fadeIn">
+                <h3 className="font-bold text-gray-900 text-sm flex items-center gap-2">
+                  <span className="w-7 h-7 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+                    <i className="ri-user-add-line text-sm"></i>
+                  </span>
+                  Datos del acompañante
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Nombre completo</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nombre completo</label>
                     <input
                       type="text"
                       required
@@ -1382,11 +1387,11 @@ export default function ReservarPage() {
                         );
                       }}
                       placeholder="Nombre del acompañante"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none transition-all text-sm"
+                      className="w-full px-4 py-3.5 rounded-2xl border border-rose-100/80 focus:border-rose-400 focus:ring-4 focus:ring-rose-100/60 outline-none transition-all text-sm font-medium shadow-soft-xs"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1.5">Teléfono móvil</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Teléfono móvil</label>
                     <PhoneInput
                       international
                       defaultCountry="ES"
@@ -1404,13 +1409,14 @@ export default function ReservarPage() {
               </div>
             )}
 
-            <div className="mb-6">
+            <div>
               <ServiceFilter types={serviceTypes} active={filterType} onChange={setFilterType} />
             </div>
+
             {loadingServices ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="h-40 rounded-2xl bg-gray-100 animate-pulse" />
+                  <div key={i} className="h-44 rounded-3xl bg-rose-50/40 animate-pulse" />
                 ))}
               </div>
             ) : (
@@ -1434,13 +1440,20 @@ export default function ReservarPage() {
 
         {/* Step 1: Date & Time */}
         {step === 1 && (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-1">Elige fecha y hora</h2>
-              <p className="text-sm text-gray-500">
-                Duración total de tu cita: {Math.floor(totalMinutes / 60) > 0 ? `${Math.floor(totalMinutes / 60)} h ` : ""}{totalMinutes % 60 > 0 ? `${totalMinutes % 60} min` : ""}
-              </p>
+          <div className="space-y-6">
+            <div className="bg-white/90 backdrop-blur-sm rounded-4xl border border-rose-100/70 p-6 sm:p-7 shadow-soft-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 font-playfair">Elige fecha y horario</h2>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium mt-0.5">
+                  Selecciona la fecha y la profesional para tu cita
+                </p>
+              </div>
+
+              <div className="px-4 py-2 bg-rose-50/70 rounded-full border border-rose-100/60 text-xs font-bold text-rose-700 self-start sm:self-auto">
+                ⏱ Duración total: {Math.floor(totalMinutes / 60) > 0 ? `${Math.floor(totalMinutes / 60)} h ` : ""}{totalMinutes % 60 > 0 ? `${totalMinutes % 60} min` : ""}
+              </div>
             </div>
+
             <CalendarPicker
               totalMinutes={totalMinutes}
               selectedDate={selectedDate}
@@ -1453,35 +1466,43 @@ export default function ReservarPage() {
               setBookingMode={setBookingMode}
               onAssignProfessionals={handleAssignProfessionals}
             />
-            <div className="flex justify-between mt-8 gap-4">
+
+            <div className="flex justify-between items-center pt-4 gap-4">
               <button
+                type="button"
                 onClick={() => setStep(0)}
-                className="flex items-center gap-2 px-6 py-3 rounded-full border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
+                className="flex items-center gap-2 px-6 py-3 rounded-full border border-rose-100/80 bg-white text-xs sm:text-sm font-bold text-gray-700 hover:bg-rose-50/50 transition-all shadow-soft-xs cursor-pointer"
               >
-                <i className="ri-arrow-left-line"></i> Volver
+                <i className="ri-arrow-left-line"></i> Volver a servicios
               </button>
+
               <button
+                type="button"
                 disabled={!selectedDate || !selectedTime || !selectedProfessionalId}
                 onClick={() => setStep(2)}
-                className={`flex items-center gap-2 px-8 py-3 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                className={`flex items-center gap-2 px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
                   selectedDate && selectedTime && selectedProfessionalId
-                    ? "bg-rose-500 hover:bg-rose-600 text-white shadow-lg shadow-rose-200"
+                    ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-sm hover:scale-[1.02]"
                     : "bg-gray-100 text-gray-400 cursor-not-allowed"
                 }`}
               >
-                Continuar <i className="ri-arrow-right-line"></i>
+                <span>Continuar a tus datos</span>
+                <i className="ri-arrow-right-line"></i>
               </button>
             </div>
           </div>
         )}
 
-        {/* Step 2: Client form & Payment */}
+        {/* Step 2: Client Form & Payment */}
         {step === 2 && (
-          <div>
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-1">Completa tu reserva</h2>
-              <p className="text-sm text-gray-500">Rellena tus datos y realiza el pago del anticipo</p>
+          <div className="space-y-6">
+            <div className="bg-white/90 backdrop-blur-sm rounded-4xl border border-rose-100/70 p-6 sm:p-7 shadow-soft-sm">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 font-playfair">Finaliza tu reserva</h2>
+              <p className="text-xs sm:text-sm text-gray-500 font-medium mt-0.5">
+                Revisa el desglose de servicios y confirma el anticipo de tu cita
+              </p>
             </div>
+
             <ClientForm
               data={clientData}
               onChange={setClientData}
@@ -1498,10 +1519,12 @@ export default function ReservarPage() {
               companions={companions}
               bookingMode={bookingMode}
             />
-            <div className="mt-6">
+
+            <div className="pt-4">
               <button
+                type="button"
                 onClick={() => setStep(1)}
-                className="flex items-center gap-2 text-sm text-gray-500 hover:text-rose-500 transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-600 hover:text-rose-600 transition-colors cursor-pointer bg-white px-5 py-2.5 rounded-full border border-rose-100/60 shadow-soft-xs"
               >
                 <i className="ri-arrow-left-line"></i> Volver a fecha y hora
               </button>
@@ -1510,7 +1533,7 @@ export default function ReservarPage() {
         )}
       </div>
 
-      {/* Floating summary bar (only step 0) */}
+      {/* Floating Summary Bar for Step 0 */}
       {step === 0 && (
         <BookingSummaryBar
           selected={[
@@ -1523,7 +1546,6 @@ export default function ReservarPage() {
               setActiveTab("main");
               return;
             }
-            // Validate all companions
             for (let i = 0; i < companions.length; i++) {
               const c = companions[i];
               if (!c.name.trim()) {

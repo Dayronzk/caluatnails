@@ -1,83 +1,107 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/Button";
 
-const SALON_IMG = "https://readdy.ai/api/search-image?query=professional%20nail%20technician%20elegant%20manicure%20pedicure%20beauty%20salon%20warm%20rose%20gold%20lighting%20hands%20close%20up%20luxury%20spa%20pastel%20tones%20soft%20bokeh%20background&width=1440&height=900&seq=1&orientation=landscape";
+const SALON_HERO_IMG = "/assets/salon-interior.jpg";
 const SALON_IMG_FALLBACK = "/assets/manicure-premium.png";
 
 const STATS = [
-  { icon: "ri-map-pin-line", value: "Barcelona", label: "Centro de Estética" },
-  { icon: "ri-time-line", value: "Reserva", label: "Cita Online" },
-  { icon: "ri-star-line", value: "Premium", label: "Materiales de Calidad" },
-  { icon: "ri-award-line", value: "Profesionales", label: "Equipo Experto" },
+  { icon: "ri-map-pin-line", value: "Barcelona", label: "Calle Padilla 301 (Eixample)" },
+  { icon: "ri-star-fill", value: "4.9 / 5⭐", label: "+125 Opiniones Verificadas" },
+  { icon: "ri-sparkles-line", value: "Semipermanente", label: "Manicura & Pedicura" },
+  { icon: "ri-team-line", value: "3 Estilistas", label: "Karol, Eidy y Maryuri" },
 ];
 
 export default function Hero() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden">
-      <div className="absolute inset-0 z-10">
+    <section className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-950 via-rose-950 to-gray-900 flex items-center pt-28 pb-20">
+      {/* Background Image with Salon Photo */}
+      <div className="absolute inset-0 z-0">
         <img
-          src={SALON_IMG}
+          src={SALON_HERO_IMG}
           onError={(e) => { (e.currentTarget as HTMLImageElement).src = SALON_IMG_FALLBACK; }}
-          alt="Salón de manicura y pedicura premium en Barcelona"
-          className="w-full h-full object-cover object-top"
+          alt="Salón Caluatnails manicura y pedicura en Calle Padilla 301, Eixample Barcelona"
+          className="w-full h-full object-cover object-center opacity-35 filter brightness-90 contrast-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-950/95 via-gray-900/80 to-rose-950/40" />
       </div>
 
-      <div className="relative z-20 w-full h-full min-h-screen flex items-center max-w-7xl mx-auto px-6 lg:px-10 py-32 pt-40">
-        <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
-            <i className="ri-sparkling-fill text-rose-300 text-sm"></i>
-            <span className="text-white text-xs font-medium tracking-wide uppercase">Salón Premium · Eixample Barcelona</span>
+      {/* Decorative Soft Glowing Orbs */}
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl pointer-events-none animate-soft-pulse" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl pointer-events-none animate-soft-pulse" style={{ animationDelay: '3s' }} />
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 py-8">
+        <div className="max-w-3xl space-y-6">
+          {/* Badge Capsule */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4.5 py-2 shadow-soft-xs">
+            <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse" />
+            <span className="text-white text-xs font-bold tracking-widest uppercase font-sans">
+              CALUATNAILS · Centro de Manicura & Estética en Barcelona
+            </span>
           </div>
 
-          <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6">
-            Tus Uñas Merecen<br />
-            <span className="text-rose-300">Cuidado de Lujo</span><br />
-            y Precisión
+          {/* Literary Heading */}
+          <h1 className="font-playfair text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-[1.1] tracking-tight">
+            El arte delicado de<br />
+            <span className="bg-gradient-to-r from-rose-300 via-pink-200 to-rose-400 bg-clip-text text-transparent">
+              realzar tu belleza natural
+            </span><br />
+            en el corazón del Eixample
           </h1>
 
-          <p className="text-white/85 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 max-w-xl">
-            Especialistas en <strong className="text-white">manicura rusa con nivelación</strong>, esmaltado semipermanente, uñas en gel y pedicura spa. Reserva tu cita en pleno corazón del Eixample, Barcelona.
+          {/* Literary Narrative Paragraph */}
+          <p className="text-white/85 text-base sm:text-lg leading-relaxed max-w-2xl font-medium">
+            En nuestro salón de la <strong className="text-white font-bold">Calle Padilla 301</strong> (a 5 minutos de Sagrada Familia y Sant Pau), disfruta de <strong className="text-white font-bold">manicura y pedicura semipermanente completa</strong>, aplicación de uñas de gel/acrílico, lifting de pestañas y depilación facial con hilo.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button
+          {/* Literary Quote Note */}
+          <p className="text-rose-200/90 italic text-sm border-l-2 border-rose-400/60 pl-4 py-1">
+            “Cuidar de tus manos, pies y mirada es un ritual diario de bienestar y serenidad.”
+          </p>
+
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center gap-4 pt-3">
+            <Button
+              variant="primary"
+              size="lg"
+              icon="ri-calendar-check-line"
               onClick={() => navigate("/reservar")}
-              className="flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all cursor-pointer whitespace-nowrap text-sm sm:text-base shadow-xl shadow-rose-900/30"
+              className="shadow-xl shadow-rose-900/40 hover:scale-105 transition-all"
             >
-              <i className="ri-calendar-check-line text-lg"></i>
-              Reservar mi Cita
-            </button>
+              Reservar Cita Online
+            </Button>
 
-            <button
+            <Button
+              variant="outline"
+              size="lg"
+              icon="ri-list-check-2"
               onClick={() => navigate("/servicios")}
-              className="flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/30 text-white font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all cursor-pointer whitespace-nowrap text-sm sm:text-base"
+              className="!bg-white/10 !border-white/30 !text-white hover:!bg-white/20"
             >
-              <i className="ri-list-check-2 text-lg"></i>
-              Ver Servicios
-            </button>
+              Ver Catálogo Completo
+            </Button>
           </div>
-        </div>
-      </div>
 
-      {/* Stats */}
-      <div className="absolute bottom-24 left-0 right-0 z-30 pointer-events-none">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex flex-wrap gap-4 sm:gap-6 lg:gap-8">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="flex items-center gap-2">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-white/15 backdrop-blur-sm">
-                  <i className={`${stat.icon} text-rose-300 text-sm`}></i>
-                </div>
-                <div>
-                  <p className="text-white font-bold text-xs sm:text-sm leading-none">{stat.value}</p>
-                  <p className="text-white/60 text-[10px] sm:text-xs mt-0.5">{stat.label}</p>
-                </div>
+          {/* Key Stats Bar */}
+          <div className="pt-6">
+            <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/15 p-4 sm:p-5 shadow-soft-sm max-w-3xl">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {STATS.map((stat) => (
+                  <div key={stat.label} className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-400/30 flex items-center justify-center shrink-0">
+                      <i className={`${stat.icon} text-rose-300 text-lg`} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-white font-bold text-xs sm:text-sm truncate">{stat.value}</p>
+                      <p className="text-white/60 text-[10px] sm:text-xs truncate font-medium">{stat.label}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
+
         </div>
       </div>
     </section>

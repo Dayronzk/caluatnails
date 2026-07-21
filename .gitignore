@@ -8,7 +8,12 @@ out
 *.log
 supabase/.temp
 supabase/data.sql
-.claude/launch.json
-.vercel
-supabase/functions/.env
-.env*.local
+.agents/
+.claude-flow/
+.claude/
+.swarm/
+.mcp.json
+CLAUDE.md
+ruvector.db
+.env.vercel.local
+skills-lock.json

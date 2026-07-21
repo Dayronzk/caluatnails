@@ -3,12 +3,8 @@ import { supabase } from '@/lib/supabase';
 
 export interface DashboardStats {
   totalStudents: number;
-  totalModules: number;
-  totalLessons: number;
-  totalPurchases: number;
   totalBookings: number;
   pendingBookings: number;
-  completionRate: number;
   revenueTotal: number;
   professionalStats: ProfessionalStat[];
   availability: TeamAvailability;
@@ -57,29 +53,18 @@ export interface RecentBooking {
   created_at: string;
 }
 
-export interface TopLesson {
-  title: string;
-  completions: number;
-  module_title: string | null;
-}
-
 export interface DashboardData {
   stats: DashboardStats;
   recentStudents: RecentStudent[];
   recentBookings: RecentBooking[];
-  topLessons: TopLesson[];
   loading: boolean;
   error: string | null;
 }
 
 const DEFAULT_STATS: DashboardStats = {
   totalStudents: 0,
-  totalModules: 0,
-  totalLessons: 0,
-  totalPurchases: 0,
   totalBookings: 0,
   pendingBookings: 0,
-  completionRate: 0,
   revenueTotal: 0,
   professionalStats: [],
   availability: {
@@ -98,7 +83,6 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
   const [stats, setStats] = useState<DashboardStats>(DEFAULT_STATS);
   const [recentStudents, setRecentStudents] = useState<RecentStudent[]>([]);
   const [recentBookings, setRecentBookings] = useState<RecentBooking[]>([]);
-  const [topLessons, setTopLessons] = useState<TopLesson[]>([]);
 
   const selectedDate = selectedDateParam || new Date().toISOString().split('T')[0];
 
@@ -111,15 +95,10 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
       try {
         const results = await Promise.all([
           supabase.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'student'),
-          supabase.from('modules').select('id', { count: 'exact', head: true }),
-          supabase.from('lessons').select('id', { count: 'exact', head: true }),
-          supabase.from('purchases').select('amount_total').eq('status', 'completed'),
           supabase.from('bookings').select('id', { count: 'exact', head: true }),
           supabase.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
-          supabase.from('student_progress').select('completed', { count: 'exact', head: false }),
           supabase.from('profiles').select('id, name, email, created_at').eq('role', 'student').order('created_at', { ascending: false }).limit(5),
           supabase.from('bookings').select('id, client_name, client_email, booking_date, booking_time, status, total_price, created_at').order('created_at', { ascending: false }).limit(5),
-          supabase.from('lessons').select('title, module_id, modules(title), student_progress(id, completed)').limit(100),
           supabase.from('profiles').select('id, name, role, is_professional').or('role.eq.admin,is_professional.eq.true'),
           supabase.from('bookings').select('professional_id, total_price, booking_date, total_duration_minutes, status').neq('status', 'cancelled'),
           supabase.from('professional_schedules').select('profile_id, day_of_week, is_working, start_time, end_time'),
@@ -129,42 +108,29 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
         if (cancelled) return;
 
         const [
-          studentsRes, modulesRes, lessonsRes, purchasesRes, bookingsRes,
-          pendingBookingsRes, progressRes, recentStudentsRes, recentBookingsRes,
-          topLessonsRes, professionalsRes, allBookingsRes, schedulesRes, settingsRes
+          studentsRes, bookingsRes, pendingBookingsRes,
+          recentStudentsRes, recentBookingsRes,
+          professionalsRes, allBookingsRes, schedulesRes, settingsRes
         ] = results;
 
-        // Compute completion rate
-        const progressData = progressRes.data ?? [];
-        const totalProgress = progressData.length;
-        const completedProgress = progressData.filter((p) => p.completed).length;
-        const completionRate = totalProgress > 0 ? Math.round((completedProgress / totalProgress) * 100) : 0;
-
-        // Revenue from purchases
-        const revenueTotal = (purchasesRes.data ?? []).reduce((acc, p) => acc + (p.amount_total ?? 0), 0) / 100;
-
-        // Top lessons
-        const topLessonsData: TopLesson[] = (topLessonsRes.data ?? [])
-          .map((l: any) => ({
-            title: l.title,
-            module_title: l.modules?.title ?? null,
-            completions: (l.student_progress ?? []).filter((p: any) => p.completed).length,
-          }))
-          .sort((a, b) => b.completions - a.completions)
-          .slice(0, 5);
+        // Revenue computed from bookings directly (completed ones)
+        const allBookingsList = allBookingsRes.data ?? [];
+        const revenueTotal = allBookingsList
+          .filter((b) => b.status === 'completed')
+          .reduce((acc, b) => acc + (Number(b.total_price) ?? 0), 0);
 
         // Dates
         const todayStr = selectedDate;
         const monthStr = todayStr.substring(0, 7);
         const yearStr = todayStr.substring(0, 4);
-        
-        // Correct DOW for selected date (taking care of UTC vs Local)
+
+        // Day of week for selected date
         const dateObj = new Date(selectedDate + 'T12:00:00');
         const dow = dateObj.getDay();
 
-        // Calculate Availability
+        // Availability calculation
         const professionals = professionalsRes.data ?? [];
-        const bookings = allBookingsRes.data ?? [];
+        const bookings = allBookingsList;
         const schedules = schedulesRes.data ?? [];
         const settings = settingsRes.data ?? [];
 
@@ -177,7 +143,7 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
           const sched = schedules.find(s => s.profile_id === pro.id && s.day_of_week === dow);
           const setting = settings.find(s => s.profile_id === pro.id);
           const slotSize = setting?.slot_duration_minutes || 30;
-          
+
           let profSlots = 0;
           if (sched?.is_working) {
             totalActive++;
@@ -234,12 +200,8 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
 
         setStats({
           totalStudents: studentsRes.count ?? 0,
-          totalModules: modulesRes.count ?? 0,
-          totalLessons: lessonsRes.count ?? 0,
-          totalPurchases: purchasesRes.data?.length ?? 0,
           totalBookings: bookingsRes.count ?? 0,
           pendingBookings: pendingBookingsRes.count ?? 0,
-          completionRate,
           revenueTotal,
           professionalStats,
           availability: {
@@ -254,7 +216,6 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
 
         setRecentStudents((recentStudentsRes.data ?? []) as RecentStudent[]);
         setRecentBookings((recentBookingsRes.data ?? []) as RecentBooking[]);
-        setTopLessons(topLessonsData);
       } catch (err) {
         if (!cancelled) setError(err instanceof Error ? err.message : 'Error cargando datos');
       } finally {
@@ -266,5 +227,5 @@ export function useDashboardStats(selectedDateParam?: string): DashboardData {
     return () => { cancelled = true; };
   }, [selectedDate]);
 
-  return { stats, recentStudents, recentBookings, topLessons, loading, error };
+  return { stats, recentStudents, recentBookings, loading, error };
 }

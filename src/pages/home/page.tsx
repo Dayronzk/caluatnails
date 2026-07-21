@@ -3,23 +3,27 @@ import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Footer from "./components/Footer";
+import FilosofiaHome from "./components/FilosofiaHome";
 import ServiciosHome from "./components/ServiciosHome";
+import EquipoHome from "./components/EquipoHome";
+import GaleriaHome from "./components/GaleriaHome";
+import Testimonios from "./components/Testimonios";
+import SeoContentHome from "./components/SeoContentHome";
+import Footer from "./components/Footer";
 import FloatingCart from "./components/FloatingCart";
 import { useCart } from "@/hooks/useCart";
 import { supabase } from "@/lib/supabase";
 
-
-
 export default function Home() {
   useSEO({
-    title: "Manicura y Pedicura Profesional en Barcelona (Eixample)",
-    description: "Salón premium de manicura y pedicura en el Eixample, Barcelona. Especialistas en manicura con nivelación, esmaltado semipermanente, uñas en gel y pedicura spa. Reserva tu cita online.",
-    ogTitle: "CALUATNAILS — Manicura y Pedicura Profesional en Barcelona",
-    ogDescription: "Salón premium en el Eixample, Barcelona. Reserva tu cita online: manicura con nivelación, semipermanente, uñas en gel y pedicura.",
+    title: "Caluatnails | Salón de Manicura Rusa, Pedicura y Estética en Barcelona (Eixample)",
+    description: "Atelier de manicura rusa con nivelación, esmaltado semipermanente, uñas de gel, pedicura spa y depilación con hilo en Calle Padilla 301, Eixample, Barcelona. Reserva tu cita online.",
+    ogTitle: "CALUATNAILS — Manicura Rusa & Estética en Barcelona Eixample",
+    ogDescription: "Reserva online tu cita con nuestras estilistas Karol, Eidy y Maryuri. Manicura rusa, pedicura spa, uñas en gel y lifting de pestañas.",
     canonical: "/",
-    ogImage: "https://www.caluatnails.com/assets/manicure-premium.png",
+    ogImage: "https://www.caluatnails.com/assets/salon-interior.jpg",
     ogUrl: "/",
+    keywords: "manicura rusa barcelona, manicura nivelacion eixample, pedicura spa sagrada familia, salon de unas padilla 301, caluatnails barcelona, lifting pestanas eixample",
   });
 
   const cart = useCart();
@@ -37,7 +41,7 @@ export default function Home() {
   }, [location]);
 
   const [paymentStatus, setPaymentStatus] = useState<"success" | "cancelled" | null>(null);
-  // Capture referral code from URL and store in sessionStorage
+
   useEffect(() => {
     const urlRef = searchParams.get("ref");
     if (urlRef) {
@@ -54,7 +58,6 @@ export default function Home() {
       setPaymentStatus("success");
       cart.clearCart();
 
-      // Complete referral for course purchase
       const storedRef = sessionStorage.getItem("caluatnails_ref");
       if (storedRef && sessionId) {
         (async () => {
@@ -120,11 +123,12 @@ export default function Home() {
   }, []);
 
   const dismissStatus = () => setPaymentStatus(null);
+
   return (
-    <main className="min-h-screen w-full">
+    <main className="min-h-screen w-full bg-white">
       <Navbar />
 
-      {/* Payment status banners */}
+      {/* Banners de estado de pago */}
       {paymentStatus === "success" && (
         <div className="fixed top-0 inset-x-0 z-[200] flex items-center justify-between gap-4 bg-emerald-500 text-white px-6 py-4">
           <div className="flex items-center gap-3">
@@ -151,11 +155,28 @@ export default function Home() {
         </div>
       )}
 
+      {/* 1. Hero Principal */}
       <Hero />
       
-      {/* Primary Focus: Services */}
+      {/* 2. Filosofía de Atelier & Manicura Rusa */}
+      <FilosofiaHome />
+
+      {/* 3. Catálogo Dinámico de Servicios (35 Ofertas) */}
       <ServiciosHome />
 
+      {/* 4. Equipo de Estilistas: Karol, Eidy y Maryuri */}
+      <EquipoHome />
+
+      {/* 5. Galería Fotográfica del Local */}
+      <GaleriaHome />
+
+      {/* 6. Testimonios Reales de Clientas (4.9 ⭐) */}
+      <Testimonios />
+
+      {/* 7. Contenido Literario SEO, Localización Eixample & FAQs */}
+      <SeoContentHome />
+
+      {/* 8. Pie de Página Completo */}
       <Footer />
 
       <FloatingCart

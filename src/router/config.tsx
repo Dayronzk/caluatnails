@@ -3,6 +3,7 @@ import NotFound from "../pages/NotFound";
 import Home from "../pages/home/page";
 import AdminDashboard from "../pages/admin/page";
 import AdminClientesPage from "../pages/admin/clientes/page";
+import AdminProfesionalesPage from "../pages/admin/profesionales/page";
 import AdminSettings from "../pages/admin/settings/page";
 import AdminServiciosPage from "../pages/admin/servicios/page";
 import AdminAgendaPage from "../pages/admin/agenda/page";
@@ -42,6 +43,7 @@ import TarjetaRegaloPage from "../pages/tarjeta-regalo/page";
 import AportacionPage from "../pages/tarjeta-regalo/aportacion/page";
 import PromocionesPage from "../pages/promociones/page";
 import SedeEixamplePage from "../pages/sede-eixample/page";
+import QuienesSomosPage from "../pages/quienes-somos/page";
 import ProtectedRoute from "../components/feature/ProtectedRoute";
 import AdminRoute from "../components/feature/AdminRoute";
 
@@ -63,6 +65,14 @@ const routes: RouteObject[] = [
     element: (
       <AdminRoute>
         <AdminClientesPage />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: "/admin/profesionales",
+    element: (
+      <AdminRoute>
+        <AdminProfesionalesPage />
       </AdminRoute>
     ),
   },
@@ -281,6 +291,14 @@ const routes: RouteObject[] = [
   {
     path: "/sede-eixample",
     element: <SedeEixamplePage />,
+  },
+  {
+    path: "/quienes-somos",
+    element: <QuienesSomosPage />,
+  },
+  {
+    path: "/equipo",
+    element: <QuienesSomosPage />,
   },
   {
     path: "*",

@@ -72,14 +72,42 @@ export default function ProfessionalScheduleConfig({ adminProId, onClose }: Prop
     loadData();
   }, [targetId]);
 
+const DEFAULT_CALUATNAILS_PROFESSIONALS = [
+  {
+    id: "prof-karol",
+    name: "Karol (Master Stylist & Fundadora)",
+    display_name: "Karol",
+    bio: "Master Stylist & Fundadora · Especialista en Manicura Rusa, Gel y Arquitectura Ungueal (+10 años exp.)",
+    photo_url: "/assets/manicure-premium.png",
+  },
+  {
+    id: "prof-eidy",
+    name: "Eidy (Especialista Técnica & Nail Art)",
+    display_name: "Eidy",
+    bio: "Especialista Técnica & Nail Art · Experta en Semipermanente y Pedicura Spa (+6 años exp.)",
+    photo_url: "/assets/manicure-pastel.jpg",
+  },
+  {
+    id: "prof-maryuri",
+    name: "Maryuri (Estilista de la Mirada & Piel)",
+    display_name: "Maryuri",
+    bio: "Estilista de la Mirada & Piel · Especialista en Lifting de Pestañas, Cejas y Depilación con Hilo (+5 años exp.)",
+    photo_url: "/assets/extensions-premium.png",
+  },
+];
+
   const loadProfsList = async () => {
     const { data: profiles } = await supabase
       .from('profiles')
       .select('id, name, role, is_professional')
       .or('role.eq.admin,is_professional.eq.true');
     
-    if (profiles) {
+    if (profiles && profiles.length > 0) {
       setProfsList(profiles.map(p => ({ id: p.id, name: p.name || 'Profesional' })));
+      if (!selectedProId) setSelectedProId(profiles[0].id);
+    } else {
+      setProfsList(DEFAULT_CALUATNAILS_PROFESSIONALS.map(p => ({ id: p.id, name: p.name })));
+      if (!selectedProId) setSelectedProId(DEFAULT_CALUATNAILS_PROFESSIONALS[0].id);
     }
   };
 
@@ -103,6 +131,18 @@ export default function ProfessionalScheduleConfig({ adminProId, onClose }: Prop
         is_active: settingsRes.data.is_active ?? true,
         google_calendar_connected: settingsRes.data.google_calendar_connected ?? false,
       });
+    } else {
+      const defaultPro = DEFAULT_CALUATNAILS_PROFESSIONALS.find(p => p.id === targetId);
+      if (defaultPro) {
+        setInfo({
+          display_name: defaultPro.display_name,
+          bio: defaultPro.bio,
+          slot_duration_minutes: 30,
+          buffer_minutes: 10,
+          is_active: true,
+          google_calendar_connected: false,
+        });
+      }
     }
 
     if (schedulesRes.data && schedulesRes.data.length > 0) {
@@ -118,8 +158,41 @@ export default function ProfessionalScheduleConfig({ adminProId, onClose }: Prop
     }
 
     setGcalConnected(!!tokenRes.data);
-    if (servicesRes.data) setServices(servicesRes.data);
-    if (profServicesRes.data) setSelectedServiceIds(profServicesRes.data.map((ps: any) => ps.service_id));
+    
+    if (servicesRes.data && servicesRes.data.length > 0) {
+      setServices(servicesRes.data);
+    } else {
+      // Fallback a los servicios de Caluatnails
+      setServices([
+        { id: "srv-manicura-rusa", name: "Manicura Rusa con Nivelación", service_type: "Manicura" },
+        { id: "srv-manicura-semi", name: "Manicura Semipermanente", service_type: "Manicura" },
+        { id: "srv-manicura-trad", name: "Manicura Tradicional", service_type: "Manicura" },
+        { id: "srv-pedicura-spa", name: "Pedicura Spa Semipermanente", service_type: "Pedicura" },
+        { id: "srv-pedicura-trad", name: "Pedicura Tradicional", service_type: "Pedicura" },
+        { id: "srv-pack-mani-pedi", name: "Pack Manicura + Pedicura Semipermanente", service_type: "Pack Completo" },
+        { id: "srv-unas-gel", name: "Uñas Esculpidas en Gel", service_type: "Extensiones" },
+        { id: "srv-relleno-gel", name: "Relleno de Gel / Acrílico", service_type: "Mantenimiento" },
+        { id: "srv-nailart-francesa", name: "Francesa Moderna & Micro-Líneas", service_type: "Diseño Artístico" },
+        { id: "srv-nailart-cromo", name: "Efecto Cromo & Aurora Holográfico", service_type: "Diseño Artístico" },
+        { id: "srv-lifting-pestanas", name: "Lifting de Pestañas con Queratina & Tinte", service_type: "General" },
+        { id: "srv-diseno-cejas", name: "Diseño de Cejas & Tinte", service_type: "General" },
+        { id: "srv-hilo-cejas", name: "Depilación de Cejas con Hilo Orgánico", service_type: "General" },
+        { id: "srv-hilo-facial", name: "Depilación Facial Completa con Hilo", service_type: "General" },
+      ]);
+    }
+
+    if (profServicesRes.data && profServicesRes.data.length > 0) {
+      setSelectedServiceIds(profServicesRes.data.map((ps: any) => ps.service_id));
+    } else {
+      // Por defecto seleccionar todos los servicios para los profesionales del equipo
+      setSelectedServiceIds([
+        "srv-manicura-rusa", "srv-manicura-semi", "srv-manicura-trad",
+        "srv-pedicura-spa", "srv-pedicura-trad", "srv-pack-mani-pedi",
+        "srv-unas-gel", "srv-relleno-gel", "srv-nailart-francesa",
+        "srv-nailart-cromo", "srv-lifting-pestanas", "srv-diseno-cejas",
+        "srv-hilo-cejas", "srv-hilo-facial"
+      ]);
+    }
 
     setLoading(false);
   };

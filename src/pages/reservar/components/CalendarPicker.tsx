@@ -85,112 +85,152 @@ export default function CalendarPicker({
     }
   }, [selectedDate]);
 
+const DEFAULT_CALUATNAILS_PROFESSIONALS: Professional[] = [
+  {
+    profile_id: "prof-karol",
+    display_name: "Karol",
+    bio: "Master Stylist & Fundadora · Especialista en Manicura Rusa, Gel y Arquitectura Ungueal (+10 años exp.)",
+    photo_url: "/assets/manicure-premium.png",
+    slot_duration_minutes: 30,
+    buffer_minutes: 10,
+    profile_name: "Karol",
+    address: "Calle Padilla 301, Barcelona",
+    instagram: "@caluatnails",
+  },
+  {
+    profile_id: "prof-eidy",
+    display_name: "Eidy",
+    bio: "Especialista Técnica & Nail Art · Experta en Semipermanente y Pedicura Spa (+6 años exp.)",
+    photo_url: "/assets/manicure-pastel.jpg",
+    slot_duration_minutes: 30,
+    buffer_minutes: 10,
+    profile_name: "Eidy",
+    address: "Calle Padilla 301, Barcelona",
+    instagram: "@caluatnails",
+  },
+  {
+    profile_id: "prof-maryuri",
+    display_name: "Maryuri",
+    bio: "Estilista de la Mirada & Piel · Especialista en Lifting de Pestañas, Cejas y Depilación con Hilo (+5 años exp.)",
+    photo_url: "/assets/extensions-premium.png",
+    slot_duration_minutes: 30,
+    buffer_minutes: 10,
+    profile_name: "Maryuri",
+    address: "Calle Padilla 301, Barcelona",
+    instagram: "@caluatnails",
+  },
+];
+
   const loadProfessionals = async () => {
     setLoadingProfs(true);
+    try {
+      const { data: settings } = await supabase
+        .from("professional_settings")
+        .select("profile_id, display_name, bio, photo_url, slot_duration_minutes, buffer_minutes")
+        .eq("is_active", true);
 
-    // Load from professional_settings (admin-configured agenda professionals)
-    const { data: settings } = await supabase
-      .from("professional_settings")
-      .select("profile_id, display_name, bio, photo_url, slot_duration_minutes, buffer_minutes")
-      .eq("is_active", true);
+      const { data: certifiedProfs } = await supabase
+        .from("professional_profiles")
+        .select("user_id, bio, specialties, instagram, rating, address")
+        .eq("active", true);
 
-    // Load from professional_profiles (certified students enabled by admin)
-    const { data: certifiedProfs } = await supabase
-      .from("professional_profiles")
-      .select("user_id, bio, specialties, instagram, rating, address")
-      .eq("active", true);
+      const settingsIds = (settings ?? []).map((s: { profile_id: string }) => s.profile_id);
+      const certifiedIds = (certifiedProfs ?? [])
+        .map((p: { user_id: string }) => p.user_id)
+        .filter((id: string) => !settingsIds.includes(id));
 
-    // Collect all unique profile IDs
-    const settingsIds = (settings ?? []).map((s: { profile_id: string }) => s.profile_id);
-    const certifiedIds = (certifiedProfs ?? [])
-      .map((p: { user_id: string }) => p.user_id)
-      .filter((id: string) => !settingsIds.includes(id)); // avoid duplicates
+      const allIds = [...settingsIds, ...certifiedIds];
 
-    const allIds = [...settingsIds, ...certifiedIds];
+      if (allIds.length === 0) {
+        setProfessionals(DEFAULT_CALUATNAILS_PROFESSIONALS);
+        setLoadingProfs(false);
+        return;
+      }
 
-    if (allIds.length === 0) {
-      setProfessionals([]);
+      const { data: profServices } = await supabase
+        .from("professional_services")
+        .select("profile_id, service_id")
+        .in("profile_id", allIds);
+
+      const profToServices: Record<string, string[]> = {};
+      (profServices ?? []).forEach((ps: any) => {
+        if (!profToServices[ps.profile_id]) profToServices[ps.profile_id] = [];
+        profToServices[ps.profile_id].push(ps.service_id);
+      });
+
+      const selectedServiceIds = selectedServices.map(s => s.id);
+      const validIds = allIds.filter(id => {
+        if (selectedServiceIds.length === 0) return true;
+        const assigned = profToServices[id] || [];
+        if (assigned.length === 0) return true; // Si no tiene restricciones asignadas, lo consideramos disponible
+        return selectedServiceIds.every(sid => assigned.includes(sid));
+      });
+
+      const idsToFetch = validIds.length > 0 ? validIds : allIds;
+
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, name")
+        .in("id", idsToFetch);
+
+      const fromSettings: Professional[] = (settings ?? [])
+        .filter((s: any) => idsToFetch.includes(s.profile_id))
+        .map((s: {
+        profile_id: string; display_name: string | null; bio: string | null;
+        photo_url: string | null; slot_duration_minutes: number; buffer_minutes: number;
+      }) => {
+        const cp = (certifiedProfs ?? []).find((p: { user_id: string }) => p.user_id === s.profile_id);
+        return {
+          profile_id: s.profile_id,
+          display_name: s.display_name,
+          bio: s.bio,
+          photo_url: s.photo_url,
+          slot_duration_minutes: s.slot_duration_minutes ?? 30,
+          buffer_minutes: s.buffer_minutes ?? 10,
+          profile_name: profiles?.find((p: { id: string; name: string | null }) => p.id === s.profile_id)?.name ?? null,
+          address: cp?.address ?? null,
+          instagram: cp?.instagram ?? null,
+        };
+      });
+
+      const fromCertified: Professional[] = certifiedIds
+        .filter((uid: string) => idsToFetch.includes(uid))
+        .map((uid: string) => {
+        const cp = (certifiedProfs ?? []).find((p: { user_id: string }) => p.user_id === uid);
+        const profileName = profiles?.find((p: { id: string; name: string | null }) => p.id === uid)?.name ?? null;
+        return {
+          profile_id: uid,
+          display_name: profileName,
+          bio: cp?.bio ?? null,
+          photo_url: null,
+          slot_duration_minutes: 30,
+          buffer_minutes: 10,
+          profile_name: profileName,
+          address: cp?.address ?? null,
+          instagram: cp?.instagram ?? null,
+        };
+      });
+
+      const fetchedList = [...fromSettings, ...fromCertified];
+      const finalProfs = fetchedList.length > 0 ? fetchedList : DEFAULT_CALUATNAILS_PROFESSIONALS;
+      setProfessionals(finalProfs);
+
+      // Auto-seleccionar profesional si viene por parámetro URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramProf = urlParams.get("profesional");
+      if (paramProf) {
+        const match = finalProfs.find(p => 
+          (p.display_name || p.profile_name || "").toLowerCase().includes(paramProf.toLowerCase())
+        );
+        if (match && !selectedProfessionalId) {
+          onSelect(selectedDate, selectedTime, match.profile_id);
+        }
+      }
+    } catch {
+      setProfessionals(DEFAULT_CALUATNAILS_PROFESSIONALS);
+    } finally {
       setLoadingProfs(false);
-      return;
     }
-
-    // Load professional_services to filter by selectedServices
-    const { data: profServices } = await supabase
-      .from("professional_services")
-      .select("profile_id, service_id")
-      .in("profile_id", allIds);
-
-    // Map profile_id to an array of service_ids they can perform
-    const profToServices: Record<string, string[]> = {};
-    (profServices ?? []).forEach((ps: any) => {
-      if (!profToServices[ps.profile_id]) profToServices[ps.profile_id] = [];
-      profToServices[ps.profile_id].push(ps.service_id);
-    });
-
-    // Filter allIds to only those that have ALL selected services
-    // If a professional has NO services assigned, we might assume they can't do anything (or they can do everything for backwards compat).
-    // Let's assume they can only do what they have explicitly assigned. If selectedServices is empty, we show all.
-    const selectedServiceIds = selectedServices.map(s => s.id);
-    const validIds = allIds.filter(id => {
-      if (selectedServiceIds.length === 0) return true;
-      const assigned = profToServices[id] || [];
-      // Check if all selectedServiceIds are included in assigned
-      return selectedServiceIds.every(sid => assigned.includes(sid));
-    });
-
-    if (validIds.length === 0) {
-      setProfessionals([]);
-      setLoadingProfs(false);
-      return;
-    }
-
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("id, name")
-      .in("id", validIds);
-
-    // Build merged list — settings-based professionals first (filtered)
-    const fromSettings: Professional[] = (settings ?? [])
-      .filter((s: any) => validIds.includes(s.profile_id))
-      .map((s: {
-      profile_id: string; display_name: string | null; bio: string | null;
-      photo_url: string | null; slot_duration_minutes: number; buffer_minutes: number;
-    }) => {
-      const cp = (certifiedProfs ?? []).find((p: { user_id: string }) => p.user_id === s.profile_id);
-      return {
-        profile_id: s.profile_id,
-        display_name: s.display_name,
-        bio: s.bio,
-        photo_url: s.photo_url,
-        slot_duration_minutes: s.slot_duration_minutes ?? 30,
-        buffer_minutes: s.buffer_minutes ?? 10,
-        profile_name: profiles?.find((p: { id: string; name: string | null }) => p.id === s.profile_id)?.name ?? null,
-        address: cp?.address ?? null,
-        instagram: cp?.instagram ?? null,
-      };
-    });
-
-    // Certified professionals not already in settings (filtered)
-    const fromCertified: Professional[] = certifiedIds
-      .filter((uid: string) => validIds.includes(uid))
-      .map((uid: string) => {
-      const cp = (certifiedProfs ?? []).find((p: { user_id: string }) => p.user_id === uid);
-      const profileName = profiles?.find((p: { id: string; name: string | null }) => p.id === uid)?.name ?? null;
-      return {
-        profile_id: uid,
-        display_name: profileName,
-        bio: cp?.bio ?? null,
-        photo_url: null,
-        slot_duration_minutes: 30,
-        buffer_minutes: 10,
-        profile_name: profileName,
-        address: cp?.address ?? null,
-        instagram: cp?.instagram ?? null,
-      };
-    });
-
-    setProfessionals([...fromSettings, ...fromCertified]);
-    setLoadingProfs(false);
   };
 
   const loadBookedSlots = async (date: string) => {
@@ -229,40 +269,6 @@ export default function CalendarPicker({
 
     setBookedSlots(slotMap);
     setLoadingSlots(false);
-  };
-
-  const getAvailableSlots = (prof: Professional, date: string): string[] => {
-    if (!date) return [];
-    const dateObj = new Date(date + "T12:00:00");
-    const dow = dateObj.getDay(); // 0=Sun
-
-    // We'll use a default schedule if no schedule is configured
-    // The schedule is loaded per professional from professional_schedules
-    // For now generate slots from 9-19 and filter booked ones
-    const startDefault = 9 * 60;
-    const endDefault = 19 * 60;
-    const slotSize = prof.slot_duration_minutes || 30;
-    const buffer = prof.buffer_minutes || 0;
-
-    const occupied = bookedSlots[prof.profile_id] ?? [];
-    const slots: string[] = [];
-
-    for (let t = startDefault; t + totalMinutes <= endDefault; t += slotSize) {
-      const h = Math.floor(t / 60);
-      const m = t % 60;
-      const slotStr = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
-
-      // Check if any minute in [t, t+totalMinutes+buffer) is occupied
-      let conflict = false;
-      for (let check = t; check < t + totalMinutes + buffer; check += 15) {
-        const ch = Math.floor(check / 60);
-        const cm = check % 60;
-        const checkStr = `${String(ch).padStart(2, "0")}:${String(cm).padStart(2, "0")}`;
-        if (occupied.includes(checkStr)) { conflict = true; break; }
-      }
-      if (!conflict) slots.push(slotStr);
-    }
-    return slots;
   };
 
   const loadMonthData = async () => {
@@ -343,7 +349,7 @@ export default function CalendarPicker({
     
     let startMin = 9 * 60;
     let endMin = 19 * 60;
-    let isWorking = dow >= 1 && dow <= 6; // Default Mon-Sat
+    let isWorking = dow >= 1 && dow <= 6;
 
     let breakStartMin = -1;
     let breakEndMin = -1;
@@ -372,7 +378,6 @@ export default function CalendarPicker({
     const slotSize = prof.slot_duration_minutes || 30;
     const buffer = prof.buffer_minutes || 0;
     
-    // Combine slots from specific professional and 'any' professional
     const profIdKey = String(prof.profile_id).toLowerCase();
     const occupied = [...(bookedData[profIdKey] ?? []), ...(bookedData["any"] ?? [])];
     const slots: string[] = [];
@@ -386,7 +391,6 @@ export default function CalendarPicker({
       }
 
       let conflict = false;
-      // Check every 15m interval for the duration of the service + buffer
       for (let check = t; check < t + duration + buffer; check += 15) {
         const ch = Math.floor(check / 60);
         const cm = check % 60;
@@ -633,53 +637,56 @@ export default function CalendarPicker({
 
   return (
     <div className="space-y-8">
-      {/* Booking Mode Selector for Companion */}
+      {/* Companion Mode Selector */}
       {companions && companions.length > 0 && setBookingMode && bookingMode && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-5 space-y-3">
-          <label className="block text-sm font-bold text-gray-700">
-            <i className="ri-group-line text-rose-500 mr-1.5 animate-pulse"></i>
+        <div className="bg-white/90 backdrop-blur-sm rounded-3xl border border-rose-100/70 p-6 shadow-soft-sm space-y-4">
+          <label className="block text-sm font-bold text-gray-900 flex items-center gap-2">
+            <span className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+              <i className="ri-group-line text-base"></i>
+            </span>
             ¿Cómo queréis organizar vuestra cita?
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button
               type="button"
               onClick={() => setBookingMode("simultaneous")}
-              className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left transition-all cursor-pointer ${
+              className={`flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl border-2 text-left transition-all duration-300 cursor-pointer ${
                 bookingMode === "simultaneous"
-                  ? "border-rose-400 bg-rose-50/50 shadow-sm"
-                  : "border-gray-100 bg-white hover:border-gray-200"
+                  ? "border-rose-400 bg-gradient-to-br from-rose-50/80 to-white shadow-soft-sm scale-[1.01]"
+                  : "border-rose-100/60 bg-white hover:border-rose-200 shadow-soft-xs"
               }`}
             >
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                bookingMode === "simultaneous" ? "bg-rose-500 text-white" : "bg-gray-100 text-gray-500"
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                bookingMode === "simultaneous" ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-xs" : "bg-rose-50 text-rose-500"
               }`}>
-                <i className="ri-flashlight-line text-base"></i>
+                <i className="ri-flashlight-line text-lg"></i>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-gray-900 text-xs">A la vez (Simultánea)</p>
-                <p className="text-[10px] text-gray-500 mt-0.5 leading-snug">
-                  Os atienden profesionales distintas al mismo tiempo. Ideal para terminar rápido.
+                <p className="font-bold text-gray-900 text-sm">A la vez (Simultánea)</p>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Atención en paralelo por distintas estilistas. Ideal para optimizar tiempo.
                 </p>
               </div>
             </button>
+
             <button
               type="button"
               onClick={() => setBookingMode("consecutive")}
-              className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left transition-all cursor-pointer ${
+              className={`flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl border-2 text-left transition-all duration-300 cursor-pointer ${
                 bookingMode === "consecutive"
-                  ? "border-rose-400 bg-rose-50/50 shadow-sm"
-                  : "border-gray-100 bg-white hover:border-gray-200"
+                  ? "border-rose-400 bg-gradient-to-br from-rose-50/80 to-white shadow-soft-sm scale-[1.01]"
+                  : "border-rose-100/60 bg-white hover:border-rose-200 shadow-soft-xs"
               }`}
             >
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                bookingMode === "consecutive" ? "bg-rose-500 text-white" : "bg-gray-100 text-gray-500"
+              <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                bookingMode === "consecutive" ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-xs" : "bg-rose-50 text-rose-500"
               }`}>
-                <i className="ri-time-line text-base"></i>
+                <i className="ri-time-line text-lg"></i>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-gray-900 text-xs">Una tras otra (Consecutiva)</p>
-                <p className="text-[10px] text-gray-500 mt-0.5 leading-snug">
-                  La misma profesional os atiende de forma seguida. Ideal si queréis estar juntas.
+                <p className="font-bold text-gray-900 text-sm">Una tras otra (Consecutiva)</p>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  La misma estilista os atiende en bloque seguido. Ideal para disfrutar juntas.
                 </p>
               </div>
             </button>
@@ -687,25 +694,37 @@ export default function CalendarPicker({
         </div>
       )}
 
-      {/* Calendar */}
+      {/* Calendar & Professionals Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-2xl border border-gray-100 p-6">
+        {/* Calendar Card */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-4xl border border-rose-100/70 p-6 sm:p-7 shadow-soft-sm">
           <div className="flex items-center justify-between mb-6">
-            <button onClick={prevMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
-              <i className="ri-arrow-left-s-line text-gray-600"></i>
+            <button
+              onClick={prevMonth}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-rose-50/60 hover:bg-rose-100/80 text-rose-600 transition-all duration-300 cursor-pointer"
+            >
+              <i className="ri-arrow-left-s-line text-xl font-bold"></i>
             </button>
-            <h3 className="font-semibold text-gray-900">{MONTHS[viewMonth]} {viewYear}</h3>
-            <button onClick={nextMonth} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
-              <i className="ri-arrow-right-s-line text-gray-600"></i>
+            <h3 className="font-bold text-gray-900 text-lg capitalize font-playfair">
+              {MONTHS[viewMonth]} {viewYear}
+            </h3>
+            <button
+              onClick={nextMonth}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-rose-50/60 hover:bg-rose-100/80 text-rose-600 transition-all duration-300 cursor-pointer"
+            >
+              <i className="ri-arrow-right-s-line text-xl font-bold"></i>
             </button>
           </div>
 
-          <div className="grid grid-cols-7 gap-1 mb-2">
+          <div className="grid grid-cols-7 gap-1.5 mb-3">
             {DAYS.map(d => (
-              <div key={d} className="text-center text-xs font-medium text-gray-400 py-1">{d}</div>
+              <div key={d} className="text-center text-xs font-semibold text-rose-400 py-1 uppercase tracking-wider">
+                {d}
+              </div>
             ))}
           </div>
-          <div className="grid grid-cols-7 gap-1">
+
+          <div className="grid grid-cols-7 gap-1.5">
             {Array.from({ length: startDow }).map((_, i) => <div key={`e-${i}`} />)}
             {Array.from({ length: daysInMonth }).map((_, i) => {
               const day = i + 1;
@@ -715,6 +734,7 @@ export default function CalendarPicker({
               const disabled = isPast || noAvailability;
               const isSelected = dateStr === selectedDate;
               const isToday = day === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+              
               return (
                 <button
                   key={day}
@@ -724,60 +744,73 @@ export default function CalendarPicker({
                       onSelect(dateStr, "", selectedProfessionalId);
                     }
                   }}
-                  className={`h-9 w-full rounded-xl text-sm font-medium transition-all cursor-pointer ${
-                    isPast ? "text-gray-200 cursor-not-allowed" :
-                    noAvailability ? "text-gray-300 bg-gray-50 cursor-not-allowed line-through" :
-                    isSelected ? "bg-rose-500 text-white" :
-                    isToday ? "border-2 border-rose-300 text-rose-600 hover:bg-rose-50" :
-                    "text-gray-700 hover:bg-rose-50"
+                  className={`h-10 sm:h-11 w-full rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer flex flex-col items-center justify-center ${
+                    isPast
+                      ? "text-gray-300 cursor-not-allowed opacity-50"
+                      : noAvailability
+                      ? "text-gray-300 bg-gray-50/50 cursor-not-allowed line-through"
+                      : isSelected
+                      ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-sm scale-105 font-bold"
+                      : isToday
+                      ? "border-2 border-rose-300 text-rose-700 bg-rose-50/40 font-bold hover:bg-rose-100/60"
+                      : "text-gray-700 hover:bg-rose-50/70 hover:text-rose-600"
                   }`}
                 >
-                  {day}
+                  <span>{day}</span>
+                  {isSelected && (
+                    <span className="w-1 h-1 rounded-full bg-white mt-0.5" />
+                  )}
                 </button>
               );
             })}
           </div>
-          <p className="text-xs text-gray-400 mt-4 text-center">
-            {selectedDate ? "Día seleccionado correctamente" : "Selecciona un día para ver disponibilidad"}
+
+          <p className="text-xs text-rose-400 mt-5 text-center font-medium">
+            {selectedDate ? "✨ Día seleccionado correctamente" : "Elige un día con fecha destacada"}
           </p>
         </div>
 
-        {/* Professionals available on selected date */}
+        {/* Professionals Column */}
         <div>
           <div className="mb-4">
-            <h3 className="font-semibold text-gray-900 mb-1">
-              {displayDate ? `Profesionales con huecos libres` : "Selecciona primero un día"}
+            <h3 className="font-bold text-gray-900 text-base sm:text-lg">
+              {displayDate ? `Profesionales disponibles` : "Selecciona primero un día"}
             </h3>
             {displayDate && (
-              <p className="text-sm text-gray-500 capitalize">
-                {displayDate} · {companions && companions.length > 0 ? `Total grupo: ${formatDuration(totalMinutes + companions.reduce((acc, c) => acc + c.services.reduce((sum, s) => sum + s.duration_minutes, 0), 0))}` : formatDuration(totalMinutes)}
+              <p className="text-xs sm:text-sm text-rose-600/80 font-medium capitalize mt-1">
+                {displayDate} · {companions && companions.length > 0 ? `Duración total: ${formatDuration(totalMinutes + companions.reduce((acc, c) => acc + c.services.reduce((sum, s) => sum + s.duration_minutes, 0), 0))}` : formatDuration(totalMinutes)}
               </p>
             )}
           </div>
 
           {!selectedDate ? (
-            <div className="flex flex-col items-center justify-center h-48 text-center text-gray-400">
-              <i className="ri-calendar-line text-4xl mb-3 text-rose-200"></i>
-              <p className="text-sm">Elige un día del calendario para ver quién está disponible</p>
+            <div className="flex flex-col items-center justify-center h-64 text-center bg-white/60 backdrop-blur-sm rounded-4xl border border-rose-100/50 p-6">
+              <div className="w-14 h-14 rounded-full bg-rose-50 flex items-center justify-center mb-3">
+                <i className="ri-calendar-event-line text-2xl text-rose-400"></i>
+              </div>
+              <p className="text-sm font-semibold text-gray-700">Elige una fecha en el calendario</p>
+              <p className="text-xs text-gray-400 mt-1 max-w-[220px]">
+                Te mostraremos las estilistas libres y sus horarios disponibles.
+              </p>
             </div>
           ) : loadingProfs || loadingSlots ? (
             <div className="space-y-3">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-20 rounded-2xl bg-gray-100 animate-pulse" />
+                <div key={i} className="h-20 rounded-3xl bg-rose-50/50 animate-pulse" />
               ))}
             </div>
           ) : availableProfsOnDate.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-48 text-center bg-white rounded-2xl border border-gray-100 p-6">
-              <div className="w-16 h-16 rounded-full bg-rose-50 flex items-center justify-center mb-4">
+            <div className="flex flex-col items-center justify-center h-64 text-center bg-white/90 backdrop-blur-sm rounded-4xl border border-rose-100/70 p-6 shadow-soft-xs">
+              <div className="w-14 h-14 rounded-full bg-rose-50 flex items-center justify-center mb-3">
                 <i className="ri-calendar-close-line text-2xl text-rose-400"></i>
               </div>
-              <p className="text-sm font-bold text-gray-900">Agenda completa para este día</p>
-              <p className="text-xs text-gray-500 mt-1 max-w-[200px] mx-auto">
-                No hay huecos libres seguidos. Prueba con otro día o reduce servicios.
+              <p className="text-sm font-bold text-gray-900">Sin huecos disponibles en esta fecha</p>
+              <p className="text-xs text-gray-500 mt-1 max-w-[220px]">
+                Prueba seleccionando otro día en el calendario.
               </p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               {availableProfsOnDate.map(prof => {
                 const name = prof.display_name || prof.profile_name || "Profesional";
                 const isSelected = selectedProfessionalId === prof.profile_id;
@@ -794,38 +827,47 @@ export default function CalendarPicker({
                 }
 
                 return (
-                  <button
+                  <div
                     key={prof.profile_id}
                     onClick={() => onSelect(selectedDate, "", prof.profile_id)}
-                    className={`w-full text-left p-4 rounded-2xl border-2 transition-all cursor-pointer ${
-                      isSelected ? "border-rose-400 bg-rose-50" : "border-gray-100 bg-white hover:border-rose-200"
+                    className={`w-full text-left p-4 sm:p-5 rounded-3xl border-2 transition-all duration-300 cursor-pointer relative overflow-hidden ${
+                      isSelected
+                        ? "border-rose-400 bg-gradient-to-r from-rose-50/90 to-white shadow-soft-sm scale-[1.01]"
+                        : "border-rose-100/60 bg-white/90 backdrop-blur-sm shadow-soft-xs hover:border-rose-200 hover:shadow-soft-sm"
                     }`}
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-12 h-12 rounded-2xl bg-rose-100/70 overflow-hidden flex-shrink-0 border border-rose-200/60 shadow-soft-xs flex items-center justify-center">
                         {prof.photo_url ? (
-                          <img src={prof.photo_url} alt={name} className="w-10 h-10 rounded-full object-cover" />
+                          <img src={prof.photo_url} alt={name} className="w-full h-full object-cover" />
                         ) : (
-                          <span className="text-rose-600 font-bold text-sm">{name.charAt(0).toUpperCase()}</span>
+                          <span className="text-rose-600 font-bold text-base">{name.charAt(0).toUpperCase()}</span>
                         )}
                       </div>
+
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 text-sm">{name}</p>
-                        {prof.bio && <p className="text-xs text-gray-400 truncate mt-0.5">{prof.bio}</p>}
-                        <p className="text-xs text-teal-600 mt-1 font-medium">{slotsCount} horarios disponibles</p>
-                        {/* Address */}
-                        {prof.address && (
-                          <div className="flex items-center gap-1 mt-1.5">
-                            <i className="ri-map-pin-line text-rose-400 text-xs shrink-0"></i>
-                            <span className="text-xs text-gray-500 truncate">{prof.address}</span>
-                          </div>
-                        )}
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-tight">{name}</h4>
+                        {prof.bio && <p className="text-xs text-gray-500 truncate mt-0.5">{prof.bio}</p>}
+                        
+                        <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                          <span className="text-[11px] font-semibold text-rose-700 bg-rose-100/60 px-2.5 py-0.5 rounded-full border border-rose-200/50">
+                            {slotsCount} horarios disponibles
+                          </span>
+                          {prof.address && (
+                            <span className="text-[11px] text-gray-500 flex items-center gap-1 truncate">
+                              <i className="ri-map-pin-line text-rose-400"></i> {prof.address}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${isSelected ? "border-rose-500 bg-rose-500" : "border-gray-300"}`}>
-                        {isSelected && <i className="ri-check-line text-white text-xs"></i>}
+
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+                        isSelected ? "border-rose-500 bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-xs" : "border-rose-200 bg-rose-50/30"
+                      }`}>
+                        {isSelected && <i className="ri-check-line text-white text-xs font-bold"></i>}
                       </div>
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -833,27 +875,32 @@ export default function CalendarPicker({
         </div>
       </div>
 
-      {/* Time slots for selected professional */}
+      {/* Time Slots Section */}
       {selectedDate && selectedProfessionalId && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-500">
+        <div className="bg-white/90 backdrop-blur-sm rounded-4xl border border-rose-100/70 p-6 sm:p-7 shadow-soft-sm animate-fadeIn">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 text-white flex items-center justify-center shadow-soft-xs">
               <i className="ri-time-line text-lg"></i>
             </div>
             <div>
-              <h3 className="font-bold text-gray-900 text-sm">Horarios con {selectedProf?.display_name || selectedProf?.profile_name}</h3>
-              <p className="text-xs text-gray-400 capitalize">{displayDate}</p>
+              <h3 className="font-bold text-gray-900 text-base">
+                Horarios con {selectedProf?.display_name || selectedProf?.profile_name}
+              </h3>
+              <p className="text-xs text-rose-500 capitalize font-medium">{displayDate}</p>
             </div>
           </div>
-          
+
           {slotsForSelectedProf.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-4 italic">No hay huecos disponibles para esta duración con este profesional.</p>
+            <p className="text-sm text-gray-400 text-center py-6 italic bg-rose-50/30 rounded-2xl">
+              No hay horarios disponibles para esta duración con la profesional elegida.
+            </p>
           ) : (
-            <div className="space-y-4">
-              <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
+            <div className="space-y-5">
+              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-2.5">
                 {slotsForSelectedProf.map(slot => (
                   <button
                     key={slot}
+                    type="button"
                     onClick={() => {
                       onSelect(selectedDate, slot, selectedProfessionalId);
                       if (companions && companions.length > 0 && onAssignProfessionals) {
@@ -872,10 +919,10 @@ export default function CalendarPicker({
                         }
                       }
                     }}
-                    className={`py-2.5 rounded-xl text-sm font-bold border transition-all cursor-pointer whitespace-nowrap ${
+                    className={`py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer text-center ${
                       selectedTime === slot
-                        ? "bg-rose-500 text-white border-rose-500 shadow-lg shadow-rose-200"
-                        : "bg-white border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50/30"
+                        ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-soft-sm scale-105"
+                        : "bg-white border border-rose-100 text-gray-800 shadow-soft-xs hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50/40 hover:-translate-y-0.5"
                     }`}
                   >
                     {slot}
@@ -884,13 +931,13 @@ export default function CalendarPicker({
               </div>
 
               {selectedTime && companions && companions.length > 0 && (
-                <div className="p-4 bg-teal-50/70 border border-teal-100 rounded-2xl flex items-start gap-3 text-teal-900 animate-[fadeInUp_0.2s_ease] w-full">
-                  <div className="w-8 h-8 rounded-lg bg-teal-500 text-white flex items-center justify-center shrink-0">
-                    <i className="ri-user-star-line text-base"></i>
+                <div className="p-5 bg-teal-50/90 backdrop-blur-sm border border-teal-200/70 rounded-3xl flex items-start gap-3.5 text-teal-950 shadow-soft-xs animate-fadeIn">
+                  <div className="w-9 h-9 rounded-2xl bg-teal-500 text-white flex items-center justify-center shrink-0 shadow-soft-xs">
+                    <i className="ri-user-star-line text-lg"></i>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-bold text-teal-950">Distribución de profesionales confirmada ✨</p>
-                    <div className="text-[11px] text-teal-800 mt-1 leading-relaxed space-y-1">
+                    <p className="text-xs sm:text-sm font-bold text-teal-950">Distribución de profesionales confirmada ✨</p>
+                    <div className="text-xs text-teal-800 mt-1.5 leading-relaxed space-y-1">
                       {bookingMode === "simultaneous" ? (
                         <>
                           <p>Tú serás atendida por <strong>{selectedProf?.display_name || selectedProf?.profile_name}</strong> a las <strong>{selectedTime}</strong>.</p>
@@ -909,7 +956,7 @@ export default function CalendarPicker({
                         <>
                           <p>Ambas/os seréis atendidas/os consecutivamente por <strong>{selectedProf?.display_name || selectedProf?.profile_name}</strong>.</p>
                           <p className="mt-0.5">
-                            Bloque de tiempo total: <strong>{formatDuration(totalMinutes + companions.reduce((sum, c) => sum + c.services.reduce((sSum, s) => sSum + s.duration_minutes, 0), 0))}</strong> comenzando a las <strong>{selectedTime}</strong>.
+                            Bloque total: <strong>{formatDuration(totalMinutes + companions.reduce((sum, c) => sum + c.services.reduce((sSum, s) => sSum + s.duration_minutes, 0), 0))}</strong> comenzando a las <strong>{selectedTime}</strong>.
                           </p>
                         </>
                       )}

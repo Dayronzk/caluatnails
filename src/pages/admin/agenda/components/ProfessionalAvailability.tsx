@@ -43,6 +43,45 @@ export default function ProfessionalAvailability() {
   const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
   const [creatingBooking, setCreatingBooking] = useState<{ proId: string, proName: string, time: string, maxMinutes: number } | null>(null);
 
+const DEFAULT_CALUATNAILS_PROFS_AVAILABILITY: Professional[] = [
+  {
+    id: "prof-karol",
+    name: "Karol",
+    display_name: "Karol (Master Stylist)",
+    avatar_url: "/assets/manicure-premium.png",
+    slot_duration_minutes: 30,
+    is_working_today: true,
+    start_time: "09:30",
+    end_time: "20:30",
+    break_start: "14:00",
+    break_end: "15:00",
+  },
+  {
+    id: "prof-eidy",
+    name: "Eidy",
+    display_name: "Eidy (Técnica & Nail Art)",
+    avatar_url: "/assets/manicure-pastel.jpg",
+    slot_duration_minutes: 30,
+    is_working_today: true,
+    start_time: "09:30",
+    end_time: "20:30",
+    break_start: "14:00",
+    break_end: "15:00",
+  },
+  {
+    id: "prof-maryuri",
+    name: "Maryuri",
+    display_name: "Maryuri (Estilista Mirada)",
+    avatar_url: "/assets/extensions-premium.png",
+    slot_duration_minutes: 30,
+    is_working_today: true,
+    start_time: "09:30",
+    end_time: "20:30",
+    break_start: "14:00",
+    break_end: "15:00",
+  },
+];
+
   const loadData = useCallback(async () => {
     setLoading(true);
     setBookings([]);
@@ -58,7 +97,14 @@ export default function ProfessionalAvailability() {
         .select('id, name, avatar_url, role, is_professional')
         .or('role.eq.admin,is_professional.eq.true');
 
-      if (!profiles) return;
+      if (!profiles || profiles.length === 0) {
+        setProfessionals(DEFAULT_CALUATNAILS_PROFS_AVAILABILITY.map(p => ({
+          ...p,
+          is_working_today: dayOfWeek >= 1 && dayOfWeek <= 6,
+        })));
+        setLoading(false);
+        return;
+      }
 
       // 2. Get their settings and schedules for the selected day
       const profIds = profiles.map(p => p.id);
@@ -103,17 +149,18 @@ export default function ProfessionalAvailability() {
           display_name: s?.display_name || p.name,
           avatar_url: p.avatar_url,
           slot_duration_minutes: s?.slot_duration_minutes || 30,
-          is_working_today: sch?.is_working ?? false,
-          start_time: sch?.start_time || null,
-          end_time: sch?.end_time || null,
+          is_working_today: sch?.is_working ?? (dayOfWeek >= 1 && dayOfWeek <= 6),
+          start_time: sch?.start_time || "09:30",
+          end_time: sch?.end_time || "20:30",
           break_start: sch?.break_start || null,
           break_end: sch?.break_end || null,
         };
       });
 
-      setProfessionals(mapped);
+      setProfessionals(mapped.length > 0 ? mapped : DEFAULT_CALUATNAILS_PROFS_AVAILABILITY);
     } catch (err) {
       console.error("Error loading availability:", err);
+      setProfessionals(DEFAULT_CALUATNAILS_PROFS_AVAILABILITY);
     } finally {
       setLoading(false);
     }

@@ -10,12 +10,12 @@ const WIFI_ENCRYPTION: "WPA" | "WEP" | "nopass" = "WPA";
 const WIFI_QR = `WIFI:T:${WIFI_ENCRYPTION};S:${WIFI_SSID};P:${WIFI_PASSWORD};H:false;;`;
 const MOBILECONFIG_URL = "/assets/wifi-caluatnails.mobileconfig";
 
-const ADDRESS = "Carrer del Rosselló, 497 · Eixample · Barcelona";
-const PHONE = "+34 636 68 91 01";
-const PHONE_DISPLAY = "636 68 91 01";
-const WHATSAPP_URL = "https://wa.me/34636689101";
+const ADDRESS = "Calle Padilla, 301 · Eixample · Barcelona";
+const PHONE = "+34 635 797 539";
+const PHONE_DISPLAY = "635 797 539";
+const WHATSAPP_URL = "https://wa.me/34635797539";
 const MAPS_URL =
-  "https://www.google.com/maps/dir/?api=1&destination=Carrer+del+Rossell%C3%B3+497,+08025+Barcelona";
+  "https://www.google.com/maps/dir/?api=1&destination=Calle+Padilla+301,+08025+Barcelona";
 
 type Device = "ios" | "android" | "other";
 
@@ -237,7 +237,7 @@ export default function SedeEixamplePage() {
           </div>
 
           <p className="text-center text-[11px] text-gray-400 mt-8">
-            © CALUATNAILS · {new Date().getFullYear()} · Carrer del Rosselló 497
+            © CALUATNAILS · {new Date().getFullYear()} · Calle Padilla 301 (Eixample)
           </p>
         </div>
 

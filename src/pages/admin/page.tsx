@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Users, GraduationCap, TrendingUp, Calendar, ShoppingBag, Award, Clock, Bell, BellRing, Loader2 } from "lucide-react";
+import { Users, TrendingUp, Calendar, Clock, Bell, BellRing, Loader2 } from "lucide-react";
 import { AdminSidebar } from "./components/AdminSidebar";
 import { StatsCard } from "./components/StatsCard";
 import { useDashboardStats } from "./hooks/useDashboardStats";
@@ -7,6 +7,10 @@ import { useSEO } from "@/hooks/useSEO";
 import { useAuth } from "@/hooks/useAuth";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
 import { ProfessionalBookingsModal } from "./components/ProfessionalBookingsModal";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 
 function formatTimeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -27,40 +31,41 @@ function formatDate(dateStr: string): string {
   });
 }
 
-function getStatusLabel(status: string): { label: string; cls: string } {
-  const map: Record<string, { label: string; cls: string }> = {
-    pending: { label: "Pendiente", cls: "bg-amber-100 text-amber-700" },
-    confirmed: { label: "Confirmada", cls: "bg-emerald-100 text-emerald-700" },
-    cancelled: { label: "Cancelada", cls: "bg-rose-100 text-rose-700" },
-    completed: { label: "Completada", cls: "bg-gray-100 text-gray-600" },
+function getStatusBadge(status: string) {
+  const map: Record<string, { label: string; variant: "amber" | "emerald" | "rose" | "slate" }> = {
+    pending: { label: "Pendiente", variant: "amber" },
+    confirmed: { label: "Confirmada", variant: "emerald" },
+    cancelled: { label: "Cancelada", variant: "rose" },
+    completed: { label: "Completada", variant: "slate" },
   };
-  return map[status] ?? { label: status, cls: "bg-gray-100 text-gray-600" };
+  const config = map[status] ?? { label: status, variant: "slate" };
+  return <Badge variant={config.variant}>{config.label}</Badge>;
 }
 
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-2xl p-6 border border-gray-100 animate-pulse">
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-12 h-12 rounded-xl bg-gray-100" />
-        <div className="w-12 h-4 rounded bg-gray-100" />
+    <Card variant="glass" padding="md" className="animate-pulse space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="w-10 h-10 rounded-2xl bg-rose-50" />
+        <div className="w-12 h-4 rounded-full bg-rose-50" />
       </div>
-      <div className="w-20 h-7 rounded bg-gray-100 mb-2" />
-      <div className="w-32 h-4 rounded bg-gray-100" />
-    </div>
+      <div className="w-24 h-7 rounded-2xl bg-rose-50" />
+      <div className="w-32 h-3 rounded-full bg-rose-50" />
+    </Card>
   );
 }
 
 export default function AdminDashboard() {
   useSEO({
-    title: "Panel Admin",
-    description: "Panel de administración CALUATNAILS.",
+    title: "Panel Admin — CALUATNAILS",
+    description: "Panel de administración del salón CALUATNAILS.",
     canonical: "/admin",
     noindex: true,
   });
   const { user } = useAuth();
   const { isSubscribed, permission, loading: pushLoading, subscribe } = usePushNotifications({ profileId: user?.id });
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  const { stats, recentStudents, recentBookings, topLessons, loading, error } = useDashboardStats(selectedDate);
+  const { stats, recentStudents, recentBookings, loading, error } = useDashboardStats(selectedDate);
   const [selectedProfForModal, setSelectedProfForModal] = useState<{id: string, name: string} | null>(null);
 
   const handlePrevDay = () => {
@@ -78,112 +83,115 @@ export default function AdminDashboard() {
   const isToday = selectedDate === new Date().toISOString().split('T')[0];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gradient-to-br from-organic-cream via-white to-organic-blush/30 flex">
       <AdminSidebar />
 
-      <main className="flex-1 p-6 lg:p-8 overflow-auto">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 mt-1">Resumen general en tiempo real</p>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-rose-500 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">
+              CALUATNAILS · Administración
+            </span>
+            <h1 className="font-playfair text-2xl sm:text-3xl font-extrabold text-gray-900 mt-2">Dashboard Principal</h1>
+            <p className="text-gray-500 text-xs sm:text-sm font-medium">Resumen general y métricas en tiempo real</p>
           </div>
           
           {/* Global Date Filter */}
-          <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-gray-100 shadow-sm">
+          <Card variant="glass" padding="sm" className="inline-flex items-center gap-2 self-start md:self-auto">
             <button 
+              type="button"
               onClick={handlePrevDay}
-              className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-50 transition-colors text-gray-400 hover:text-rose-500"
+              className="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-rose-50 text-gray-400 hover:text-rose-600 transition-all cursor-pointer"
             >
-              <i className="ri-arrow-left-s-line text-xl"></i>
+              <i className="ri-arrow-left-s-line text-lg" />
             </button>
             
-            <div className="px-4 py-2 text-center min-w-[160px]">
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">Viendo datos de</p>
-              <p className="text-sm font-bold text-gray-900 capitalize">
+            <div className="px-3 text-center min-w-[140px]">
+              <p className="text-[10px] font-bold text-rose-400 uppercase tracking-widest leading-tight">Métricas del</p>
+              <p className="text-xs sm:text-sm font-bold text-gray-900 capitalize">
                 {new Date(selectedDate + 'T12:00:00').toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" })}
               </p>
             </div>
 
             <button 
+              type="button"
               onClick={handleNextDay}
-              className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-50 transition-colors text-gray-400 hover:text-rose-500"
+              className="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-rose-50 text-gray-400 hover:text-rose-600 transition-all cursor-pointer"
             >
-              <i className="ri-arrow-right-s-line text-xl"></i>
+              <i className="ri-arrow-right-s-line text-lg" />
             </button>
             
             {!isToday && (
-              <button 
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => setSelectedDate(new Date().toISOString().split('T')[0])}
-                className="ml-2 px-3 py-2 bg-rose-50 text-rose-600 rounded-xl text-[10px] font-bold hover:bg-rose-100 transition-colors uppercase tracking-tight"
               >
-                Volver a Hoy
-              </button>
+                Hoy
+              </Button>
             )}
-          </div>
+          </Card>
         </div>
 
         {error && (
-          <div className="mb-6 bg-rose-50 border border-rose-200 rounded-xl px-4 py-3 text-sm text-rose-700 flex items-center gap-2">
-            <i className="ri-error-warning-line"></i> {error}
+          <div className="mb-6 p-4 rounded-3xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm font-medium flex items-center gap-2">
+            <i className="ri-error-warning-line text-lg" /> {error}
           </div>
         )}
 
-        {/* Push notification subscription banner for admin */}
+        {/* Push Notification Banner */}
         {!isSubscribed && permission !== 'denied' && (
-          <div className="mb-6 bg-gradient-to-r from-rose-50 to-orange-50 border border-rose-200/60 rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
-                <Bell className="w-5 h-5 text-rose-500" />
+          <Card variant="gradient" padding="md" className="mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-rose-500/20 text-rose-600 flex items-center justify-center shrink-0">
+                <Bell className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-sm font-bold text-gray-900">Activa las notificaciones push</p>
-                <p className="text-xs text-gray-500">Recibe alertas de nuevas reservas, mensajes de WhatsApp y escalaciones del bot.</p>
+                <p className="text-xs sm:text-sm font-bold text-gray-900">Notificaciones instantáneas activas</p>
+                <p className="text-xs text-gray-600 font-medium">Recibe alertas en tu dispositivo de nuevas reservas y cambios de cita.</p>
               </div>
             </div>
-            <button
+            <Button
+              variant="primary"
+              size="sm"
+              isLoading={pushLoading}
+              icon="ri-notification-3-line"
               onClick={() => subscribe()}
-              disabled={pushLoading}
-              className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-rose-500 text-white rounded-xl text-sm font-bold hover:bg-rose-600 transition-colors disabled:opacity-50 active:scale-95"
             >
-              {pushLoading ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <BellRing className="w-4 h-4" />
-              )}
-              Activar
-            </button>
-          </div>
+              Activar Notificaciones
+            </Button>
+          </Card>
         )}
 
         {/* Stats grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           {loading ? (
             Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
           ) : (
             <>
               <StatsCard
-                title="Estudiantes registrados"
+                title="Clientes"
                 value={stats.totalStudents.toLocaleString("es-ES")}
-                icon={<Users className="w-6 h-6" />}
+                icon={<Users className="w-5 h-5" />}
                 color="rose"
               />
               <StatsCard
-                title="Ingresos totales"
+                title="Ingresos Totales"
                 value={`${stats.revenueTotal.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`}
-                icon={<TrendingUp className="w-6 h-6" />}
+                icon={<TrendingUp className="w-5 h-5" />}
                 color="green"
               />
               <StatsCard
-                title="Reservas totales"
+                title="Reservas Totales"
                 value={stats.totalBookings}
-                icon={<Calendar className="w-6 h-6" />}
+                icon={<Calendar className="w-5 h-5" />}
                 color="rose"
               />
               <StatsCard
-                title="Reservas pendientes"
+                title="Reservas Pendientes"
                 value={stats.pendingBookings}
-                icon={<Clock className="w-6 h-6" />}
+                icon={<Clock className="w-5 h-5" />}
                 color="amber"
               />
             </>
@@ -191,37 +199,30 @@ export default function AdminDashboard() {
         </div>
 
         {/* Team Availability Status */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <Card variant="glass" padding="lg" className="mb-8 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-rose-100/60 pb-4">
             <div>
-              <h2 className="text-xl font-bold text-gray-900 tracking-tight">Estado de disponibilidad del equipo</h2>
-              <p className="text-sm text-gray-500 mt-1 capitalize">
+              <h2 className="font-playfair text-xl font-bold text-gray-900">Disponibilidad del equipo hoy</h2>
+              <p className="text-xs text-gray-500 font-medium capitalize mt-0.5">
                 {new Date(selectedDate + 'T12:00:00').toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" })}
               </p>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold border border-emerald-100">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              ACTUALIZADO HOY
-            </div>
+            <Badge variant="emerald" icon="ri-checkbox-circle-line">
+              En tiempo real
+            </Badge>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
-                <Users className="w-24 h-24" />
-              </div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Activos</p>
-              <h3 className="text-3xl font-black text-gray-900">{stats.availability.activeCount} / {stats.availability.totalCount}</h3>
-              <p className="text-xs text-gray-500 mt-2 font-medium">Profesionales trabajando hoy</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div className="bg-white/80 p-5 rounded-3xl border border-rose-100/80 shadow-soft-xs">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Estilistas Activas</p>
+              <h3 className="font-playfair text-2xl sm:text-3xl font-extrabold text-gray-900">{stats.availability.activeCount} / {stats.availability.totalCount}</h3>
+              <p className="text-xs text-gray-500 font-medium mt-1">Trabajando en el salón</p>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
-                <TrendingUp className="w-24 h-24" />
-              </div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Ocupación</p>
-              <h3 className="text-3xl font-black text-emerald-600">{stats.availability.occupancyRate}%</h3>
-              <div className="w-full h-1.5 bg-gray-100 rounded-full mt-4 overflow-hidden">
+            <div className="bg-white/80 p-5 rounded-3xl border border-rose-100/80 shadow-soft-xs">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Tasa de Ocupación</p>
+              <h3 className="font-playfair text-2xl sm:text-3xl font-extrabold text-emerald-600">{stats.availability.occupancyRate}%</h3>
+              <div className="w-full h-2 bg-gray-100 rounded-full mt-3 overflow-hidden">
                 <div 
                   className="h-full bg-emerald-500 transition-all duration-1000" 
                   style={{ width: `${stats.availability.occupancyRate}%` }}
@@ -229,44 +230,40 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm relative overflow-hidden group">
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
-                <Clock className="w-24 h-24" />
-              </div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Capacidad</p>
-              <h3 className="text-3xl font-black text-gray-900">{stats.availability.totalSlots} slots</h3>
-              <p className="text-xs text-gray-500 mt-2 font-medium">Total de huecos disponibles hoy</p>
+            <div className="bg-white/80 p-5 rounded-3xl border border-rose-100/80 shadow-soft-xs">
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Capacidad Total</p>
+              <h3 className="font-playfair text-2xl sm:text-3xl font-extrabold text-gray-900">{stats.availability.totalSlots} citas</h3>
+              <p className="text-xs text-gray-500 font-medium mt-1">Capacidad diaria máxima</p>
             </div>
           </div>
 
-          {/* Individual Breakdown */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
             {stats.availability.professionalBreakdown.map(prof => (
               <div 
                 key={prof.id} 
                 onClick={() => setSelectedProfForModal({ id: prof.id, name: prof.name })}
-                className="bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 hover:border-rose-200 transition-colors cursor-pointer hover:shadow-md"
+                className="bg-white p-4 rounded-3xl border border-rose-100/80 hover:border-rose-300 transition-all cursor-pointer shadow-soft-xs hover:-translate-y-0.5"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-[10px] font-bold text-rose-600">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold text-xs flex items-center justify-center shrink-0">
                       {prof.name.slice(0, 2).toUpperCase()}
                     </div>
-                    <span className="text-sm font-bold text-gray-900 truncate max-w-[120px]">{prof.name}</span>
+                    <span className="text-xs font-bold text-gray-900 truncate max-w-[120px]">{prof.name}</span>
                   </div>
-                  <span className={`text-[10px] font-bold px-2 py-1 rounded-lg ${prof.slots > 0 ? 'bg-rose-50 text-rose-600' : 'bg-gray-50 text-gray-400'}`}>
-                    {prof.slots > 0 ? 'EN SERVICIO' : 'NO DISPONIBLE'}
-                  </span>
+                  <Badge variant={prof.slots > 0 ? "rose" : "slate"}>
+                    {prof.slots > 0 ? 'En Servicio' : 'Libre'}
+                  </Badge>
                 </div>
                 {prof.slots > 0 && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-[10px] font-medium text-gray-500">
-                      <span>{prof.occupied} de {prof.slots} citas ocupadas</span>
-                      <span>{prof.rate}%</span>
+                  <div className="space-y-1.5 pt-1">
+                    <div className="flex justify-between text-[11px] font-medium text-gray-500">
+                      <span>{prof.occupied} de {prof.slots} slots reservadas</span>
+                      <span className="font-bold text-rose-600">{prof.rate}%</span>
                     </div>
-                    <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-rose-50 rounded-full overflow-hidden">
                       <div 
-                        className={`h-full transition-all duration-1000 ${prof.rate > 80 ? 'bg-rose-500' : 'bg-rose-400'}`}
+                        className="h-full bg-gradient-to-r from-rose-500 to-pink-500 transition-all duration-1000"
                         style={{ width: `${prof.rate}%` }}
                       />
                     </div>
@@ -275,225 +272,133 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
 
-        {/* Professional Stats Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+        {/* Professional Profit breakdown table */}
+        <Card variant="glass" padding="lg" className="mb-8 space-y-4">
+          <div className="flex items-center justify-between border-b border-rose-100/60 pb-4">
+            <h2 className="font-playfair text-xl font-bold text-gray-900 flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-emerald-500" />
-              Beneficios por Profesional y Centro
+              Ingresos por Estilista y Servicio
             </h2>
           </div>
-          
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-            {loading ? (
-              <div className="p-12 text-center">
-                <i className="ri-loader-4-line animate-spin text-3xl text-rose-500 mb-2 block"></i>
-                <p className="text-gray-400">Calculando beneficios...</p>
-              </div>
-            ) : stats.professionalStats.length === 0 ? (
-              <div className="p-12 text-center text-gray-400">
-                <TrendingUp className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                <p>No hay datos de beneficios registrados</p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-left text-xs text-gray-400 border-b border-gray-100 bg-gray-50/50">
-                      <th className="px-6 py-4 font-semibold uppercase tracking-wider">Profesional / Origen</th>
-                      <th className="px-6 py-4 font-semibold uppercase tracking-wider text-right">Hoy</th>
-                      <th className="px-6 py-4 font-semibold uppercase tracking-wider text-right">Este Mes</th>
-                      <th className="px-6 py-4 font-semibold uppercase tracking-wider text-right">Este Año</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
-                    {stats.professionalStats.map((pro) => {
-                      const isTotal = pro.id === 'global-total';
-                      const isUnassigned = pro.id === 'centro-unassigned';
-                      
-                      return (
-                        <tr 
-                          key={pro.id} 
-                          className={`hover:bg-gray-50/60 transition-colors ${isTotal ? 'bg-rose-50/30 font-bold' : ''}`}
-                        >
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center gap-3">
-                              {!isTotal && (
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold ${isUnassigned ? 'bg-amber-100 text-amber-600' : 'bg-rose-100 text-rose-600'}`}>
-                                  {pro.name.slice(0, 2).toUpperCase()}
-                                </div>
-                              )}
-                              <span className={isTotal ? 'text-rose-600' : 'text-gray-900'}>
-                                {pro.name}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-emerald-600 font-bold">
-                            {pro.daily.toFixed(2)} €
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right font-semibold text-gray-900">
-                            {pro.monthly.toFixed(2)} €
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right font-semibold text-rose-500">
-                            {pro.yearly.toFixed(2)} €
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </div>
+
+          <ResponsiveTable
+            isLoading={loading}
+            emptyMessage="No se registran datos de facturación todavía."
+            data={stats.professionalStats}
+            keyExtractor={(row) => row.id}
+            columns={[
+              {
+                header: "Profesional",
+                cell: (row) => (
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center shrink-0">
+                      {row.name.slice(0, 2).toUpperCase()}
+                    </div>
+                    <span className="font-bold text-xs sm:text-sm text-gray-900">{row.name}</span>
+                  </div>
+                )
+              },
+              {
+                header: "Facturación Hoy",
+                cell: (row) => (
+                  <span className="font-bold text-emerald-600">{row.daily.toFixed(2)} €</span>
+                )
+              },
+              {
+                header: "Facturación Mensual",
+                cell: (row) => (
+                  <span className="font-bold text-gray-900">{row.monthly.toFixed(2)} €</span>
+                )
+              },
+              {
+                header: "Facturación Anual",
+                cell: (row) => (
+                  <span className="font-bold text-rose-600">{row.yearly.toFixed(2)} €</span>
+                )
+              }
+            ]}
+          />
+        </Card>
 
         {/* Content grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          {/* Recent students */}
-          <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-gray-900">Últimos estudiantes registrados</h2>
+          {/* Recent Clients */}
+          <Card variant="glass" padding="lg" className="lg:col-span-2 space-y-4">
+            <div className="flex items-center justify-between border-b border-rose-100/60 pb-3">
+              <h2 className="font-playfair text-lg font-bold text-gray-900">Últimos Clientes Registrados</h2>
               <Users className="w-5 h-5 text-rose-400" />
             </div>
 
-            {loading ? (
-              <div className="space-y-3">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="h-14 rounded-xl bg-gray-50 animate-pulse" />
-                ))}
-              </div>
-            ) : recentStudents.length === 0 ? (
-              <div className="text-center py-10 text-gray-400">
-                <Users className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                <p className="text-sm">Aún no hay estudiantes registrados</p>
-              </div>
+            {recentStudents.length === 0 ? (
+              <p className="text-xs text-gray-400 py-6 text-center">No hay nuevos registros de clientes.</p>
             ) : (
               <div className="space-y-3">
                 {recentStudents.map((student) => (
-                  <div key={student.id} className="flex items-center gap-4 p-3 rounded-xl bg-gray-50 hover:bg-rose-50/40 transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-semibold text-sm flex-shrink-0">
+                  <div key={student.id} className="flex items-center gap-3.5 p-3 rounded-2xl bg-white/80 border border-rose-100/60 shadow-soft-xs">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
                       {(student.name ?? student.email).slice(0, 2).toUpperCase()}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 truncate">
-                        {student.name ?? "Sin nombre"}
-                      </p>
-                      <p className="text-xs text-gray-400 truncate">{student.email}</p>
+                      <p className="text-xs font-bold text-gray-900 truncate">{student.name ?? "Sin nombre"}</p>
+                      <p className="text-[11px] text-gray-500 truncate">{student.email}</p>
                     </div>
-                    <span className="text-xs text-gray-400 whitespace-nowrap flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
+                    <span className="text-[10px] text-gray-400 font-medium">
                       {formatTimeAgo(student.created_at)}
                     </span>
                   </div>
                 ))}
               </div>
             )}
-          </div>
+          </Card>
 
-          {/* Top lessons */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-gray-900">Lecciones más completadas</h2>
-              <Award className="w-5 h-5 text-amber-500" />
+
+          {/* Recent Bookings Table */}
+          <Card variant="glass" padding="lg" className="lg:col-span-3 space-y-4">
+            <div className="flex items-center justify-between border-b border-rose-100/60 pb-3">
+              <h2 className="font-playfair text-lg font-bold text-gray-900">Últimas Reservas de Cita</h2>
+              <Calendar className="w-5 h-5 text-rose-500" />
             </div>
 
-            {loading ? (
-              <div className="space-y-4">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="h-12 rounded-xl bg-gray-50 animate-pulse" />
-                ))}
-              </div>
-            ) : topLessons.length === 0 || topLessons.every(l => l.completions === 0) ? (
-              <div className="text-center py-10 text-gray-400">
-                <GraduationCap className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                <p className="text-sm">Aún no hay lecciones completadas</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {topLessons.map((lesson, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-semibold text-gray-600 flex-shrink-0 mt-0.5">
-                      {index + 1}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">{lesson.title}</p>
-                      {lesson.module_title && (
-                        <p className="text-xs text-gray-400 truncate">{lesson.module_title}</p>
-                      )}
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-emerald-600 font-medium">
-                          {lesson.completions} completadas
-                        </span>
-                      </div>
+            <ResponsiveTable
+              isLoading={loading}
+              emptyMessage="Aún no hay reservas registradas en el sistema."
+              data={recentBookings}
+              keyExtractor={(b) => b.id}
+              columns={[
+                {
+                  header: "Cliente",
+                  cell: (b) => (
+                    <div>
+                      <p className="font-bold text-xs sm:text-sm text-gray-900">{b.client_name}</p>
+                      <p className="text-[11px] text-gray-400">{b.client_email}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Recent bookings */}
-          <div className="lg:col-span-3 bg-white rounded-2xl border border-gray-100 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-gray-900">Últimas reservas</h2>
-              <Calendar className="w-5 h-5 text-rose-400" />
-            </div>
-
-            {loading ? (
-              <div className="space-y-3">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="h-16 rounded-xl bg-gray-50 animate-pulse" />
-                ))}
-              </div>
-            ) : recentBookings.length === 0 ? (
-              <div className="text-center py-10 text-gray-400">
-                <Calendar className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                <p className="text-sm">Aún no hay reservas registradas</p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-left text-xs text-gray-400 border-b border-gray-100">
-                      <th className="pb-3 font-medium">Cliente</th>
-                      <th className="pb-3 font-medium">Fecha de cita</th>
-                      <th className="pb-3 font-medium">Hora</th>
-                      <th className="pb-3 font-medium">Total</th>
-                      <th className="pb-3 font-medium">Estado</th>
-                      <th className="pb-3 font-medium">Registrada</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
-                    {recentBookings.map((booking) => {
-                      const { label, cls } = getStatusLabel(booking.status);
-                      return (
-                        <tr key={booking.id} className="hover:bg-gray-50/60 transition-colors">
-                          <td className="py-3 pr-4">
-                            <p className="font-medium text-gray-900">{booking.client_name}</p>
-                            <p className="text-xs text-gray-400">{booking.client_email}</p>
-                          </td>
-                          <td className="py-3 pr-4 text-gray-700">{formatDate(booking.booking_date)}</td>
-                          <td className="py-3 pr-4 text-gray-700">{booking.booking_time}</td>
-                          <td className="py-3 pr-4 font-semibold text-gray-900">
-                            {Number(booking.total_price).toFixed(2)} €
-                          </td>
-                          <td className="py-3 pr-4">
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${cls}`}>
-                              {label}
-                            </span>
-                          </td>
-                          <td className="py-3 text-gray-400 text-xs">{formatTimeAgo(booking.created_at)}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+                  )
+                },
+                {
+                  header: "Fecha Cita",
+                  cell: (b) => <span className="text-xs font-semibold text-gray-700">{formatDate(b.booking_date)}</span>
+                },
+                {
+                  header: "Hora",
+                  cell: (b) => <span className="text-xs font-bold text-rose-600">{b.booking_time}</span>
+                },
+                {
+                  header: "Total",
+                  cell: (b) => <span className="text-xs font-extrabold text-gray-900">{Number(b.total_price).toFixed(2)} €</span>
+                },
+                {
+                  header: "Estado",
+                  cell: (b) => getStatusBadge(b.status)
+                },
+                {
+                  header: "Registrado",
+                  cell: (b) => <span className="text-[11px] text-gray-400 font-medium">{formatTimeAgo(b.created_at)}</span>
+                }
+              ]}
+            />
+          </Card>
         </div>
       </main>
 
